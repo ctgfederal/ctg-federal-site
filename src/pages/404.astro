@@ -1,0 +1,38 @@
+---
+/**
+ * 404 — page not found.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import site from '../data/site';
+---
+
+<BaseLayout
+  title="Page Not Found | CTG Federal"
+  description="The page you were looking for is not here. Use the links below to find your way back."
+  noindex
+>
+  <PageHero
+    eyebrow="Error 404"
+    title="We could not find that page."
+    intro="The link may be out of date, or the page may have moved. Here is where to go next."
+    align="center"
+  />
+
+  <Section narrow>
+    <div class="prose">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/solutions/">Solutions</a></li>
+        <li><a href="/partners/">Partners</a></li>
+        <li><a href="/customers/">Customers</a></li>
+        <li><a href="/contacts/">Contact</a></li>
+      </ul>
+      <p>
+        Still stuck? Call <a href={site.phoneHref}>{site.phone}</a> or email
+        <a href={site.emailHref}>{site.email}</a>.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

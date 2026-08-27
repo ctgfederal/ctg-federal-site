@@ -1,0 +1,147 @@
+---
+/**
+ * QuickFacts — registration IDs, the compliance list, and document downloads.
+ * Reads src/data/quickFacts.ts.
+ *
+ *   <QuickFacts />
+ *   <QuickFacts heading="Quick Facts" showDownloads={false} />
+ *
+ * heading        H2 above the block (default 'Quick Facts')
+ * showFacts      show the ID list (default true)
+ * showCompliance show the certification list (default true)
+ * showDownloads  show the document links (default true)
+ * tone           'light' (default) | 'dark' for use on a navy section
+ */
+import { facts, compliance, downloads } from '../data/quickFacts';
+
+interface Props {
+  heading?: string;
+  showFacts?: boolean;
+  showCompliance?: boolean;
+  showDownloads?: boolean;
+  tone?: 'light' | 'dark';
+  id?: string;
+}
+const {
+  heading = 'Quick Facts',
+  showFacts = true,
+  showCompliance = true,
+  showDownloads = true,
+  tone = 'light',
+  id,
+} = Astro.props;
+---
+
+<div class={`quickfacts quickfacts--${tone}`} id={id}>
+  {heading && <h2>{heading}</h2>}
+  <span class="accent-bar"></span>
+
+  <div class="quickfacts__grid">
+    {
+      showFacts && (
+        <dl class="quickfacts__ids">
+          {facts.map((fact) => (
+            <div class="quickfacts__row">
+              <dt>{fact.label}:</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    {
+      showCompliance && (
+        <div class="quickfacts__block">
+          <h3 class="h4">Compliance / Certification List</h3>
+          <ul class="quickfacts__list">
+            {compliance.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    {
+      showDownloads && (
+        <div class="quickfacts__block">
+          <h3 class="h4">Downloads</h3>
+          <ul class="quickfacts__downloads">
+            {downloads.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .quickfacts__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(32px, 4vw, 56px);
+    margin-top: var(--sp-8);
+  }
+  .quickfacts__ids {
+    margin: 0;
+  }
+  .quickfacts__row {
+    display: flex;
+    gap: var(--sp-2);
+    padding-block: var(--sp-2);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .quickfacts__row dt {
+    color: var(--color-fg-muted);
+    white-space: nowrap;
+  }
+  .quickfacts__row dd {
+    margin: 0;
+    font-weight: var(--fw-medium);
+    color: var(--ctg-navy);
+    font-variant-numeric: tabular-nums;
+  }
+  .quickfacts__list,
+  .quickfacts__downloads {
+    margin: 0;
+    padding-left: 1.1em;
+  }
+  .quickfacts__list li,
+  .quickfacts__downloads li {
+    margin-bottom: var(--sp-2);
+  }
+  .quickfacts__downloads {
+    list-style: none;
+    padding-left: 0;
+  }
+  .quickfacts__downloads a {
+    display: inline-block;
+    padding-block: 2px;
+  }
+  .quickfacts--dark,
+  .quickfacts--dark .quickfacts__row dd {
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .quickfacts--dark .quickfacts__row {
+    border-color: var(--color-border-inverse);
+  }
+  .quickfacts--dark .quickfacts__row dt {
+    color: rgba(255, 255, 255, 0.55);
+  }
+  @media (max-width: 900px) {
+    .quickfacts__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

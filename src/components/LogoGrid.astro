@@ -1,0 +1,147 @@
+---
+/**
+ * LogoGrid — grayscale logo tiles that go full colour on hover.
+ *
+ *   <LogoGrid logos={strategic} heading="Our Partners"
+ *             link={{ label: 'See the complete list', href: '/partners/' }} />
+ *   <LogoGrid logos={all} cols={6} tone="light" />
+ *
+ * logos     [{ name, logo }]
+ * cols      4 | 5 | 6 | 8   (default 6)
+ * heading   optional H2
+ * intro     optional paragraph under the heading
+ * link      optional { label, href, external? } shown under the grid
+ * tone      'light' (default) | 'dark' — dark inverts tile background
+ * center    center the heading block (default true)
+ */
+interface LogoItem {
+  name: string;
+  logo: string;
+}
+interface Props {
+  logos: LogoItem[];
+  cols?: 4 | 5 | 6 | 8;
+  heading?: string;
+  intro?: string;
+  link?: { label: string; href: string; external?: boolean };
+  tone?: 'light' | 'dark';
+  center?: boolean;
+  id?: string;
+}
+const {
+  logos,
+  cols = 6,
+  heading,
+  intro,
+  link,
+  tone = 'light',
+  center = true,
+  id,
+} = Astro.props;
+---
+
+<div class={`logogrid logogrid--${tone}`} id={id}>
+  {
+    (heading || intro) && (
+      <div class={`section-heading ${center ? 'section-heading--center' : ''}`}>
+        {heading && <h2>{heading}</h2>}
+        <span class="accent-bar" />
+        {intro && <p class="lede">{intro}</p>}
+      </div>
+    )
+  }
+
+  <ul class="logogrid__grid" style={`--logo-cols:${cols}`}>
+    {
+      logos.map((item) => (
+        <li class="logotile">
+          <img src={item.logo} alt={item.name} loading="lazy" decoding="async" />
+        </li>
+      ))
+    }
+  </ul>
+
+  {
+    link && (
+      <p class={`logogrid__link ${center ? 'text-center' : ''}`}>
+        <a
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener' : undefined}
+        >
+          {link.label}
+        </a>
+      </p>
+    )
+  }
+</div>
+
+<style>
+  .logogrid__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--logo-cols, 6), minmax(0, 1fr));
+    gap: var(--sp-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .logotile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 3 / 2;
+    padding: var(--sp-4);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition:
+      border-color var(--dur-med) var(--ease-standard),
+      box-shadow var(--dur-med) var(--ease-standard);
+  }
+  .logotile img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.7;
+    transition:
+      filter var(--dur-med) var(--ease-standard),
+      opacity var(--dur-med) var(--ease-standard);
+  }
+  .logotile:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+  .logotile:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  .logogrid--dark .logotile {
+    background: rgba(255, 255, 255, 0.94);
+    border-color: transparent;
+  }
+  .logogrid__link {
+    margin: var(--sp-8) 0 0;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 1024px) {
+    .logogrid__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 700px) {
+    .logogrid__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--sp-2);
+    }
+  }
+  @media (max-width: 420px) {
+    .logogrid__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

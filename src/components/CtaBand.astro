@@ -1,0 +1,120 @@
+---
+/**
+ * CtaBand — closing band with a heading, optional copy, and up to two buttons.
+ *
+ *   <CtaBand title="Procurement Options"
+ *            text="Flexible payment structures…"
+ *            primary={{ label: 'Contact us', href: '/contacts/' }}
+ *            secondary={{ label: 'Learn more', href: '/procurement-options/' }} />
+ *
+ * eyebrow    optional line above the title
+ * tone       'gradient' (default) | 'navy' | 'yale' | 'subtle'
+ * align      'center' (default) | 'left'
+ * primary / secondary: { label, href, external? }
+ */
+interface Action {
+  label: string;
+  href: string;
+  external?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  text?: string;
+  primary: Action;
+  secondary?: Action;
+  tone?: 'gradient' | 'navy' | 'yale' | 'subtle';
+  align?: 'center' | 'left';
+}
+const {
+  eyebrow,
+  title,
+  text,
+  primary,
+  secondary,
+  tone = 'gradient',
+  align = 'center',
+} = Astro.props;
+const light = tone !== 'subtle';
+---
+
+<section class={`ctaband ctaband--${tone} ${light ? 'hex-bg' : ''} ctaband--${align}`}>
+  <div class="container ctaband__inner">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h2>{title}</h2>
+    {text && <p class="lede ctaband__text">{text}</p>}
+    <div class="btn-row ctaband__actions">
+      <a
+        class={`btn ${light ? 'btn--primary' : 'btn--navy'}`}
+        href={primary.href}
+        target={primary.external ? '_blank' : undefined}
+        rel={primary.external ? 'noopener' : undefined}
+      >
+        {primary.label}
+      </a>
+      {
+        secondary && (
+          <a
+            class={`btn ${light ? 'btn--outline-light' : 'btn--outline'}`}
+            href={secondary.href}
+            target={secondary.external ? '_blank' : undefined}
+            rel={secondary.external ? 'noopener' : undefined}
+          >
+            {secondary.label}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .ctaband {
+    padding-block: clamp(56px, 7vw, 96px);
+  }
+  .ctaband--gradient {
+    background: var(--gradient-brand);
+  }
+  .ctaband--navy {
+    background: var(--ctg-navy);
+  }
+  .ctaband--yale {
+    background: var(--ctg-yale-blue);
+  }
+  .ctaband--subtle {
+    background: var(--color-bg-subtle);
+    border-block: 1px solid var(--color-border);
+  }
+  .ctaband--gradient h2,
+  .ctaband--navy h2,
+  .ctaband--yale h2 {
+    color: var(--ctg-white);
+  }
+  .ctaband--gradient .eyebrow,
+  .ctaband--navy .eyebrow,
+  .ctaband--yale .eyebrow {
+    color: #7fb8ff;
+  }
+  .ctaband--gradient .ctaband__text,
+  .ctaband--navy .ctaband__text,
+  .ctaband--yale .ctaband__text {
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .ctaband--center .ctaband__inner {
+    max-width: 800px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .ctaband--center .ctaband__actions {
+    justify-content: center;
+  }
+  .ctaband--center .ctaband__text {
+    margin-inline: auto;
+  }
+  .ctaband__text {
+    margin-bottom: 0;
+  }
+  .ctaband__actions {
+    margin-top: var(--sp-8);
+  }
+</style>

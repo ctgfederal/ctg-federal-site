@@ -1,0 +1,55 @@
+---
+/**
+ * Section — page rhythm wrapper. One <section> with a container inside.
+ *
+ *   <Section tone="subtle" id="partners">…</Section>
+ *   <Section tone="gradient" hex tight>…</Section>
+ *   <Section narrow>…</Section>   // 860px prose column
+ *
+ * tone:   'white' | 'subtle' | 'muted' | 'navy' | 'yale' | 'gradient'
+ * tight:  60% vertical padding
+ * hex:    hexagon motif watermark (only visible on dark tones)
+ * narrow: narrow container
+ * full:   skip the container (child controls its own width)
+ */
+interface Props {
+  tone?: 'white' | 'subtle' | 'muted' | 'navy' | 'yale' | 'gradient';
+  tight?: boolean;
+  hex?: boolean;
+  narrow?: boolean;
+  full?: boolean;
+  id?: string;
+  class?: string;
+}
+const {
+  tone = 'white',
+  tight = false,
+  hex = false,
+  narrow = false,
+  full = false,
+  id,
+  class: className = '',
+} = Astro.props;
+
+const classes = [
+  'section',
+  tone !== 'white' ? `section--${tone}` : '',
+  tight ? 'section--tight' : '',
+  hex ? 'hex-bg' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<section class={classes} id={id}>
+  {
+    full ? (
+      <slot />
+    ) : (
+      <div class={`container ${narrow ? 'container--narrow' : ''}`.trim()}>
+        <slot />
+      </div>
+    )
+  }
+</section>

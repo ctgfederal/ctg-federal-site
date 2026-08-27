@@ -1,0 +1,171 @@
+---
+/**
+ * ServicesGrid — the six solution cards. Reads src/data/services.ts.
+ *
+ *   <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+ *   <ServicesGrid exclude="cybersecurity" cols={3} />
+ *
+ * heading  optional H2 above the grid
+ * exclude  slug to leave out (use on a service page to show the other five)
+ * cols     3 (default) | 2
+ */
+import { services } from '../data/services';
+
+interface Props {
+  heading?: string;
+  exclude?: string;
+  cols?: 2 | 3;
+}
+const { heading, exclude, cols = 3 } = Astro.props;
+const list = exclude ? services.filter((service) => service.slug !== exclude) : services;
+---
+
+<div class="services">
+  {
+    heading && (
+      <div class="section-heading">
+        <h2>{heading}</h2>
+        <span class="accent-bar" />
+      </div>
+    )
+  }
+  <ul class={`services__grid services__grid--${cols}`}>
+    {
+      list.map((service) => (
+        <li>
+          <a class="scard" href={`/${service.slug}/`}>
+            <span class="scard__media">
+              <img
+                src={service.image}
+                alt=""
+                width="1600"
+                height="1195"
+                loading="lazy"
+                decoding="async"
+              />
+            </span>
+            <span class="scard__body">
+              <span class="scard__verb">{service.verb}</span>
+              <span class="scard__title">{service.title}</span>
+              <span class="scard__arrow" aria-hidden="true">
+                <svg viewBox="0 0 20 12"><path d="M13 1l5 5-5 5M18 6H1" /></svg>
+              </span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .services__grid {
+    display: grid;
+    gap: var(--sp-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .services__grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .services__grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .scard {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+    color: inherit;
+    transition:
+      transform var(--dur-med) var(--ease-standard),
+      box-shadow var(--dur-med) var(--ease-standard);
+  }
+  .scard:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    color: inherit;
+  }
+  .scard__media {
+    display: block;
+    position: relative;
+    background: var(--ctg-navy);
+  }
+  .scard__media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease-standard);
+  }
+  .scard:hover .scard__media img {
+    transform: scale(1.03);
+  }
+  .scard__body {
+    display: block;
+    position: relative;
+    padding: var(--sp-6) var(--sp-6) var(--sp-8);
+    border-top: 4px solid var(--ctg-azure);
+  }
+  .scard__verb {
+    display: block;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-12);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ctg-azure);
+    margin-bottom: var(--sp-2);
+  }
+  .scard__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-24);
+    line-height: var(--lh-snug);
+    color: var(--ctg-navy);
+    text-wrap: balance;
+  }
+  .scard__arrow {
+    position: absolute;
+    right: var(--sp-6);
+    bottom: var(--sp-6);
+    color: var(--ctg-azure);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity var(--dur-med) var(--ease-standard),
+      transform var(--dur-med) var(--ease-standard);
+  }
+  .scard__arrow svg {
+    width: 20px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .scard:hover .scard__arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 980px) {
+    .services__grid--3 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 620px) {
+    .services__grid--3,
+    .services__grid--2 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,104 @@
+---
+/**
+ * PageHero — the navy gradient band at the top of every interior page.
+ *
+ *   <PageHero eyebrow="Protect your data and assets" title="Cybersecurity"
+ *             intro="Cybersecurity architecture and processes…"
+ *             image="/images/generated/service-cybersecurity.jpg" />
+ *   <PageHero title="Resources" align="center" />
+ *
+ * eyebrow  small Oswald line above the H1
+ * intro    lede paragraph below the H1
+ * image    optional right-side image (omit for a text-only band)
+ * align    'left' (default) | 'center' — center only applies without an image
+ * tone     'gradient' (default) | 'navy'
+ * A <slot /> renders under the intro (buttons, breadcrumbs, extra copy).
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  image?: string;
+  imageAlt?: string;
+  align?: 'left' | 'center';
+  tone?: 'gradient' | 'navy';
+}
+const {
+  eyebrow,
+  title,
+  intro,
+  image,
+  imageAlt = '',
+  align = 'left',
+  tone = 'gradient',
+} = Astro.props;
+const centered = align === 'center' && !image;
+---
+
+<section class={`pagehero pagehero--${tone} hex-bg ${image ? 'pagehero--split' : ''}`}>
+  <div class={`container pagehero__inner ${centered ? 'pagehero__inner--center' : ''}`}>
+    <div class="pagehero__text">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <h1>{title}</h1>
+      {intro && <p class="lede pagehero__intro">{intro}</p>}
+      <slot />
+    </div>
+    {
+      image && (
+        <div class="pagehero__media">
+          <img src={image} alt={imageAlt} width="1600" height="1195" decoding="async" />
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .pagehero {
+    background: var(--gradient-brand);
+    color: rgba(255, 255, 255, 0.86);
+    padding-block: clamp(56px, 7vw, 96px);
+  }
+  .pagehero--navy {
+    background: var(--ctg-navy);
+  }
+  .pagehero__inner {
+    display: grid;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  .pagehero--split .pagehero__inner {
+    grid-template-columns: 1.15fr 1fr;
+  }
+  .pagehero__inner--center {
+    text-align: center;
+    max-width: 860px;
+  }
+  .pagehero__inner--center .pagehero__intro {
+    margin-inline: auto;
+  }
+  .pagehero h1 {
+    color: var(--ctg-white);
+    margin-bottom: var(--sp-5);
+  }
+  .pagehero .eyebrow {
+    color: #7fb8ff;
+  }
+  .pagehero__intro {
+    color: rgba(255, 255, 255, 0.86);
+    max-width: 62ch;
+    margin-bottom: 0;
+  }
+  .pagehero__media img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  @media (max-width: 900px) {
+    .pagehero--split .pagehero__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

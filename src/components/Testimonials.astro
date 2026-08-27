@@ -1,0 +1,77 @@
+---
+/**
+ * Testimonials — customer quotes side by side. Reads src/data/testimonials.ts.
+ *
+ *   <Testimonials eyebrow="Testimonials" />
+ *   <Testimonials eyebrow="Raving fans" tone="light" />
+ *
+ * eyebrow  small line above the quotes (default 'Testimonials')
+ * tone     'dark' (default, for use on navy/gradient) | 'light'
+ */
+import { testimonials } from '../data/testimonials';
+
+interface Props {
+  eyebrow?: string;
+  tone?: 'dark' | 'light';
+}
+const { eyebrow = 'Testimonials', tone = 'dark' } = Astro.props;
+---
+
+<div class={`quotes quotes--${tone}`}>
+  {eyebrow && <p class="eyebrow quotes__eyebrow">{eyebrow}</p>}
+  <div class="quotes__grid">
+    {
+      testimonials.map((item) => (
+        <figure class="quote-card">
+          <blockquote class="quote">{item.quote}</blockquote>
+          <figcaption>&ndash; {item.attribution}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .quotes__eyebrow {
+    display: block;
+    margin-bottom: var(--sp-8);
+  }
+  .quotes__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(32px, 5vw, 64px);
+  }
+  .quote-card {
+    margin: 0;
+    padding-left: var(--sp-6);
+    border-left: 3px solid var(--ctg-azure);
+  }
+  .quote-card .quote {
+    margin: 0 0 var(--sp-5);
+    font-size: clamp(var(--fs-18), 1.5vw, var(--fs-24));
+    line-height: 1.4;
+  }
+  .quote-card figcaption {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .quotes--dark .quote-card .quote {
+    color: var(--ctg-white);
+  }
+  .quotes--dark .quote-card figcaption {
+    color: #7fb8ff;
+  }
+  .quotes--light .quote-card .quote {
+    color: var(--ctg-navy);
+  }
+  .quotes--light .quote-card figcaption {
+    color: var(--ctg-azure);
+  }
+  @media (max-width: 820px) {
+    .quotes__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+/**
+ * BaseLayout — head, header, main, footer for every page.
+ *
+ *   <BaseLayout title="Cybersecurity | CTG Federal" description="…">
+ *     …page content…
+ *   </BaseLayout>
+ *
+ * title        full <title>. Live page titles already include the brand, so
+ *              they are used as-is; pass `brandSuffix` to append " | CTG Federal".
+ * description  meta description + og:description
+ * image        og:image path (default the generated hero)
+ * noindex      set true for utility pages (404, thank you)
+ * bodyClass    extra class on <body>
+ */
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import site from '../data/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  brandSuffix?: boolean;
+  bodyClass?: string;
+}
+const {
+  title,
+  description = site.description,
+  image = '/images/generated/hero.jpg',
+  noindex = false,
+  brandSuffix = false,
+  bodyClass = '',
+} = Astro.props;
+
+const pageTitle = brandSuffix ? `${title} | ${site.name}` : title;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  legalName: 'CTG Federal, LLC',
+  url: site.url,
+  logo: new URL(site.logo, site.url).href,
+  description: site.description,
+  sameAs: [site.linkedin],
+  telephone: site.phone,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  parentOrganization: {
+    '@type': 'Organization',
+    name: site.parentName,
+    url: site.parentUrl,
+  },
+  identifier: [
+    { '@type': 'PropertyValue', name: 'DUNS', value: site.duns },
+    { '@type': 'PropertyValue', name: 'UEI', value: site.uei },
+    { '@type': 'PropertyValue', name: 'CAGE Code', value: site.cage },
+    { '@type': 'PropertyValue', name: 'NAICS', value: site.naics },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href={site.emblem} />
+    <meta name="theme-color" content="#002550" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preload" href="/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/Oswald-Medium.ttf" as="font" type="font/ttf" crossorigin />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
+    <slot name="head" />
+  </head>
+
+  <body class={bodyClass} id="top">
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

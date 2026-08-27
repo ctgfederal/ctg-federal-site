@@ -1,0 +1,97 @@
+---
+/**
+ * Accordion — <details>/<summary> list. No JavaScript required.
+ *
+ *   <Accordion items={[{ q: 'Question', a: 'Answer text' }]} />
+ *   <Accordion items={faq} single />   // only one panel open at a time
+ *
+ * items   [{ q, a }] — `a` may contain HTML
+ * single  close the other panels when one opens (needs the script below)
+ * open    index of the panel open on load (default none)
+ */
+interface Item {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: Item[];
+  single?: boolean;
+  open?: number;
+}
+const { items, single = false, open } = Astro.props;
+---
+
+<div class="accordion" data-accordion={single ? 'single' : undefined}>
+  {
+    items.map((item, index) => (
+      <details class="accordion__item" open={open === index}>
+        <summary>
+          <span>{item.q}</span>
+          <svg viewBox="0 0 14 14" aria-hidden="true">
+            <path d="M7 1v12M1 7h12" />
+          </svg>
+        </summary>
+        <div class="accordion__panel" set:html={item.a} />
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  .accordion {
+    border-top: 1px solid var(--color-border);
+  }
+  .accordion__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+  .accordion__item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding: var(--sp-5) 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-body);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-18);
+    color: var(--ctg-navy);
+  }
+  .accordion__item summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion__item summary:hover {
+    color: var(--ctg-azure);
+  }
+  .accordion__item summary svg {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--ctg-azure);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    transition: transform var(--dur-med) var(--ease-standard);
+  }
+  .accordion__item[open] summary svg {
+    transform: rotate(45deg);
+  }
+  .accordion__panel {
+    padding: 0 0 var(--sp-6);
+    max-width: 72ch;
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-accordion="single"]').forEach((group) => {
+    const panels = Array.from(group.querySelectorAll<HTMLDetailsElement>('details'));
+    panels.forEach((panel) => {
+      panel.addEventListener('toggle', () => {
+        if (!panel.open) return;
+        panels.forEach((other) => {
+          if (other !== panel) other.open = false;
+        });
+      });
+    });
+  });
+</script>

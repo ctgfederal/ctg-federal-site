@@ -1,0 +1,36 @@
+---
+/**
+ * Thank you — the Netlify Forms success page. Every form on the site posts here.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import site from '../data/site';
+---
+
+<BaseLayout
+  title="Thank You | CTG Federal"
+  description="Your message has reached CTG Federal. A member of our team will be in touch shortly."
+  noindex
+>
+  <PageHero
+    eyebrow="Message received"
+    title="Thank you for reaching out."
+    intro="Your message is with our team. Someone will get back to you shortly."
+    align="center"
+  />
+
+  <Section narrow>
+    <div class="prose">
+      <p>
+        If your request is time-sensitive, call us at
+        <a href={site.phoneHref}>{site.phone}</a> or email
+        <a href={site.emailHref}>{site.email}</a>.
+      </p>
+      <p class="btn-row" style="margin-top: var(--sp-8);">
+        <a class="btn btn--primary" href="/">Back to home</a>
+        <a class="btn btn--outline" href="/solutions/">Explore our solutions</a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

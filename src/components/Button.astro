@@ -1,0 +1,46 @@
+---
+/**
+ * Button — the one button in the system. Renders <a> when `href` is given,
+ * otherwise <button>.
+ *
+ *   <Button href="/contacts/">Contact us</Button>
+ *   <Button href="/x.pdf" variant="outline-light" size="sm" external>Learn More</Button>
+ *   <Button type="submit" variant="primary">Send</Button>
+ *
+ * variant: 'primary' | 'navy' | 'outline' | 'outline-light'   (default 'primary')
+ * size:    'md' | 'sm'                                        (default 'md')
+ */
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'navy' | 'outline' | 'outline-light';
+  size?: 'md' | 'sm';
+  external?: boolean;
+  type?: 'button' | 'submit';
+  class?: string;
+}
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  external = false,
+  type = 'button',
+  class: className = '',
+} = Astro.props;
+
+const classes = ['btn', `btn--${variant}`, size === 'sm' ? 'btn--sm' : '', className]
+  .filter(Boolean)
+  .join(' ');
+const target = external ? { target: '_blank', rel: 'noopener' } : {};
+---
+
+{
+  href ? (
+    <a href={href} class={classes} {...target}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes}>
+      <slot />
+    </button>
+  )
+}

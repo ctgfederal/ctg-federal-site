@@ -1,0 +1,255 @@
+---
+/**
+ * Footer — navy site footer. No props; reads src/data/nav.ts and site.ts.
+ *
+ *   <Footer />
+ *
+ * Row 1: white logo + parent-company line + accolade badges
+ * Row 2: registration IDs, three link columns, contact block
+ * Row 3: Fortune license line + copyright / Terms / Privacy
+ */
+import site from '../data/site';
+import { footerColumns } from '../data/nav';
+
+const accolades = [
+  {
+    src: '/images/site/CTG_Federal__National_US_English_2026_Certification_Badge-scaled.png',
+    alt: 'Great Place to Work Certified badge',
+    href: 'https://www.greatplacetowork.com/certified-company/7020449',
+  },
+  {
+    src: '/images/site/Fortune-Accolade-GPTW-Small-Workplaces-rgb-scaled.png',
+    alt: 'Fortune Best Small Workplaces 2025 badge',
+    href: 'https://www.greatplacetowork.com/best-workplaces/small/2025',
+  },
+  { src: '/images/site/CTGFederal-ISO-9001-V1.jpg', alt: 'CTG Federal ISO 9001 certification badge' },
+  {
+    src: '/images/site/CRN26-TechElite250-Vertical.png',
+    alt: 'CRN Tech Elite 250 2026 badge',
+    href: 'https://www.crn.com/rankings-and-lists/te2026-details?c=64',
+  },
+  {
+    src: '/images/site/CRN26-SP500-Logo-2.png',
+    alt: 'CRN Solution Provider 500 2026 badge',
+    href: 'https://www.crn.com/sp-500/sp2026-details?c=92',
+  },
+];
+
+const ids = [
+  ['DUNS', site.duns],
+  ['UEI', site.uei],
+  ['Cage Code', site.cage],
+  ['NAICS Primary Code', site.naics],
+];
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" aria-label="Back to top">
+          <img src={site.logoFooter} alt="CTG Federal" width="328" height="72" />
+        </a>
+        <p class="footer-brand__legal">
+          a <a href={site.parentUrl} target="_blank" rel="noopener">{site.parentName}</a> company&reg;
+        </p>
+      </div>
+
+      <ul class="accolades">
+        {
+          accolades.map((badge) => (
+            <li>
+              {badge.href ? (
+                <a href={badge.href} target="_blank" rel="noopener">
+                  <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" />
+                </a>
+              ) : (
+                <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" />
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class="fortune">{site.fortuneLicense}</p>
+
+    <div class="footer-main">
+      <dl class="ids">
+        {
+          ids.map(([label, value]) => (
+            <div class="ids__row">
+              <dt>{label}:</dt>
+              <dd>{value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      {
+        footerColumns.map((column) => (
+          <nav class="footer-col" aria-label="Footer">
+            <ul>
+              {column.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    target={link.external ? '_blank' : undefined}
+                    rel={link.external ? 'noopener' : undefined}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))
+      }
+
+      <address class="footer-contact">
+        <a href={site.address.mapUrl} target="_blank" rel="noopener">{site.address.full}</a>
+        <a href={site.phoneHref}>{site.phone}</a>
+        <a href={site.emailHref}>{site.email}</a>
+        <a class="footer-linkedin" href={site.linkedin} target="_blank" rel="noopener">
+          <img src="/images/icons/LinkedIn-Azure.svg" alt="" width="18" height="18" aria-hidden="true" />
+          <span>{site.linkedinLabel}</span>
+        </a>
+      </address>
+    </div>
+
+    <div class="footer-legal">
+      <p>
+        CTG Federal &copy; {site.copyrightYear} &nbsp;|&nbsp;
+        <a href="/terms-and-conditions/">Terms &amp; Conditions</a> &nbsp;|&nbsp;
+        <a href="/privacy-policy/">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ctg-navy);
+    color: rgba(255, 255, 255, 0.72);
+    padding-block: var(--sp-16) var(--sp-10);
+    font-size: var(--fs-14);
+  }
+  .site-footer a {
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .site-footer a:hover {
+    color: var(--ctg-white);
+    text-decoration: none;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-10);
+    padding-bottom: var(--sp-8);
+    border-bottom: 1px solid var(--color-border-inverse);
+  }
+  .footer-brand img {
+    width: auto;
+    height: 54px;
+  }
+  .footer-brand__legal {
+    margin: var(--sp-3) 0 0;
+    font-size: var(--fs-12);
+    letter-spacing: 0.04em;
+  }
+
+  .accolades {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .accolades img {
+    width: auto;
+    height: 74px;
+    object-fit: contain;
+  }
+
+  .fortune {
+    margin: var(--sp-5) 0 0;
+    font-size: var(--fs-12);
+    color: rgba(255, 255, 255, 0.5);
+    max-width: 60ch;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr 1fr 1.2fr;
+    gap: var(--sp-8);
+    margin-top: var(--sp-12);
+  }
+
+  .ids {
+    margin: 0;
+  }
+  .ids__row {
+    display: flex;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-2);
+  }
+  .ids dt {
+    color: rgba(255, 255, 255, 0.55);
+    white-space: nowrap;
+  }
+  .ids dd {
+    margin: 0;
+    color: var(--ctg-white);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .footer-col li {
+    margin-bottom: var(--sp-3);
+    line-height: 1.35;
+  }
+
+  .footer-contact {
+    display: grid;
+    gap: var(--sp-3);
+    font-style: normal;
+    justify-items: start;
+  }
+  .footer-linkedin {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .footer-legal {
+    margin-top: var(--sp-12);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--color-border-inverse);
+    font-size: var(--fs-12);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media (max-width: 1024px) {
+    .footer-main {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+  @media (max-width: 640px) {
+    .footer-main {
+      grid-template-columns: 1fr;
+      gap: var(--sp-10);
+    }
+    .accolades img {
+      height: 58px;
+    }
+  }
+</style>

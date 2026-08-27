@@ -1,0 +1,21 @@
+---
+/**
+ * IconTile — small square (or hexagon) holder for a solution icon.
+ *
+ *   <IconTile src="/images/icons/Hybrid_Cloud-Black.svg" />
+ *   <IconTile src="/images/site/1.network.png" hex />
+ *
+ * hex: clip the tile to the brand hexagon and invert the icon to white.
+ */
+interface Props {
+  src: string;
+  alt?: string;
+  hex?: boolean;
+  class?: string;
+}
+const { src, alt = '', hex = false, class: className = '' } = Astro.props;
+---
+
+<span class={`icon-tile ${hex ? 'icon-tile--hex' : ''} ${className}`.trim()}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" width="30" height="30" />
+</span>

@@ -1,0 +1,159 @@
+---
+/**
+ * ContactForm — Netlify Forms. Posts to /thank-you/.
+ *
+ *   <ContactForm name="contact" departmentSelect />
+ *   <ContactForm name="become-a-customer" heading="Become a Customer"
+ *                fields={['name','email','phone','agency','message']}
+ *                submitLabel="Send" />
+ *
+ * name              Netlify form name (must be unique across the site)
+ * heading           optional H2 above the form
+ * intro             optional paragraph under the heading
+ * departmentSelect  add the "Where should we direct your inquiry?" select
+ * fields            which fields to render and in what order.
+ *                   Available: 'name' | 'email' | 'phone' | 'organization' |
+ *                              'agency' | 'title' | 'message'
+ *                   Default: ['name','email','phone','message']
+ * required          fields that must be filled (default name/email/phone)
+ * submitLabel       button text (default 'Submit')
+ * messageLabel      label for the textarea (default 'Message')
+ */
+type Field = 'name' | 'email' | 'phone' | 'organization' | 'agency' | 'title' | 'message';
+
+interface Props {
+  name: string;
+  heading?: string;
+  intro?: string;
+  departmentSelect?: boolean;
+  fields?: Field[];
+  required?: Field[];
+  submitLabel?: string;
+  messageLabel?: string;
+}
+const {
+  name,
+  heading,
+  intro,
+  departmentSelect = false,
+  fields = ['name', 'email', 'phone', 'message'],
+  required = ['name', 'email', 'phone'],
+  submitLabel = 'Submit',
+  messageLabel = 'Message',
+} = Astro.props;
+
+const departments = [
+  'U.S. Federal Sales',
+  'Engineering',
+  'Marketing',
+  'Contracts & Human Resources',
+  'Partnerships & Alliances',
+  'Operations',
+  'Customer Nurture',
+  'For all other inquiries',
+];
+
+const config: Record<Field, { label: string; type: string; autocomplete?: string }> = {
+  name: { label: 'Name', type: 'text', autocomplete: 'name' },
+  email: { label: 'Email', type: 'email', autocomplete: 'email' },
+  phone: { label: 'Telephone', type: 'tel', autocomplete: 'tel' },
+  organization: { label: 'Organization', type: 'text', autocomplete: 'organization' },
+  agency: { label: 'Agency', type: 'text', autocomplete: 'organization' },
+  title: { label: 'Title', type: 'text', autocomplete: 'organization-title' },
+  message: { label: messageLabel, type: 'textarea' },
+};
+
+const textFields = fields.filter((field) => field !== 'message');
+const hasMessage = fields.includes('message');
+const isRequired = (field: Field) => required.includes(field);
+const id = (field: string) => `${name}-${field}`;
+---
+
+<div class="contactform">
+  {
+    (heading || intro) && (
+      <div class="section-heading">
+        {heading && <h2>{heading}</h2>}
+        <span class="accent-bar" />
+        {intro && <p class="lede">{intro}</p>}
+      </div>
+    )
+  }
+
+  <form
+    class="form"
+    name={name}
+    method="POST"
+    action="/thank-you/"
+    data-netlify="true"
+    netlify-honeypot="bot-field"
+  >
+    <input type="hidden" name="form-name" value={name} />
+    <p class="visually-hidden">
+      <label>Do not fill this out: <input name="bot-field" /></label>
+    </p>
+
+    <div class="form-row">
+      {
+        textFields.map((field) => (
+          <div class="field">
+            <label for={id(field)}>
+              {config[field].label}
+              {isRequired(field) && <span aria-hidden="true"> *</span>}
+            </label>
+            <input
+              id={id(field)}
+              name={field}
+              type={config[field].type}
+              autocomplete={config[field].autocomplete}
+              required={isRequired(field)}
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    {
+      departmentSelect && (
+        <div class="field">
+          <label for={id('department')}>
+            Where should we direct your inquiry?<span aria-hidden="true"> *</span>
+          </label>
+          <select id={id('department')} name="department" required>
+            <option value="">&mdash;Please choose an option&mdash;</option>
+            {departments.map((option) => (
+              <option value={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+      )
+    }
+
+    {
+      hasMessage && (
+        <div class="field">
+          <label for={id('message')}>
+            {messageLabel}
+            {isRequired('message') && <span aria-hidden="true"> *</span>}
+          </label>
+          <textarea id={id('message')} name="message" required={isRequired('message')} />
+        </div>
+      )
+    }
+
+    <p class="field-hint">* Required fields</p>
+
+    <div>
+      <button type="submit" class="btn btn--primary">{submitLabel}</button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .contactform .form-row {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .contactform .field-hint {
+    margin: 0;
+  }
+</style>

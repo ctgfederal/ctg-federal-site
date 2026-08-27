@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CTG Federal">
+  <rect width="64" height="64" rx="10" fill="#002550"/>
+  <path d="M32 12l15.6 9v18L32 48l-15.6-9V21z" fill="none" stroke="#0073FE" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M32 22.5l9.5 5.5v11L32 44.5 22.5 39V28z" fill="#0073FE" opacity="0.9"/>
+</svg>

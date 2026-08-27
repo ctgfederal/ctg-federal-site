@@ -1,0 +1,176 @@
+---
+/**
+ * Home — replicates every section of the live home page, in order:
+ * hero → About → stats bar → solutions grid → partners → customers →
+ * testimonials → procurement options band.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import StatsBar from '../components/StatsBar.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import LogoGrid from '../components/LogoGrid.astro';
+import CustomerLogos from '../components/CustomerLogos.astro';
+import Testimonials from '../components/Testimonials.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { strategic } from '../data/partners';
+
+const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_7.20.26-2.pdf';
+---
+
+<BaseLayout
+  title="IT Solutions for Government Agencies Nationwide | CTG Federal"
+  description="Empowering organizations with best-in-class IT. We deliver scalable solutions, reduce risk, and provide nationwide support."
+>
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero__bg" src="/images/generated/hero.jpg" alt="" width="2400" height="1018" fetchpriority="high" decoding="async" />
+    <div class="hero__scrim"></div>
+    <div class="container hero__inner">
+      <h1 class="hero__title">
+        <span>Equipping agencies</span>
+        <span>nationwide to operate with</span>
+        <span>velocity and scale</span>
+      </h1>
+      <p class="hero__actions">
+        <a class="btn btn--primary" href={capabilitiesPdf} target="_blank" rel="noopener">Learn More</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- About -->
+  <Section tone="white">
+    <div class="split split--wide-text about">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>A trusted advisor specializing in smart, secure, and scalable solutions</h2>
+        <span class="accent-bar"></span>
+      </div>
+      <div class="about__body">
+        <p>
+          CTG Federal, a Cohesive Technology Group company&trade;, is a small business that excels in
+          servicing federal defense, intelligence, and civilian organizations with best-in-class
+          information technology. Our experienced team of sales and engineering professionals design
+          and deliver IT hardware and software solutions that save time and money for our customers.
+          Headquartered in Virginia, we have dedicated resources in all regions across the
+          continental United States.
+        </p>
+        <p class="about__more"><a href="/about/">Read more</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Stats -->
+  <StatsBar />
+
+  <!-- Solutions -->
+  <Section tone="subtle" id="solutions">
+    <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+    <p class="section-link">
+      <a href="/solutions/">Our Solutions</a>
+    </p>
+  </Section>
+
+  <!-- Partners -->
+  <Section tone="white" id="partners">
+    <LogoGrid
+      logos={strategic}
+      cols={6}
+      heading="Our Partners"
+      link={{ label: 'See the complete list', href: '/partners/' }}
+    />
+  </Section>
+
+  <!-- Customers -->
+  <Section tone="subtle" id="customers">
+    <CustomerLogos heading="Our Customers" link={{ label: 'Learn more here', href: '/customers/' }} />
+  </Section>
+
+  <!-- Testimonials -->
+  <Section tone="navy" hex>
+    <Testimonials eyebrow="Testimonials" />
+  </Section>
+
+  <!-- Procurement options -->
+  <CtaBand
+    eyebrow="Procurement Options"
+    title="Flexible payment structures designed for our customers’ budget and project needs."
+    text="We offer a variety of flexible payment solutions and terms to meet your unique business needs and objectives."
+    primary={{ label: 'Contact us', href: '/contacts/' }}
+    secondary={{ label: 'Learn more about our procurement options', href: '/procurement-options/' }}
+    tone="gradient"
+  />
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    display: grid;
+    align-items: center;
+    min-height: clamp(460px, 68vh, 680px);
+    overflow: hidden;
+    background: var(--ctg-navy-900);
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 55%;
+  }
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(0, 26, 58, 0.9) 0%, rgba(0, 37, 80, 0.72) 45%, rgba(0, 37, 80, 0.15) 100%),
+      linear-gradient(0deg, rgba(0, 26, 58, 0.45) 0%, rgba(0, 26, 58, 0) 55%);
+  }
+  .hero__inner {
+    position: relative;
+    padding-block: var(--sp-20);
+  }
+  .hero__title {
+    max-width: 26ch;
+    color: var(--ctg-white);
+    font-size: clamp(var(--fs-36), 5vw, var(--fs-60));
+    line-height: 1.12;
+    margin-bottom: var(--sp-8);
+    text-shadow: 0 2px 24px rgba(0, 26, 58, 0.35);
+  }
+  /* One logical line per span; each wraps on its own when space is tight. */
+  .hero__title span {
+    display: block;
+  }
+  .hero__actions {
+    margin: 0;
+  }
+
+  /* ---- About ---- */
+  .about__body {
+    max-width: 62ch;
+  }
+  .about__more {
+    margin-top: var(--sp-5);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* ---- Shared ---- */
+  .section-link {
+    margin: var(--sp-10) 0 0;
+    text-align: center;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 820px) {
+    .hero__title {
+      max-width: 20ch;
+    }
+  }
+</style>
