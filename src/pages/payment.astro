@@ -151,7 +151,7 @@ const states = [
 
 <style>
   .payment-form {
-    max-width: 640px;
+    max-width: 760px;
   }
   .payment-form__group {
     display: grid;
@@ -168,6 +168,15 @@ const states = [
     color: var(--color-fg);
   }
   .payment-form .form-row {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+  /* City / State / Zip: give the State select room for its full option label. */
+  .payment-form .form-row:has(> :nth-child(3)) {
+    grid-template-columns: 1fr 1.45fr 0.85fr;
+  }
+  @media (max-width: 560px) {
+    .payment-form .form-row:has(> :nth-child(3)) {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

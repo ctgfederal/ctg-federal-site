@@ -6,7 +6,6 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/Section.astro';
-import IconTile from '../components/IconTile.astro';
 import StatsBar from '../components/StatsBar.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
 import LogoGrid from '../components/LogoGrid.astro';
@@ -17,12 +16,12 @@ import { strategic } from '../data/partners';
 const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26.pdf';
 
 const techIcons = [
-  '/images/site/tech-comms.png',
-  '/images/site/tech-network.png',
-  '/images/site/tech-cloud.png',
-  '/images/site/tech-cyber.png',
-  '/images/site/tec-ai.png',
-  '/images/site/tech-infrastructure.png',
+  { src: '/images/site/tech-infrastructure.png', alt: 'Infrastructure' },
+  { src: '/images/site/tec-ai.png', alt: 'HPC and AI/ML + GenAI' },
+  { src: '/images/site/tech-cloud.png', alt: 'Hybrid Cloud' },
+  { src: '/images/site/tech-cyber.png', alt: 'Cybersecurity' },
+  { src: '/images/site/tech-network.png', alt: 'Networking' },
+  { src: '/images/site/tech-comms.png', alt: 'Communications' },
 ];
 ---
 
@@ -40,9 +39,9 @@ const techIcons = [
       </h1>
       <ul class="solhero__icons">
         {
-          techIcons.map((src) => (
+          techIcons.map((tile) => (
             <li>
-              <IconTile src={src} hex />
+              <img src={tile.src} alt={tile.alt} width="209" height="201" decoding="async" />
             </li>
           ))
         }
@@ -119,13 +118,19 @@ const techIcons = [
     display: block;
   }
   .solhero__icons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--sp-4);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-3);
     list-style: none;
     margin: 0;
     padding: 0;
-    justify-content: flex-end;
+    max-width: 400px;
+    margin-left: auto;
+  }
+  .solhero__icons img {
+    display: block;
+    width: 100%;
+    height: auto;
   }
   .solhero__intro {
     padding-left: var(--sp-6);
@@ -137,7 +142,8 @@ const techIcons = [
       grid-template-columns: 1fr;
     }
     .solhero__icons {
-      justify-content: flex-start;
+      margin-left: 0;
+      max-width: 340px;
     }
   }
 </style>

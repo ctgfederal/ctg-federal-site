@@ -231,7 +231,7 @@ a.card:hover, .card--link:hover { transform: translateY(-2px); box-shadow: var(-
 
 /* ---------- Forms ---------- */
 .form { display: grid; gap: var(--sp-4); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); align-items: end; }
 @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
 .field { display: grid; gap: var(--sp-1); }
 .field label { font-size: var(--fs-14); font-weight: var(--fw-medium); color: var(--color-fg); }

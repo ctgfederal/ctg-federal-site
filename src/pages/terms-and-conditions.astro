@@ -701,14 +701,20 @@ const nonDodFar: ClauseRow[] = [
     margin: var(--sp-6) 0 0;
   }
   .pagehero__jump a {
+    padding: 7px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-md);
     color: #9cc7ff;
     font-family: var(--font-condensed);
     font-size: var(--fs-14);
     letter-spacing: 0.14em;
     text-transform: uppercase;
+    transition: border-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
   }
   .pagehero__jump a:hover {
+    border-color: var(--ctg-white);
     color: var(--ctg-white);
+    text-decoration: none;
   }
 
   .clause-table {

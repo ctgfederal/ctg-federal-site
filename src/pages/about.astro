@@ -230,28 +230,30 @@ const sustainabilityItems = [
   <Section tone="white">
     <div class="split">
       <div class="culture-media">
-        <img
-          src="/images/generated/about-team.jpg"
-          alt="CTG Federal team members collaborating in the office"
-          width="1200"
-          height="900"
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="culture-media__badge"
-          src="/images/site/work-badges-2026.png"
-          alt="Great Place to Work Certified Badge, May 2024 to May 2025, USA"
-          width="120"
-          height="120"
-          loading="lazy"
-        />
+        <div class="culture-media__frame">
+          <img
+            src="/images/generated/about-team.jpg"
+            alt="CTG Federal team members collaborating in the office"
+            width="1200"
+            height="900"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="culture-media__badge"
+            src="/images/site/work-badges-2026.png"
+            alt="Great Place to Work Certified and Fortune Best Small Workplaces badges"
+            width="120"
+            height="120"
+            loading="lazy"
+          />
+        </div>
         <p class="quote culture-media__quote">
           “The amount of camaraderie and collaboration far exceeds anything I’ve experienced
           before.”
         </p>
       </div>
-      <div>
+      <div class="culture-copy">
         <h2>
           A Certified Great Place to Work® for 8 years running and rated #4 on Fortune Best
           Small Workplaces™ 2025 list. We have employees who stick around — and a team our
@@ -452,6 +454,14 @@ const sustainabilityItems = [
   .subnav__inner {
     overflow-x: auto;
     scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (max-width: 900px) {
+    /* Fade the right edge so the bar reads as scrollable, not cut off. */
+    .subnav__inner {
+      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
+      mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
+    }
   }
   .subnav__inner::-webkit-scrollbar {
     display: none;
@@ -533,10 +543,11 @@ const sustainabilityItems = [
   }
 
   /* ---- Culture spotlight media ---- */
-  .culture-media {
+  .culture-media__frame {
     position: relative;
   }
-  .culture-media img:first-child {
+  .culture-media__frame > img:first-child {
+    display: block;
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
@@ -558,6 +569,11 @@ const sustainabilityItems = [
     margin-top: var(--sp-5);
     color: var(--ctg-navy);
   }
+  /* Long statement headline: keep it a readable lead, not a 10-line display line. */
+  .culture-copy h2 {
+    font-size: clamp(var(--fs-20), 1.8vw, var(--fs-24));
+    line-height: var(--lh-snug);
+  }
 
   /* ---- Leadership ---- */
   .leaders-grid {
@@ -566,6 +582,8 @@ const sustainabilityItems = [
     gap: var(--sp-6);
   }
   .leader-card {
+    display: flex;
+    flex-direction: column;
     background: var(--ctg-white);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
@@ -573,7 +591,10 @@ const sustainabilityItems = [
     overflow: hidden;
   }
   .leader-card summary {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
     cursor: pointer;
     list-style: none;
     padding: var(--sp-6);
@@ -615,7 +636,7 @@ const sustainabilityItems = [
     place-items: center;
     width: 32px;
     height: 32px;
-    margin-top: var(--sp-4);
+    margin-top: auto;
     border: 1.5px solid var(--ctg-azure);
     border-radius: var(--radius-pill);
   }

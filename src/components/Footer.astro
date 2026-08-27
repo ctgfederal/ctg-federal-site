@@ -13,23 +13,23 @@ import { footerColumns } from '../data/nav';
 
 const accolades = [
   {
-    src: '/images/site/CTG_Federal__National_US_English_2026_Certification_Badge-scaled.png',
+    src: '/images/site/badge-gptw-certified-2026.png',
     alt: 'Great Place to Work Certified badge',
     href: 'https://www.greatplacetowork.com/certified-company/7020449',
   },
   {
-    src: '/images/site/Fortune-Accolade-GPTW-Small-Workplaces-rgb-scaled.png',
+    src: '/images/site/badge-fortune-best-small-workplaces-2025.png',
     alt: 'Fortune Best Small Workplaces 2025 badge',
     href: 'https://www.greatplacetowork.com/best-workplaces/small/2025',
   },
   { src: '/images/site/CTGFederal-ISO-9001-V1.jpg', alt: 'CTG Federal ISO 9001 certification badge' },
   {
-    src: '/images/site/CRN26-TechElite250-Vertical.png',
+    src: '/images/site/badge-crn-tech-elite-250-2026.png',
     alt: 'CRN Tech Elite 250 2026 badge',
     href: 'https://www.crn.com/rankings-and-lists/te2026-details?c=64',
   },
   {
-    src: '/images/site/CRN26-SP500-Logo-2.png',
+    src: '/images/site/badge-crn-solution-provider-500-2026.png',
     alt: 'CRN Solution Provider 500 2026 badge',
     href: 'https://www.crn.com/sp-500/sp2026-details?c=92',
   },
@@ -152,7 +152,9 @@ const ids = [
 
   .footer-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr 1.15fr 1.25fr;
+    /* Floors: identity fits the 5-badge row (282px); link columns fit
+       "Sustainability" (103px) and "Online Order Status Tool" (180px). */
+    grid-template-columns: minmax(292px, 1.5fr) minmax(112px, 1fr) minmax(188px, 1.15fr) 1.25fr;
     gap: clamp(32px, 4vw, 64px);
     align-items: start;
   }
@@ -175,11 +177,11 @@ const ids = [
     list-style: none;
     margin: 0;
     padding: 0;
-    max-width: 320px;
   }
   .accolades img {
+    display: block;
     width: auto;
-    height: 78px;
+    height: 72px;
     object-fit: contain;
   }
   .fortune {
@@ -261,10 +263,20 @@ const ids = [
 
   @media (max-width: 1100px) {
     .footer-grid {
-      grid-template-columns: 1.4fr 1fr 1fr;
+      grid-template-columns: minmax(292px, 1.4fr) 1fr 1fr;
     }
     .footer-contact {
       grid-column: 2 / -1;
+    }
+  }
+  @media (max-width: 1000px) {
+    /* Smaller badges need less room, so relax the identity floor and give
+       the link columns their width back. */
+    .footer-grid {
+      grid-template-columns: minmax(260px, 1.4fr) 1fr 1fr;
+    }
+    .accolades img {
+      height: 64px;
     }
   }
   @media (max-width: 760px) {
@@ -279,7 +291,7 @@ const ids = [
       grid-column: 1 / -1;
     }
     .accolades img {
-      height: 62px;
+      height: 56px;
     }
   }
   @media (max-width: 460px) {

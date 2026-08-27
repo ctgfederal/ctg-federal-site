@@ -145,6 +145,16 @@ const capabilitiesPdf = '/downloads/CTG-Federal-Contracts-Capabilities_External_
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+  @media (max-width: 520px) {
+    .identifiers {
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+    .identifiers__item dd {
+      font-size: var(--fs-20);
+      overflow-wrap: anywhere;
+    }
+  }
 
   .contracts__cta {
     margin-top: var(--sp-10);
