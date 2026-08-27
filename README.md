@@ -1,43 +1,39 @@
-# Astro Starter Kit: Minimal
+# CTG Federal — Website
 
-```sh
-npm create astro@latest -- --template minimal
+Static site for [www.ctgfederal.com](https://www.ctgfederal.com), built with [Astro](https://astro.build) and deployed on Netlify from this GitHub repository.
+
+## Local development
+
+```bash
+npm install
+npm run dev        # http://localhost:4321
+npm run build      # outputs to dist/
+npm run preview    # serve the built site
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Structure
 
-## 🚀 Project Structure
+| Path | Purpose |
+|---|---|
+| `src/pages/` | One `.astro` file per URL (`about.astro` → `/about/`) |
+| `src/layouts/BaseLayout.astro` | Head, header, footer, SEO |
+| `src/components/` | Shared sections (hero, stats bar, logo grids, forms, etc.) |
+| `src/data/` | Site content that repeats across pages: nav, stats, services, partners, customers, testimonials, quick facts |
+| `src/styles/global.css` | Brand tokens and base styles (from the CTG Federal Design System) |
+| `public/images/` | Logos, icons, badges, photos |
+| `public/downloads/` | PDFs (capabilities statement, line card, contracts, etc.) |
 
-Inside of your Astro project, you'll see the following folders and files:
+## Editing content
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+- Text on a single page: edit that page in `src/pages/`.
+- Stats, partner logos, customer logos, testimonials, quick facts, nav: edit the matching file in `src/data/`.
+- New PDF: drop it in `public/downloads/` and update the link.
+- New accolade badge: add the image to `public/images/site/` and update `src/components/Footer.astro`.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Forms
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Contact, Become a Customer, Tech Support, When to Engage, and Order Status forms use [Netlify Forms](https://docs.netlify.com/forms/setup/). Submissions appear under **Forms** in the Netlify dashboard; set up email notifications there.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deploy
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Netlify builds on every push to `main` (`netlify.toml` holds the build settings). Pull requests get a preview URL.
