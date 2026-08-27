@@ -1,0 +1,744 @@
+---
+/**
+ * Terms & Conditions — verbatim legal text from the live page: two full
+ * sets of Subcontract/Purchase Order terms (DoD and Non-DoD), each with its
+ * own Appendix A government-clauses table(s), plus the archived T&Cs link.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PageHero from '../components/PageHero.astro';
+
+interface ClauseRow {
+  ref: string;
+  title: string;
+  applicability: string;
+}
+
+const dodFar: ClauseRow[] = [
+  { ref: '52.203-13', title: 'Contractor Code of Business Ethics and Conduct (NOV 2021)', applicability: 'Acquisitions ≥ $6,000,000 with performance ≥ 120 days' },
+  { ref: '52.203-15', title: 'Whistleblower Protections Under the American Recovery and Reinvestment Act of 2009 (JUN 2010)', applicability: 'All Acquisitions funded under the Recovery Act.' },
+  { ref: '52.023-17', title: 'Contractor Employee Whistleblower Rights (NOV 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.203-19', title: 'Prohibition on Requiring Certain Internal Confidentiality Agreements or Statements (Jan 2017)', applicability: 'All Acquisitions' },
+  { ref: '52.204-21', title: 'Basic Safeguarding of Covered Contractor Information Systems (NOV 2021)', applicability: 'All Acquisition if Seller may have Federal contract information residing in or transitioning through its information system. Not applicable to COTS' },
+  { ref: '52.204-23', title: 'Prohibition on Contracting for Hardware, Software, and Services Developed or Provided by Kaspersky Lab and Other Covered Entities (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.204-25', title: 'Prohibition on Contracting for Certain Telecommunications and Video Surveillance Services or Equipment (NOV 2021)', applicability: 'All Acquisitions' },
+  { ref: '52.204-27', title: 'Prohibition on a ByteDance Covered Application (JUN 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.204-30', title: 'Federal Acquisition Supply Chain Security Act Orders – Prohibition (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.219-8', title: 'Utilization of Small Business Concerns (SEP 2023)', applicability: 'All Acquisitions that offer lower-tier subcontracting opportunities' },
+  { ref: '52.222-21', title: 'Prohibition of Segregated Facilities (Apr 2015)', applicability: 'All Acquisitions' },
+  { ref: '52.222-26', title: 'Equal Opportunity (Sep 2016) (E.O. 11246)', applicability: 'All Acquisitions' },
+  { ref: '52.222-35', title: 'Equal Opportunity for Veterans (Jun 2020)', applicability: 'Acquisitions ≥ $150,000' },
+  { ref: '52.222-36', title: 'Equal Opportunity for Workers with Disabilities (June 2020)', applicability: 'Acquisitions ≥ $15,000' },
+  { ref: '52.222-37', title: 'Employment Reports on Veterans (Jun 2020)', applicability: 'Acquisitions ≥ $150,000' },
+  { ref: '52.222-40', title: 'Notification of Employee Rights Under the National Labor Relations Act (Dec 2010)', applicability: 'Acquisitions ≥ $10,000. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.222-41', title: 'Service Contract Labor Standards (Aug 2018)', applicability: 'All Acquisitions' },
+  { ref: '52.222-50', title: 'Combating Trafficking in Persons (NOV 2021)', applicability: 'Acquisitions ≥ $550,000. Applicable to the portions of the Order that are for supplies acquired or services performed outside the United States. Not applicable to COTS' },
+  { ref: '52.222-51', title: 'Exemption from Application of the Service Contract Labor Standards to Contracts for Maintenance, Calibration, or Repair of Certain Equipment–Requirements (May 2014)', applicability: 'All Acquisitions' },
+  { ref: '52.222-53', title: 'Exemption from Application of the Service Contract Labor Standards to Contracts for Certain Services-Requirements (May 2014)', applicability: 'All Acquisitions' },
+  { ref: '552.222-54', title: 'Employment Eligibility Verification (MAY 2022)', applicability: 'Acquisitions ≥ $3,500. Not applicable to COTS' },
+  { ref: '52.222-55', title: 'Minimum Wages Under Executive Order 13658 (JAN 2022)', applicability: 'All Acquisitions. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.222-62', title: 'Paid Sick Leave Under Executive Order 13706 (JAN 2022) (E.O. 13706)', applicability: 'All Acquisitions. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.224-3', title: 'Privacy Training (Jan 2017)', applicability: "All Acquisitions if Seller's employees will (1) have access to a system of records; (2) handle personally identifiable information; or (3) design, develop, maintain, or operate a system of records" },
+  { ref: '52.225-26', title: 'Contractors Performing Private Security Functions Outside the United States (Oct 2016)', applicability: 'All Acquisitions if performance is outside the United States in areas of combat operations or other significant military operations.' },
+  { ref: '52.226-6', title: 'Promoting Excess Food Donation to Nonprofit Organizations (JUN 2020)', applicability: 'All Acquisitions if for the provision, service, or sale of food in the United States.' },
+  { ref: '52.232-40', title: 'Providing Accelerated Payments to Small Business Subcontractors (MAR 2023)', applicability: 'All Acquisitions. Not applicable if Seller is Large Business' },
+  { ref: '52.244-6', title: 'Subcontracts for Commercial Items (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.247-64', title: 'Preference for Privately Owned U.S.-Flag Commercial Vessels (NOV 2021)', applicability: 'All Acquisitions. Not applicable to COTS. Not applicable to Acquisitions under DoD prime contracts.' },
+];
+
+const dodDfars: ClauseRow[] = [
+  { ref: '252.203-7002', title: 'Requirements to Inform Employees of Whistleblower Rights (Sep 2013)', applicability: 'All Acquisitions' },
+  { ref: '252.204-7004', title: 'Antiterrorism Awareness Training for Contractors (Feb 2019)', applicability: 'All Acquisitions if performance requires routine physical access to a Federally-controlled facility or military installation' },
+  { ref: '252.204-7009', title: 'Limitations on the Use or Disclosure of Third-Party Contractor Reported Cyber Incident Information (Oct 2016)', applicability: "All Acquisitions for services that include support for the Government's activities related to safeguarding covered defense information and cyber incident reporting." },
+  { ref: '252.204-7012', title: 'Safeguarding Covered Defense Information and Cyber Incident Reporting. (Dec 2019)', applicability: 'All Acquisitions for operationally critical support, or for which subcontract performance will involve covered defense information.' },
+  { ref: '252.204-7014', title: 'Limitations on the Use or Disclosure of Information for Litigation Support (JAN 2023)', applicability: 'All Acquisitions' },
+  { ref: '252.204-7015', title: 'Notice of Authorized Disclosure of Information for Litigation Support (JAN 2023)', applicability: 'All Acquisitions' },
+  { ref: '252-211-7003', title: 'Item Unique Identification and Valuation (JAN 2023)', applicability: 'All Acquisitions for any item(s) for which item unique identification is required in accordance with paragraph (c)(1) of this clause.' },
+  { ref: '252.223-7008', title: 'Prohibition of Hexavalent Chromium (June 2013)', applicability: 'All Acquisitions that are for supplies, maintenance and repair services, or construction materials.' },
+  { ref: '252.225-7009', title: 'Restriction on Acquisition of Certain Articles Containing Specialty Metals (Dec 2019) — Paragraphs (a) – (c) and (e)(2) only', applicability: 'All Acquisitions for items containing specialty metals' },
+  { ref: '252.225-7043', title: 'Antiterrorism/Force Protection for Defense Contractors Outside the United States (Jun 2015)', applicability: 'All Acquisitions. Does not apply if Seller is a foreign government, representative of a foreign government, or a foreign corporation wholly owned by a foreign government.' },
+  { ref: '252.225-7052', title: 'Restriction on the Acquisition of Certain Magnets, Tantalum, and Tungsten (JAN 2023)', applicability: 'All Acquisitions for items containing a covered material as defined in paragraph (a) of this clause unless an exception in paragraph (c) of this clause applies.' },
+  { ref: '252.226-7001', title: 'Utilization of Indian Organizations, Indian-Owned Economic Enterprises, and Native Hawaiian Small Business Concerns (JAN 2023)', applicability: 'Acquisitions ≥ $500,000' },
+  { ref: '252.227-7013', title: 'Rights in Technical Data—Other than Commercial Products and Commercial Services (MAR 2023)', applicability: 'All Acquisitions where any technical data for other than commercial products or commercial services, or for commercial products developed in any part at Government expense, is to be obtained from Seller for delivery to the Government.' },
+  { ref: '252.227-7015', title: 'Technical Data—Commercial Products and Commercial Services (MAR 2023)', applicability: 'All Acquisitions where any technical data related to commercial products or commercial services developed in any part at private expense.' },
+  { ref: '252.227-7037', title: 'Validation of Restrictive Markings on Technical Data (JAN 2023)', applicability: 'All Acquisitions if acquisition requires delivery of technical data' },
+  { ref: '252.239-7010', title: 'Cloud Computing Services (JAN 2023)', applicability: 'All Acquisitions that involve or may involve cloud services.' },
+  { ref: '252.244-7000', title: 'Subcontracts for Commercial Items (NOV 2023)', applicability: 'All Acquisitions' },
+  { ref: '252.246-7003', title: 'Notification of Potential Safety Issues (JAN 2023). Seller shall be required to provide the notification required by paragraph (c) of this clause to (i) Buyer or (ii) The ACO and the PCO, if the Seller is aware of the ACO and the PCO for the contract.', applicability: 'All Acquisitions (i) Parts identified as critical safety items; (ii) Systems and subsystems, assemblies, and subassemblies integral to a system; or (iii) Repair, maintenance, logistics support, or overhaul services for systems and subsystems, assemblies, subassemblies, and parts integral to a system.' },
+  { ref: '252.246-7007', title: 'Contractor Counterfeit Electronic Part Detection and Avoidance System (JAN 2023) — Excluding the introductory text and including only paragraphs (a) through (e).', applicability: 'All Acquisitions for electronic parts or assemblies containing electronic parts.' },
+  { ref: '252.246-7008', title: 'Sources of Electronic Parts (JAN 2023)', applicability: 'All Acquisitions for electronic parts or assemblies containing electronic parts, unless the Seller is the original manufacturer.' },
+  { ref: '252.247-7003', title: 'Pass-Through of Motor Carrier Fuel Surcharge Adjustment to the Cost Bearer (Jun 2013)', applicability: 'All Acquisitions where Seller is a with motor carriers, brokers, or freight forwarders.' },
+];
+
+const nonDodFar: ClauseRow[] = [
+  { ref: '52.203-6', title: 'Restrictions on Subcontractor Sales to the Government – Alternate I (DEC 2021)', applicability: 'Acquisitions ≥ $250,000' },
+  { ref: '52.203-12', title: 'Limitation on Payments to Influence Certain Federal Transactions (Jun 2020)', applicability: 'Acquisitions > $150,000' },
+  { ref: '52.203-13', title: 'Contractor Code of Business Ethics and Conduct (NOV 2021)', applicability: 'Acquisitions ≥ $6,000,000 with performance ≥ 120 days' },
+  { ref: '52.203-15', title: 'Whistleblower Protections Under the American Recovery and Reinvestment Act of 2009 (JUN 2010)', applicability: 'All Acquisitions funded under the Recovery Act.' },
+  { ref: '52.023-17', title: 'Contractor Employee Whistleblower Rights (NOV 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.203-19', title: 'Prohibition on Requiring Certain Internal Confidentiality Agreements or Statements (Jan 2017)', applicability: 'All Acquisitions' },
+  { ref: '52.204-10', title: 'Reporting Executive Compensation and First-Tier Subcontract Awards (Jun 2020)', applicability: 'Acquisitions ≥ $30,000' },
+  { ref: '52.204-14', title: 'Service Contract Reporting Requirements (Oct 2016)', applicability: 'Acquisitions ≥ $500,000' },
+  { ref: '52.204-15', title: 'Service Contract Reporting Requirements for Indefinite-Delivery Contracts (Oct 2016)', applicability: 'Acquisitions ≥ $500,000' },
+  { ref: '52.204-21', title: 'Basic Safeguarding of Covered Contractor Information Systems (NOV 2021)', applicability: 'All Acquisition if Seller may have Federal contract information residing in or transitioning through its information system. Not applicable to COTS' },
+  { ref: '52.204-23', title: 'Prohibition on Contracting for Hardware, Software, and Services Developed or Provided by Kaspersky Lab and Other Covered Entities (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.204-25', title: 'Prohibition on Contracting for Certain Telecommunications and Video Surveillance Services or Equipment (NOV 2021)', applicability: 'All Acquisitions' },
+  { ref: '52.204-27', title: 'Prohibition on a ByteDance Covered Application (JUN 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.204-30', title: 'Federal Acquisition Supply Chain Security Act Orders – Prohibition (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.211-15', title: 'Defense Priority and Allocation Requirements (APR 2008)', applicability: 'All Acquisitions with DPAS rating' },
+  { ref: '52.219-8', title: 'Utilization of Small Business Concerns (SEP 2023)', applicability: 'All Acquisitions that offer lower-tier subcontracting opportunities' },
+  { ref: '52.222-21', title: 'Prohibition of Segregated Facilities (Apr 2015)', applicability: 'All Acquisitions' },
+  { ref: '52.222-26', title: 'Equal Opportunity (Sep 2016) (E.O. 11246)', applicability: 'All Acquisitions' },
+  { ref: '52.222-35', title: 'Equal Opportunity for Veterans (Jun 2020)', applicability: 'Acquisitions ≥ $150,000' },
+  { ref: '52.222-36', title: 'Equal Opportunity for Workers with Disabilities (June 2020)', applicability: 'Acquisitions ≥ $15,000' },
+  { ref: '52.222-37', title: 'Employment Reports on Veterans (Jun 2020)', applicability: 'Acquisitions ≥ $150,000' },
+  { ref: '52.222-40', title: 'Notification of Employee Rights Under the National Labor Relations Act (Dec 2010)', applicability: 'Acquisitions ≥ $10,000. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.222-41', title: 'Service Contract Labor Standards (Aug 2018)', applicability: 'All Acquisitions' },
+  { ref: '52.222-50', title: 'Combating Trafficking in Persons (NOV 2021)', applicability: 'Acquisitions ≥ $550,000. Applicable to the portions of the Order that are for supplies acquired or services performed outside the United States. Not applicable to COTS' },
+  { ref: '52.222-51', title: 'Exemption from Application of the Service Contract Labor Standards to Contracts for Maintenance, Calibration, or Repair of Certain Equipment–Requirements (May 2014)', applicability: 'All Acquisitions' },
+  { ref: '52.222-53', title: 'Exemption from Application of the Service Contract Labor Standards to Contracts for Certain Services-Requirements (May 2014)', applicability: 'All Acquisitions' },
+  { ref: '52.222-54', title: 'Employment Eligibility Verification (MAY 2022)', applicability: 'Acquisitions ≥ $3,500. Not applicable to COTS' },
+  { ref: '52.222-55', title: 'Minimum Wages Under Executive Order 13658 (JAN 2022)', applicability: 'All Acquisitions. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.222-62', title: 'Paid Sick Leave Under Executive Order 13706 (JAN 2022) (E.O. 13706)', applicability: 'All Acquisitions. Not applicable if work is performed exclusively outside the United States' },
+  { ref: '52.223-18', title: 'Encouraging Contractor Policies to Ban Text Messaging while Driving (Jun 2020) (E.O. 13513)', applicability: 'Acquisitions ≥ $10,000' },
+  { ref: '52.224-3', title: 'Privacy Training (Jan 2017)', applicability: "All Acquisitions if Seller's employees will (1) have access to a system of records; (2) handle personally identifiable information; or (3) design, develop, maintain, or operate a system of records" },
+  { ref: '52.225-3', title: 'Buy American–Free Trade Agreements–Israeli Trade Act (NOV 2023)', applicability: 'Acquisitions ≥ $25,000 and < $182,000 for supplies or services involving furnishing of supplies for use within the United States' },
+  { ref: '52.225-13', title: 'Restrictions on Certain Foreign Purchases (Feb 2021)', applicability: 'All Acquisitions' },
+  { ref: '52.225-26', title: 'Contractors Performing Private Security Functions Outside the United States (Oct 2016)', applicability: 'All Acquisitions if performance is outside the United States in areas of combat operations or other significant military operations.' },
+  { ref: '52.226-6', title: 'Promoting Excess Food Donation to Nonprofit Organizations (JUN 2020)', applicability: 'All Acquisitions if for the provision, service, or sale of food in the United States.' },
+  { ref: '52.232-40', title: 'Providing Accelerated Payments to Small Business Subcontractors (MAR 2023)', applicability: 'All Acquisitions. Not applicable if Seller is Large Business' },
+  { ref: '52.244-6', title: 'Subcontracts for Commercial Items (DEC 2023)', applicability: 'All Acquisitions' },
+  { ref: '52.247-64', title: 'Preference for Privately Owned U.S.-Flag Commercial Vessels (NOV 2021)', applicability: 'All Acquisitions. Not applicable to COTS. Not applicable to Acquisitions under DoD prime contracts.' },
+];
+---
+
+<BaseLayout
+  title="Terms & Conditions - CTG Federal"
+  description="CTG Federal's Terms & Conditions for Subcontracts/Purchase Orders for Commercial Items purchased in support of a U.S. Government contract (DoD and Non-DoD)."
+>
+  <PageHero title="Terms & Conditions">
+    <p class="pagehero__jump">
+      <a href="#dod">DOD</a>
+      <a href="#non">Non-DoD</a>
+    </p>
+  </PageHero>
+
+  <Section tone="white" narrow id="dod">
+    <div class="prose">
+      <p>
+        CTG Federal, LLC<br />
+        Terms &amp; Conditions for Subcontracts/Purchase Orders for Commercial Items Purchased in Support of
+        a U.S. Government Contract<br />
+        (DoD)
+      </p>
+      <p>
+        The following terms and conditions apply to Purchase Orders for commercial items purchased in
+        support of a U.S. Government contract. These terms and conditions, and the Purchase Order issued in
+        support of a U.S. Government contract to which these terms and conditions are attached (collectively
+        referred to as the &ldquo;Order&rdquo;), represent the entire agreement between CTG Federal, LLC,
+        hereinafter referred to as &ldquo;Buyer,&rdquo; and the company (&ldquo;Seller&rdquo;) listed on the
+        Purchase Order for the purchase of commercial goods and services (&ldquo;Goods and Services&rdquo;)
+        in support of Seller&rsquo;s customer (&ldquo;Customer&rdquo;).
+      </p>
+
+      <h3>Definitions</h3>
+      <p>As used in this Purchase Order, the below terms shall have the following meanings:</p>
+      <ul>
+        <li>&ldquo;Buyer&rdquo; means CTG Federal, LLC.</li>
+        <li>&ldquo;Seller&rdquo; means the party identified on the Purchase Order, with whom Buyer is contracting for the procurement of the Supplies.</li>
+        <li>&ldquo;Purchase Order&rdquo; and &ldquo;Order&rdquo; are used interchangeably and refer to this contractual instrument.</li>
+        <li>&ldquo;Customer&rdquo; means the party who issued the prime contract or higher tier subcontract to Buyer.</li>
+        <li>&ldquo;Government&rdquo; means the United States Government.</li>
+        <li>&ldquo;Prime Contract&rdquo; means Buyer&rsquo;s prime contract with the U.S. Government, or higher tier subcontract, with Buyer&rsquo;s Customer, under which this Purchase Order is issued.</li>
+        <li>&ldquo;Supplies&rdquo; means what the Seller is contracted to furnish to Buyer under this Purchase Order and includes, without limitation, the following:</li>
+        <li>&ldquo;The work,&rdquo; &ldquo;materials,&rdquo; &ldquo;articles,&rdquo; &ldquo;deliverable items,&rdquo; &ldquo;items,&rdquo; &ldquo;data,&rdquo; and &ldquo;services,&rdquo; whether tangible or intangible, or any combination thereof; and</li>
+        <li>What is leased or licensed, pursuant to the lease(s) or license(s) signed by both Seller and the Buyer if attached to and made a part of this Purchase Order.</li>
+        <li>&ldquo;Service&rdquo; means products, supplies, engineering support, data or services (including software and software documentation) provided by Seller.</li>
+        <li>&ldquo;Commercial Item&rdquo; means a commercial item as defined in FAR 2.101</li>
+      </ul>
+
+      <h3>Order and Acceptance.</h3>
+      <ul>
+        <li>All communication regarding fulfillment of this Order shall be addressed via email to the Buyer&rsquo;s representative referenced on this Order.</li>
+        <li>This Purchase Order supersedes any prior offers, negotiations, and agreements concerning the subject matter herein and constitutes the entire agreement between Buyer and Seller.</li>
+        <li>Seller must provide notification of receipt of Order within 24 hours and email confirmation of the Order prior to delivery. If the Purchase Order indicates a DPAS Rating (Priority Rating), the seller must notify CTG Federal within one (1) business day if the rated order cannot be accepted and processed accordingly, for any reason.</li>
+        <li>Where Seller fails to email an acknowledgement and confirmation of this Order as requested, this Purchase Order becomes a binding agreement, subject to the specific terms and conditions stated herein, upon, Seller&rsquo;s performance, including, but not limited to, providing any part of the goods or services under this Purchase Order or accepting payment under this Purchase Order.</li>
+        <li>By accepting the Purchase Order, Seller agrees to the incorporation of these terms into the Purchase Order and no condition or additional terms stated or purportedly incorporated by reference by Seller in accepting or acknowledging this Purchase Order will be binding upon Buyer if it is in conflict with, is inconsistent with, or is in addition to the Terms and Conditions contained herein unless expressly accepted in writing by Buyer.</li>
+        <li>No change, modification or revision to this Purchase Order shall be valid and binding unless expressly agreed to in writing and signed by the authorized representative of Buyer.</li>
+      </ul>
+
+      <h3>Changes.</h3>
+      <ul>
+        <li>Buyer may, at any time, in writing, make changes to this order. If any such change causes an increase or decrease in the cost or time required for performance of the work, Seller shall promptly notify buyer and the price and/or delivery schedule shall be equitably adjusted and the Purchase Order so modified. Seller shall commence any such change pending such modification. Seller must assert its right to an equitable adjustment in the purchase order price or delivery schedule under this clause for changes to this purchase order within thirty (30) days from the date of receipt of BUYER&rsquo;s written change order.</li>
+        <li>No one other than an authorized representative of Buyer has the authority to approve any amendments or changes to this Order. BUYER technical personnel may from time-to-time render assistance or give technical advice or discuss or effect exchange or information with Seller&rsquo;s personnel concerning work hereunder. No such action taken by Seller, whether or not accomplished with the concurrence of any Buyer&rsquo;s employees shall be deemed a change order and shall not entitle Seller to an equitable adjustment, unless such action is specifically directed by a written notice issued by an authorized representative of Buyer.</li>
+      </ul>
+
+      <h3>Quantities, Content, and Quality.</h3>
+      <p>It is Seller&rsquo;s responsibility to furnish the proper quantities, labor categories, equipment, and other items called for by this Order. No variation in quantity, quality or affecting form, fit, or function specified herein will be accepted as compliant with this Order. Buyer reserves the right to reject in whole or in part any varied quantities, equipment type or other elements of items in this Order. Buyer reserves the right to revoke acceptance if made without actual knowledge of any varied quantities, equipment type or other elements or items in this Order. Any approvals by Buyer shall not relieve Seller of responsibility for any error or deficiencies that may exist, or for performing the work and furnishing the Supplies and/or Services in strict accordance with the Purchase Order requirements.</p>
+
+      <h3>No Extras/Extra Charges.</h3>
+      <ul>
+        <li>Work shall not be supplied in excess of the quantities specified in this Order. Seller shall be responsible for handling charges and return shipment costs for any excess quantities.</li>
+        <li>The total price payable to Seller for Supplies furnished hereunder shall be stated in this Order. No extra charges of any kind shall apply to this Order, including without limitation, amounts for (i) any future price increases, (ii) the cost of any permits fees or licenses required for the goods and/or services to be delivered hereunder, (iii) premium transportation charges, (iv) service or carrying charges, or (v) packing, packaging, boxing, crating, palletizing, or reusable containers.</li>
+        <li>Except as may be otherwise provided in this Purchase Order, the prices herein include all Federal, State and local taxes applicable to the goods purchased herein. Any taxes not included on the quote from the seller are the responsibility of the seller if imposed. All taxes, (including but not limited to: TERO, sales or Excise taxes) paid under this Purchase Order must be accompanied with a receipt and sent with all invoices.</li>
+      </ul>
+
+      <h3>Inspection/Testing.</h3>
+      <p>Payment for the goods delivered hereunder shall not constitute acceptance thereof. Buyer shall have the right to inspect such goods and to reject any or all of said goods that are in Buyer&rsquo;s judgment defective or nonconforming. Goods rejected and goods supplied in excess of quantities called for herein may be returned to Seller at its expense and, in addition to Buyer&rsquo;s other rights, Buyer may charge Seller all expenses of unpacking, examining, repacking, and reshipping such goods. In the event Buyer receives goods whose defects or nonconformity is not apparent on examination, Buyer reserves the right to require replacement, as well as payment of damages. Nothing contained in this Purchase Order shall relieve in any way the Seller from the obligation of testing, inspection and quality control.</p>
+
+      <h3>Audit/Inspection Right.</h3>
+      <p>Acceptance of Goods and Services under this Purchase Order is subject to the inspection of both Buyer and its Customer. Goods and Services that are either defective, delayed, or otherwise fail to conform to the specifications in the Purchase Order may be rejected. When Seller receives notification of rejection of Goods or Services, Seller shall provide Buyer with instructions for the return of Goods at Seller&rsquo;s exclusive expense. Seller shall not replace any rejected Goods or re-perform Services without the authorized express written and signed consent of Buyer.</p>
+
+      <h3>Remedies for Defects.</h3>
+      <p>If any of the Supplies are found to be defective in material or workmanship, or otherwise not in conformity with the requirements of this Order, Buyer (in addition to any other rights which it may have under warranties or otherwise) may at its option (1) accept all or part of the Supplies with an equitable price reduction; or (2) reject and return such Supplies at Seller&rsquo;s expense, and require Seller, at Seller&rsquo;s expense, to make all repairs, modifications or replacements necessary to bring the Supplies into compliance with the requirements of this Order. Seller shall not re-tender rejected work without disclosing corrective action taken. If Seller fails promptly to remove such Supplies that are required to be removed, or promptly to replace or correct such Supplies, Buyer may either (1) by Purchase Order or otherwise replace or correct such Supplies and charge to Seller the cost occasioned to Buyer thereby, or (2) may terminate this Purchase Order for default; and in either event may charge Seller the costs of damages occasioned to Buyer thereby. Seller shall not re-tender rejected Supplies without disclosing the corrective action taken.</p>
+
+      <h3>Packaging and Packing.</h3>
+      <p>Seller will be responsible for properly packing and packaging the goods in suitable containers for protection during shipment in accordance with transportation regulations and good commercial practice. Buyer&rsquo;s order number must be plainly marked on all invoices, packages, bills of lading, and shipping orders. Packing lists will accompany each shipment showing materials.</p>
+
+      <h3>Shipment.</h3>
+      <p>If in order to comply with Buyer&rsquo;s required delivery date, it becomes necessary for Seller to ship by a more expensive way than specified in this Purchase Order, any increased transportation costs resulting therefrom shall be paid for by Seller unless the necessity for such rerouting or expedited handling has been caused by Buyer.</p>
+
+      <h3>Delivery.</h3>
+      <p>Time is of the essence of this Contract and if delivery of goods or rendering of services is not completed by the time promised, Buyer reserves the right, without liability in addition to its other rights and remedies, to terminate this Contract by notice effective when received by Seller as to goods not yet shipped or services not yet rendered and to purchase substitute goods or services elsewhere and charge Seller with any loss incurred. Seller shall properly mark each package with the Purchase Order Number, part number, serial number, quantity and where multiple packages comprise a single shipment, each package shall also be consecutively numbered. The Purchase Order number, part number, and serial number shall be shown on packing slips, bills of lading and invoices. Delivery shall be made in the quantities and at the time specified by Buyer. Buyer shall include with each package a certificate of conformance certifying that the Goods and Services conform to all specifications set forth in the Purchase Order. Seller agrees that Buyer and Customer reserve the right to refuse shipments of defective, damaged or nonconforming Goods, quantities of Goods that differ from the amount ordered, and shipments delivered either before or after the scheduled delivery date set forth in the Purchase Order. In such case, Buyer shall not be responsible for Goods delivered in excess of the quantities specified in the Purchase Order.</p>
+
+      <h3>Original Equipment from Manufacturer (OEM).</h3>
+      <p>All material, including material incorporated into the Goods delivered under this Purchase Order must be procured from the original equipment or component manufacturer (OEM/OCM), or the OEM/OCM&rsquo;s authorized distributor. Independent distributors or brokers are not acceptable suppliers and shall not be used to provide product delivered under this Purchase Order.</p>
+
+      <h3>Counterfeit Parts.</h3>
+      <p>Seller warrants that it has policies and procedures in place (or similar measures in the absence of such policies and procedures) to ensure that none of the supplies or materials furnished under this Order are &ldquo;suspect or counterfeit parts&rdquo; and certifies to the best of its knowledge and belief that no such parts shall be furnished to Buyer. For the purposes of this Order, &ldquo;suspect or counterfeit parts&rdquo; refers to any parts, including those of new manufacture, that are misleadingly labeled to provide the impression that they are of a different class or quality or from a different source than is actually the case, or that represent gray market parts. Suspect or counterfeit parts also refer to refurbished parts, complete with false labeling, that are represented as new parts. Any parts that are designated as suspect by the US Government, such as parts listed in alerts published by the Defense Contract Management Agency under the Government-Industry Data Exchange Program (GIDEP) are also considered suspect or counterfeit parts. If Buyer reasonably determines that Seller has supplied suspect or counterfeit parts, Buyer shall notify Seller and Seller shall immediately replace the suspect or counterfeit parts with parts acceptable to Buyer. Notwithstanding any other provision contained herein, Seller shall be liable for all costs, fees, and penalties incurred by Buyer associated in any way with the removal and replacement of the suspect or counterfeit parts, including without limitation Buyer&rsquo;s external and internal costs of removing such suspect or counterfeit parts, of reinserting replacement parts and of any testing necessitated by the reinstallation of Seller&rsquo;s goods after suspect or counterfeit parts have been exchanged. The warranties provided by Seller under this paragraph shall survive any termination or expiration of this Order.</p>
+
+      <h3>Section 508 Compliance of Accessibility of Information Technology.</h3>
+      <p>Section 508 Compliance of Accessibility of Information Technology. All electronic and information technology (EIT) procured under this Purchase Order must meet any applicable accessibility standards, including but not limited to those for U.S. federal procurement at 36 CFR 1194, unless the procuring government agency establishes a published exception to this requirement. 36 CFR 1194 implements Section 508 of the Rehabilitation Act of 1973, as amended, and is viewable, with implementing provisions of the Federal Acquisition Regulation, at <a href="https://www.section508.gov" target="_blank" rel="noopener">www.section508.gov</a>. The Seller shall indicate for each line item in the schedule whether each product or service is compliant or non-compliant with the accessibility standards, including (where applicable) those at 36 CFR 1194; in presenting this information, the Seller may use the Voluntary Product Accessibility Template (VPAT) referenced at: <a href="https://www.itic.org/policy/accessibility/vpat" target="_blank" rel="noopener">itic.org/policy/accessibility/vpat</a>. Further, the Seller must indicate where full details of compliance can be found (e.g., Seller&rsquo;s website or other exact location).</p>
+
+      <h3>Confidential Information.</h3>
+      <ul>
+        <li>Supplemental to any existing Nondisclosure or Confidential Information Agreement between the parties, all information including, but not limited to drawings, prints, publications, specifications, process manufacturing techniques, software products and programs (in object code or any other form), and other Intellectual Property, provided by the Buyer to the Seller, or by Seller to Buyer, prior to and during the performance of this order that is identified as proprietary or confidential to the disclosing party will be received in confidence by the receiving party and will remain the property of the disclosing party. Neither party will reproduce, distribute or disclose the other party&rsquo;s proprietary information without written consent, provided, however, Buyer is authorized to reproduce, distribute, and disclose Seller&rsquo;s proprietary information to Buyer&rsquo;s customers, subcontractors, or other parties as necessary to use to complete any of the work under this Contract.</li>
+        <li>The receiving party may use the disclosing party&rsquo;s proprietary information solely as required to perform its obligations or to exercise its rights under this order. The receiving party may disclose the disclosing party&rsquo;s proprietary information to those of its employees or employees of the disclosing party&rsquo;s affiliate who have a &ldquo;need to know&rdquo; the proprietary information to perform its obligations and exercise its rights under this order; provided that: (a) such persons are made aware of the obligations under this order and are bound by written agreements or professional obligations prohibiting the unauthorized disclosure or use of proprietary information that are at least as protective as the terms of this order; and (b) the receiving party remains liable for the acts and omissions of such affiliate with respect to the proprietary information of the disclosing party. Each party will take all reasonable measures to protect the other party&rsquo;s proprietary information, but in no case will that be less than reasonable care. Upon completion of the order, all proprietary information, including digital and hard copies, will be provided to the original disclosing party, or destroyed, at that party&rsquo;s election. A party will not be required to hold the foregoing obligations of confidentiality with respect to proprietary information that (w) was in such party&rsquo;s possession prior to its receipt from the other party, (x) is or becomes publicly known through no fault of the receiving party, (y) is obtained from a third party who had a right to disclose it, or (z) was or is independently developed without access to any proprietary information of the other party.</li>
+      </ul>
+
+      <h3>Warranty.</h3>
+      <p>Seller expressly warrants that all goods or services furnished under this Agreement shall conform to all specifications and appropriate standards, will be new, and will be free from defects in material or workmanship. Seller warrants that all such goods or services will conform to any statements made on the containers or labels or advertisements for such goods, or services, and that any goods will be adequately contained, packaged, marked and labeled. Seller warrants that all goods or services furnished hereunder will be merchantable, and will be safe and appropriate for the purpose for which goods or services of that kind are normally used. If Seller knows or has reason to know the particular purpose for which Buyer intends to use the goods or services, Seller warrants that such goods or services will be fit for such particular purpose. Seller warrants that goods or services furnished will conform in all respects to samples. Inspection, test, acceptance or use of the goods or services furnished hereunder shall not affect the Seller&rsquo;s obligation under this Warranty, and such warranties shall survive inspection, test, acceptance and use. Seller&rsquo;s warranty shall run to Buyer, its successors, assigns and customers, and users of goods sold by Buyer. Seller agrees to replace or correct defects of any goods or services not conforming to the foregoing warranty promptly, without expense to Buyer, when notified of such nonconformity by Buyer, provided Buyer elects to provide Seller with the opportunity to do so. In the event of failure of Seller to correct defects in or replace nonconforming goods or services promptly, Buyer, after reasonable notice to Seller, may make such corrections or replace such goods and services and charge Seller for the cost incurred by Buyer in doing so.</p>
+
+      <h3>Price Warranty.</h3>
+      <p>Seller warrants that the prices for the goods sold Buyer hereunder are not less favorable than those currently extended to any other customer for the same or similar goods in similar quantities. In the event Seller reduces its price for such goods during the term of this Order, Seller agrees to reduce the prices hereof correspondingly. Seller warrants that prices shown on this Purchase Order shall be complete, and no additional charges of any type shall be added without Buyer&rsquo;s express written consent. Such additional charges include, but are not limited to, shipping, packaging, labeling, custom duties, taxes, storage, insurance, boxing, crating.</p>
+
+      <h3>Invoices.</h3>
+      <p>An itemized invoice shall be submitted electronically as outlined on Buyer&rsquo;s purchase order. Invoices should be properly formatted with all accompanying items noted on Buyer&rsquo;s purchase order under section labeled &ldquo;Invoicing Instructions.&rdquo; Invoices that do not comply with Buyer&rsquo;s Invoicing Instructions shall be rejected. Buyer shall not be responsible for and Seller shall not invoice Buyer for interest or carrying charges.</p>
+
+      <h3>Payment Terms.</h3>
+      <ul>
+        <li>Unless otherwise specified in this Purchase Order, terms of payment are &ldquo;Net 60 days.&rdquo; If a discount for prompt payment of Seller&rsquo;s invoice is allowed, payment shall be made within the allowable period to qualify for such discount. The time allowable for payment shall begin after both of the following requirements are met: (a) all items required under Buyer&rsquo;s Invoicing Instructions have been provided to and accepted by Buyer and (b) delivery and Customer acceptance of conforming Supplies. Buyer reserves the right to reject any invoices or adjust Net payment terms based upon missing or incorrect information.</li>
+        <li>Each payment made shall be subject to reduction to the extent of amounts which are found by Buyer or Seller to not have been properly payable, and shall also be subject to reduction for overpayments. Seller shall promptly notify Buyer of any such overpayments and remit the overpaid amount except as otherwise directed by Buyer.</li>
+        <li>Payment shall be deemed to have been made as of the date of mailing Buyer&rsquo;s payment or electronic funds transfer.</li>
+        <li>Unless otherwise specified and agreed to in the Purchase Order, prices include all applicable federal, state, and local taxes, duties, tariffs, and similar government-imposed fees, all of which shall be listed separately on the invoice. Only items and amounts identified on the Purchase Order or otherwise agreed to in writing between the Buyer and Seller shall be included on Seller&rsquo;s invoice.</li>
+      </ul>
+
+      <h3>Right to Use/Title.</h3>
+      <ul>
+        <li>Seller shall provide to Buyer and/or the Customer unencumbered rights to use any software products and unencumbered title for any other products, property or service delivered by Seller under this Purchase Order. Seller shall disclose to Buyer in writing a Free, Libre and Open Source Software (FLOSS) that will be used or delivered in connection with this Purchase Order and obtain Buyer&rsquo;s written consent before using or delivering such FLOSS in connection with the is Purchase Order.</li>
+        <li>Seller agrees to full indemnify and hold Buyer harmless from and against all claims made against Buyer resulting from or related or incidental to encumbrances of right to use or unencumbered title or other rights claimed by third parties upon items provided by Seller. Seller agrees upon receipt of notification to promptly assume full responsibility for defense of any suit or proceeding which may be brought against Buyer or its agents, customers, or other vendors for alleged patent infringement, as well as for any alleged unfair competition resulting from similarity in design, trademark or appearance of goods or services furnished hereunder, and Seller further agrees to indemnify Buyer, its agents and customers against any and all expenses, losses, royalties, profits and damages including court costs and attorney&rsquo;s fees resulting from any such suit or proceeding, including any settlement. Buyer may be represented by and actively participate through its own counsel in any such suit or proceeding if it so desires, and the costs of such representation shall be paid by Seller.</li>
+      </ul>
+
+      <h3>Insurance.</h3>
+      <p>Seller will carry or obtain insurance as required by the Buyer, at Seller&rsquo;s sole cost and expense, prior to commencement and throughout the entire period of Contract performance. Such insurance will include, at a minimum:</p>
+      <ul>
+        <li>Commercial General Liability with limits of no lower than $1,000,000 per occurrence and of $2,000,000 aggregate for personal injury, bodily injury, and property damage,</li>
+        <li>If licensed vehicles will be used in connection with the performance of the work, Seller will maintain Business Automobile Liability insurance covering all vehicles, whether owned, hired, rented, borrowed, or otherwise, with available limits of not less than $1,000,000 per occurrence combined single limit,</li>
+        <li>Employer Liability Insurance coverage with a limit no less than $1,000,000 per claim, and</li>
+        <li>Employee Workers&rsquo; Compensation insurance as may be required by law, regulation, or ordinance.</li>
+        <li>Should Seller be required to perform on Buyer&rsquo;s or a third party&rsquo;s premises at Buyer&rsquo;s request, Seller will include Buyer as a named insured on its Commercial General Liability policy. Seller will provide a certificate of insurance upon request.</li>
+      </ul>
+
+      <h3>Indemnification.</h3>
+      <p>Seller shall defend, indemnify and hold harmless Buyer against all damages, claims or liabilities and expenses (including attorney&rsquo;s fees) arising out of or resulting in any way from any defect in the goods or services purchased hereunder, any breach of the terms and conditions of this Order, or from any act or omission of Seller, its agents, employees or subcontractors. This indemnification shall be in addition to the warranty obligations of Seller.</p>
+
+      <h3>Limit on Buyer&rsquo;s Liability-Statute of Limitations.</h3>
+      <p>In no event shall Buyer be liable for anticipated profits or for incidental or consequential damages. Buyer&rsquo;s liability on any claim of any kind for any loss or damage arising out of or in connection with or resulting from this Agreement or from the performance or breach thereof shall in no case exceed the price allocable to the goods or services or unit thereof which gives rise to the claim.</p>
+      <p>Buyer shall not be liable for penalties of any description. Any action resulting from any breach on the part of Buyer as to the goods or services delivered hereunder must be commenced within one year after the cause of action has accrued.</p>
+
+      <h3>Title and Risk of Loss.</h3>
+      <p>Unless otherwise provided in this Purchase Order, the F.O.B. point shall be the delivery destination indicated in this Order, and title to the Supplies and risk of loss or damage shall pass to Buyer upon Buyer&rsquo;s and Customer&rsquo;s acceptance of the Supplies regardless of where Buyer takes physical possession and in accordance with the FAR Inspection Clauses identified herein.</p>
+
+      <h3>Stop Work Order.</h3>
+      <p>Buyer may, at any time, by written notice to Seller, stop all or any part of the work hereunder for up to ninety (90) days. Upon receiving such notice, Seller shall immediately comply with its terms and take all reasonable steps to avoid incurring any additional cost allocable to such work. Within ninety (90) days after the effective date of the stop work order, Buyer shall either cancel the stop work order or terminate this Order in whole or in part as permitted by this Order. If a stop work order is issued, Buyer shall modify the delivery schedule and/or price in this Order as Buyer deems equitable under the circumstances, provided Seller requests such change within ten (10) days of the end of the stop work order.</p>
+
+      <h3>Termination.</h3>
+      <ul>
+        <li>Termination for Convenience. Buyer may, by written notice to Seller terminate in whole or in part this Purchase Order for convenience if Buyer&rsquo;s Customer has terminated its order. Termination shall be effective upon the date set forth in the termination notice. In the event of such termination, Seller shall immediately stop all work hereunder and shall immediately cause any and all of its suppliers and subcontractors to cease work. Seller shall not be paid for any work done after receipt of the notice of termination, nor for any costs incurred by Seller&rsquo;s suppliers or subcontractors which Seller could reasonably have avoided.</li>
+        <li>Termination for Default. Buyer may terminate all or any part of this Purchase Order by written notice to Seller if: (i) Seller fails to provide the Item or support services within the time specified by this Purchase Order or any written extension authorized by Buyer; (ii) Seller fails to perform any other provision of this Purchase Order or fails to make progress, so as to endanger performance of this Purchase Order and, in either of these two circumstances, does not cure the failure to Buyer&rsquo;s satisfaction within ten days after receipt of notice from Buyer specifying the failure. Buyer may immediately terminate this Purchase Order in the event Seller declares bankruptcy, suspends its business operation, or initiates any reorganization and/or arrangement for the benefit of its creditors.</li>
+        <li>In the event of termination, Buyer&rsquo;s sole financial obligation to Seller shall be to pay for any Supplies or Services delivered to Buyer consistent with the terms of this Purchase Order. Buyer shall have no obligation to Seller for payment of any costs, fees, or expenses relating to its exercise of its termination rights hereunder, including but not limited to termination, restocking, demobilization. Buyer and Seller shall agree on the amount of payment for in process materials, title to which has been transferred and delivered to Buyer. Seller shall not be paid for any work performed or costs incurred that reasonably could have been avoided. Failure to agree shall be a dispute and shall be settled under the Disputes provision of this Purchase Order. Seller must submit all claims within sixty calendar days after the effective date of termination. In no event shall Buyer be obligated to pay Seller any amount in excess of the Purchase Order price.</li>
+      </ul>
+
+      <h3>Survivability.</h3>
+      <p>Any provision of these Terms and Conditions that imposes or contemplates continuing obligations on a party will survive the expiration or termination of the Purchase Order.</p>
+
+      <h3>Seller Contact with Buyer&rsquo;s Customer and Other Third Parties.</h3>
+      <ul>
+        <li>Unless specifically authorized in writing by Buyer, Seller shall not discuss this Order with third parties, including Buyer&rsquo;s Customer. Seller shall immediately notify the Buyer in writing, if at any time the Seller believes the Buyer&rsquo;s Customer is effecting a change to the Seller&rsquo;s scope of work under this Order or otherwise directs the Seller in any way. Seller is prohibited from agreeing to any changes or assuming obligations on behalf of the Buyer.</li>
+        <li>This clause does not prohibit Seller from communicating with the Government with respect to (i) matters unrelated to this Order; (ii) matters that Seller is required by law or regulation to communicate to the Government; (iii) fraud, waste or abuse communicated to a designated investigative or enforcement representative of a Federal department or agency authorized to receive such information; or (iv) any matter for which this Order (including any incorporated FAR provision) expressly provides for direct communication by Seller to the Government.</li>
+      </ul>
+
+      <h3>Force Majeure.</h3>
+      <p>Buyer shall not be liable for delay or failure of performance occasioned by causes beyond its control, including, but not limited to, acts of God or the public enemy, actions or decrees of governmental entities, civil unrest, riots, acts of terrorism, organized labor strikes, declared or undeclared war, fire, floods, unusually severe weather, earthquakes, or volcanoes (&ldquo;Force Majeure Event&rdquo;). If Buyer is affected by a Force Majeure Event, Buyer shall give written notice to Seller, which shall cause, without penalty to Buyer, all obligations under this Order to be immediately suspended for a period of sixty (60) days. If the period of suspension caused by the Force Majeure Event exceeds that first sixty-day period, Buyer either may terminate the Order for convenience in accord with Section 26.1 or issue a Stop Work Order for an additional period under Section 25. Any termination settlement or equitable adjustment sought by Seller following the termination for convenience or Stop Work Order may not include any costs incurred during the first sixty-day suspension.</p>
+
+      <h3>Applicable Laws.</h3>
+      <p>This Purchase Order will be governed by and construed in accordance with the laws of the Commonwealth of Virginia, without regard to its conflict of laws provisions, except that any provision in this Contract that is (i) incorporated in text or by reference from the Federal Acquisition Regulation (FAR) or Defense Federal Acquisition Regulation Supplement (DFARS) or (ii) incorporated by text or reference any agency or regulation that supplements the FAR or DFARS or (iii) that is substantially based on any such agency regulation or FAR clause or DFARS clause, will be construed and interpreted according to federal common law of Government contracts as applied by federal judicial bodies, boards of contract appeals, and quasi-judicial agencies of the federal Government. The United Nations&rsquo; Convention for the International Sale of Goods is expressly excluded from this Order, and shall have no force or effect on the Parties.</p>
+
+      <h3>Compliance with Laws.</h3>
+      <p>Seller warrants that it will comply with all applicable national, state and local laws and regulations, including without limitation, the Procurement Integrity Act, 41 U.S.C. 423, and its implementing regulations. Seller shall immediately report to Buyer any information concerning violation of applicable law or regulation pertaining to the performance of this Order and shall provide Buyer any information and/or certifications reasonably requested and related to its compliance with applicable laws and regulations. Seller agrees to indemnify and hold Buyer harmless against any loss or liability due to Seller&rsquo;s violation or noncompliance with such laws and regulations.</p>
+      <p>Seller also agrees that in connection with activities under this Agreement it shall not make or promise to make any improper payments, or provide or offer to provide anything of value, directly or indirectly, to government officials or other parties in violation of the Foreign Corrupt Practices Act or other applicable anti-bribery laws or regulations to which Seller may be subject.</p>
+      <p>Seller accepts all mandatory U.S. Government flow down clauses under the Prime Contract. If, through mistake or otherwise, such provisions or &ldquo;flow down&rdquo; clauses are not inserted or are incorrectly inserted in this Purchase Order, then this Purchase Order shall promptly be amended so as to comply with the requirements of the Prime Contract. The FAR and DFARS clauses referenced in Appendix A are incorporated herein by reference, with the same force and effect as if they were given in full text, and are applicable, including any notes following the clause citation, to this Contract. The Seller agrees to flow down all applicable FAR and DFARS clauses to its lowest tier suppliers/subcontractors.</p>
+
+      <h3>Compliance with Export Control Laws and Regulations.</h3>
+      <ul>
+        <li>Seller, at its sole expense, shall comply with all applicable U.S. export control laws and regulations in the performance of this Order, including, but not limited to, the International Traffic in Arms Regulations (ITAR), 22 CFR Parts 120 to 130, the Export Administration Regulations (EAR) 15 CFR Parts 730 through 799, and with all other laws, regulations, or executive orders of the United States related to the import, export, or delivery of goods or services contemplated by this Order such as customs laws and regulations, immigration laws and regulations, etc.</li>
+        <li>Seller, at its sole expense, agrees to determine and comply with all export license requirements, to obtain any export license or other official authorization, and to carry out any customs or immigration formalities or similar requirements for the export of any goods or services covered by this Order. Seller also hereby expressly agrees to bear sole responsibility for obtaining export licenses, if required, before utilizing foreign persons (as defined in 22 CFR § 120.16) in the performance of this Order, including instances where the work is to be performed on-site at any Government installation, where the foreign person will have access to export-controlled technical data, equipment or software. Seller also agrees to bear sole responsibility for all regulatory record keeping associated with the use of licenses and license exemptions/exceptions.</li>
+        <li>Seller shall insert the substance of this clause in any lower-tier subcontracts it enters into in connection with this Order.</li>
+      </ul>
+
+      <h3>Certifications to Implement Public Law.</h3>
+      <ul>
+        <li>Debarment. If this Order exceeds $35,000, in satisfaction of FAR 52.209-6(c), Protecting the Government&rsquo;s Interest When Subcontracting with Contractors Debarred, Suspended, or Proposed for Debarment, the Seller by countersignature of this Order, hereby certifies and warrants that neither the Seller nor its principals are debarred, suspended or proposed for debarment by the Federal Government.</li>
+        <li>Anti-Lobbying. If this Order exceeds $150,000, in accordance with FAR 52.203-11, Certification and Disclosure Regarding Payments to Influence Certain Federal Transactions, and FAR 52.203-12, Limitation on Payments to Influence Certain Federal Transactions, the Seller by countersignature of this Order hereby certifies and warrants that, to the best of its knowledge and belief, no Federally appropriated funds have been paid or will be paid to any person for influencing or attempting to influence an officer or employee of any agency, Member of Congress, an officer or employee of Congress, or an employee of Member of Congress on its behalf in connection with the awarding of the Prime Contract.</li>
+      </ul>
+
+      <h3>Gratuities; Conflicts of Interest.</h3>
+      <p>Seller warrants that it has not offered or given, and will not offer or give to any employee, agent, or representative of Buyer, a payment, gratuity, or kickback for obtaining or rewarding favorable treatment by Buyer with respect to the terms, conditions, price, performance, or award of an order. Seller further warrants that neither Seller nor its employees have an organizational or personal conflict of interest in providing the goods and/or services contemplated by this Purchase Order. Further, Seller represents and warrants that it is familiar, and shall comply, with the requirements of the Foreign Corrupt Practices Act in effect during the term of this Order.</p>
+
+      <h3>Conflict Minerals.</h3>
+      <ul>
+        <li>Seller certifies that, regardless of whether Seller is publicly traded or not, Seller does not procure Conflict Minerals from Covered Countries, as those terms are defined by and consistent with the Securities and Exchange Commission&rsquo;s final rule on Conflict Minerals, 17 CFR Parts 240 and 249(b), promulgated pursuant to Section 1502 of the Dodd-Frank Wall Street Reform and Consumer Protection Act (the &ldquo;Rule&rdquo;).</li>
+        <li>Seller certifies and warrants that all products that will be delivered to Buyer by Seller under this Order are Democratic Republic of the Congo (DRC) Conflict Free, as defined by and consistent with the Rule.</li>
+        <li>Seller agrees that, if required by the Rule, it has made, and will continue to make, good faith inquiries reasonably designed to determine whether any Conflict Mineral that is included in any product delivered to Buyer pursuant to this Order originated in the DRC or an Adjoining Country, or is from Recycled or Scrap Sources, as defined in the Rule. Seller further agrees that, if required by the Rule, it has performed, and will continue to perform, due diligence on the source and chain of custody of any Conflict Mineral that is included in any product delivered to Buyer pursuant to this Order, and that such due diligence conforms to a nationally or internationally recognized due diligence framework, if such a framework is available for the Conflict Mineral. Seller agrees that all inquiries and diligence performed shall be consistent with the requirements of the Rule.</li>
+        <li>Seller agrees that it shall require its own subcontractors and suppliers (at any tier in the supply chain for a product delivered to Buyer under this Order) to furnish information to Seller necessary to support Seller&rsquo;s obligations under this Section 33.</li>
+        <li>Seller will maintain records reviewable by Buyer to support its certifications above.</li>
+        <li>Seller acknowledges that Buyer may utilize and disclose Conflict Minerals information provided by Seller in order to satisfy its disclosure obligations under the Rule.</li>
+        <li>If Buyer determines that any certification made by Seller under this Section is inaccurate or incomplete in any respect, then Buyer may terminate this Order for default pursuant to Section 26.2.</li>
+      </ul>
+
+      <h3>Priority Rating.</h3>
+      <p>If this Purchase Order contains a DPAS rating, this order is a &ldquo;rated order&rdquo; certified for national defense, emergency preparedness, and energy program use under the Defense Priorities and Allocation Systems (DPAS) (15 C.F.R. 700). If the Purchase Order indicates a DPAS Rating (Priority Rating), the Seller must notify Buyer within one (1) business day if the rated order cannot be accepted and processed accordingly, for any reason. If the rated order is accepted and processed, it is certified for national defense use, and the Seller is required to follow all provisions of the Defense Priorities and Allocations System regulation (15 C.F.R. 700). Rated orders shall take preference over all unrated customer orders if and as necessary to meet required delivery dates.</p>
+
+      <h3>Equal Employment Opportunity</h3>
+      <p>The Buyer is a federal contractor and, as such, is obligated to comply with certain requirements, including: Section 503 of the Rehabilitation Act, 29 U.S.C. 793; the Vietnam Era Veterans Readjustment Assistance Act, 38 U.S.C. sec 4212, as amended; the Executive Order 11246 of September 24, 1965, and the Executive Order 13496 of January 30, 2009, including the corresponding regulations, 41 C.F.R. secs. 60.1 et al., 60-300 et al., and 60-741 et al., which create certain requirements concerning anti-discrimination and affirmative action; and 29 C.F.R. Part 471, appendix A to subpart A. As a vendor providing services to the Buyer, Seller may be obligated to comply with these requirements. Specifically, where applicable, Seller shall abide by the requirements of 41 C.F.R. 60-300.5(a). This regulation prohibits discrimination against qualified protected veterans, and requires affirmative action by covered prime contractors and subcontractors to employ and advance in employment qualified protected veterans. In addition, where applicable, Seller shall abide by the requirements of 41 C.F.R. 60-741.5(a). This regulation prohibits discrimination against qualified individuals on the basis of disability, and requires affirmative action by covered prime contractors and subcontractors to employ and advance in employment qualified individuals with disabilities.</p>
+
+      <h3>Unauthorized Obligations.</h3>
+      <ul>
+        <li>Except as stated in Subsection 38.2, when any Supply or Service acquired under a Purchase Order is subject to any End User License Agreement (EULA), Terms of Service (TOS), or similar legal instrument or agreement, that includes any clause requiring the Government to indemnify the Contractor or any person or entity for damages, costs, fees, or any other loss or liability that would create an Anti-Deficiency Act violation (31 U.S.C. 1341), the following shall govern:</li>
+        <li>Any such clause is unenforceable against the Buyer and the Government</li>
+        <li>Neither the Buyer, the Government, nor any Government authorized end user shall be deemed to have agreed to such clause by virtue of it appearing in the EULA, TOS, or similar legal instrument or agreement. If the EULA, TOS, or similar legal instrument or agreement is invoked through an &ldquo;I agree&rdquo; click box or other comparable mechanism (e.g., &ldquo;click-wrap&rdquo; or &ldquo;browse-wrap&rdquo; agreements), execution does not bind the Buyer, the Government, or any Government authorized end user to such clause.</li>
+        <li>Any such clause is deemed to be stricken from the EULA, TOS, or similar legal instrument or agreement.</li>
+        <li>Subsection 38.1 does not apply to indemnification by the Government that is expressly authorized by statute and specifically authorized under applicable agency regulations and procedures.</li>
+      </ul>
+
+      <h3>Disputes.</h3>
+      <p>Any disputes under this Purchase Order that are not disposed of by mutual agreement of the Parties may be decided by recourse to an action at law or in equity. Until final resolution of any dispute hereunder, Seller shall diligently proceed with performance of this Purchase Order as directed by Buyer. Any dispute over any question of fact or law arising under this Purchase Order shall be governed by the laws of the Commonwealth of Virginia. Seller consents to personal jurisdiction in Virginia and any litigation under this Order, if commenced by Seller, must be brought exclusively in a court of competent jurisdiction in the Commonwealth of Virginia, without regard to conflicts of law principles. The parties hereby mutually agree to waive their respective rights to trial by jury. The rights and remedies herein reserved to Buyer shall be cumulative and additional to any other or further rights and remedies provided in law or equity.</p>
+
+      <h3>Independent Contractor.</h3>
+      <p>Seller is an independent contractor in all its operations and activities hereunder. The employees utilized by Seller to perform work under this Order shall be Seller&rsquo;s employees exclusively without any relation whatsoever to Buyer.</p>
+
+      <h3>Retention of Records; Audits.</h3>
+      <p>Unless a longer period is specified in this Order or by law or regulation, and except as otherwise directed by Buyer, Seller shall retain all records related to this Order for three (3) years from the date of final payment received by Seller. At no additional cost, Seller shall provide timely access to such records to the US Government and/or Buyer upon request.</p>
+
+      <h3>Entire Agreement.</h3>
+      <p>The Parties agree that this Purchase Order, including all attachments, shall constitute the entire agreement and understanding between the Parties hereto and shall supersede and replace any and all prior or contemporaneous representations, agreements or understandings of any kind, whether written or oral, relating to the subject matter hereof. No terms or conditions of sale set forth in Seller&rsquo;s quotation or acknowledgement shall be included as a part hereof, nor shall any prior course of dealing, custom, or usage in the trade supersede or modify any Purchase Order provisions.</p>
+
+      <h3>Assignments and Subcontracting.</h3>
+      <p>No part of this Order may be assigned or subcontracted without the prior written approval of Buyer.</p>
+
+      <h3>Notice.</h3>
+      <p>Any notices required or permitted to be given hereunder shall be in writing and shall be deemed to be duly given when received if sent by mail to each party&rsquo;s address as stated on this Order, or when delivered by hand or by facsimile transmission if the transmittal report indicates that the facsimile was sent successfully.</p>
+
+      <h3>No Waiver.</h3>
+      <p>Buyer&rsquo;s failure to insist upon or enforce strict compliance by Seller with respect to any aspect of this Purchase Order shall not be deemed a waiver or relinquishment to any extent of any of Buyer&rsquo;s right to assert or rely upon any such provisions or rights in that or any other instance, or as a waiver of any Seller obligation or Buyer right provided under the Order or by law. No right or remedy of Buyer shall be deemed waived or released unless such waiver or release is in writing and signed by an authorized representative of Buyer.</p>
+
+      <h3>Order of Precedence.</h3>
+      <p>Conflicting provisions hereof, if any, will be resolved by (1) first giving precedence to any provision granting greater rights or remedies to the Buyer, or imposing the greater duty, standard, responsibility or obligations on the Seller; and (2) second, if the conflict cannot be resolved by item (1) herein, by giving precedence to the provisions in the following order: (a) the Purchase Order and any continuation pages thereof; (b) these Standard Terms &amp; Conditions; (c) the U.S. Government Clauses set forth in Appendix A; (d) any attachments to these Terms and Conditions; and (e) statements of work, specifications, and drawings. In the event of any ambiguity, discrepancy, or conflict in any of the requirements, Seller shall immediately contact Buyer for a resolution.</p>
+
+      <h2>Appendix A – U.S. Government Clauses</h2>
+      <p>This Order incorporates the following FAR, DFARS &amp; Agency clauses by reference. The clauses have the same force and effect as if they were given in full text. The full text of the clauses can be accessed at: <a href="http://www.acquisition.gov/far/" target="_blank" rel="noopener">acquisition.gov/far</a> and, upon written request, Buyer will provide the Seller the full text copy of the clauses.</p>
+      <p>If the date of any of the clauses listed below differs from the date of the clause incorporated in the Prime Contract (or if the Prime Contract incorporates an Alternate version), the version incorporated in the Prime Contract shall apply instead.</p>
+      <p>Seller shall incorporate these flow-down clauses in any lower-tier Order approved under this Order.</p>
+      <p>Unless otherwise specified below, the terms below shall have the following meaning in the clauses referenced herein:</p>
+      <ul>
+        <li>&ldquo;Disputes&rdquo; clause shall mean the Disputes clause of this Order</li>
+        <li>&ldquo;Commercial Item&rdquo; means a Commercial Item as defined in FAR 2.101.</li>
+        <li>&ldquo;Commercially available off-the-shelf (COTS) item&rdquo; means a COTS item as defined in FAR 2.101</li>
+        <li>&ldquo;Contract&rdquo; means this Order</li>
+        <li>&ldquo;Contracting Officer&rdquo; shall mean the United States Government Contracting Officer for the Prime Contract.</li>
+        <li>&ldquo;Contractor&rdquo; or &ldquo;Offeror&rdquo; shall mean Seller.</li>
+        <li>&ldquo;Prime Contract&rdquo; shall mean the Prime Contract.</li>
+        <li>&ldquo;Subcontract&rdquo; shall mean any contract placed by Prime Contractor or its lower-tier subcontractors under this Order</li>
+      </ul>
+      <p>Seller agrees that upon request of Buyer it will negotiate in good faith with Buyer relative to changes amending this Purchase Order to incorporate additional provisions herein or to change provisions hereof, as Buyer may reasonably deem necessary in order to comply with the provisions of the applicable Prime Contract or with the amendments to that Prime Contract. If any such amendment to this Purchase Order causes an increase or decrease in cost or schedule for any of the work under this Purchase Order, and equitable adjustment may be made pursuant to the &ldquo;Changes&rdquo; clause in this Purchase Order.</p>
+      <p>DFARS 227.7202, entitled Commercial Computer Software and Commercial Computer Software Documentation, shall govern the acquisition of Commercial Computer Software.</p>
+      <p>If any designs, drawings, equipment, tooling, engineering data, or other technical data or proprietary information which the US Government owns or has the right to authorize the use of are furnished by the Buyer to the Seller, nothing herein shall be construed to mean that BUYER, acting on its own behalf, may modify or limit any rights the Government may have to authorize Seller&rsquo;s use of such Furnished Items in support of other US Government prime contracts.</p>
+      <p>If the Government Contracting agency is other than the Department of Defense, the applicable clauses of such Contracting agency that supplement the FAR clauses cited below are hereby incorporated by reference, and the DFARS clauses cited below are hereby deemed deleted.</p>
+      <p>Communication/notification required under this clause from/to Seller from the Contracting Officer shall be through the Buyer.</p>
+      <p>The Seller shall comply with the following Federal Acquisition Regulation (FAR) clauses, which are incorporated in this Purchase Order by reference, for the acquisition of Commercial Items (as defined in FAR 2.101).</p>
+
+      <div class="clause-table">
+        <table>
+          <thead>
+            <tr><th>FAR Reference</th><th>Clause Title (Date)</th><th>Applicability</th></tr>
+          </thead>
+          <tbody>
+            {dodFar.map((row) => (
+              <tr>
+                <td>{row.ref}</td>
+                <td>{row.title}</td>
+                <td>{row.applicability}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p>The Seller shall comply with the following Defense Federal Acquisition Regulation (DFAR) clauses, which are incorporated in this Purchase Order by reference, for the acquisition of Commercial Items (as defined in FAR 2.101).</p>
+
+      <div class="clause-table">
+        <table>
+          <thead>
+            <tr><th>DFARS Reference</th><th>Clause Title (Date)</th><th>Applicability</th></tr>
+          </thead>
+          <tbody>
+            {dodDfars.map((row) => (
+              <tr>
+                <td>{row.ref}</td>
+                <td>{row.title}</td>
+                <td>{row.applicability}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle" narrow id="non">
+    <div class="prose">
+      <p>
+        CTG Federal, LLC<br />
+        Terms &amp; Conditions for Subcontracts/Purchase Orders for Commercial Items Purchased in Support of
+        a U.S. Government Contract<br />
+        (Non-DoD)
+      </p>
+      <p>
+        The following terms and conditions apply to Purchase Orders for commercial items purchased in
+        support of a U.S. Government contract. These terms and conditions, and the Purchase Order issued in
+        support of a U.S. Government contract to which these terms and conditions are attached (collectively
+        referred to as the &ldquo;Order&rdquo;), represent the entire agreement between CTG Federal, LLC,
+        hereinafter referred to as &ldquo;Buyer,&rdquo; and the company (&ldquo;Seller&rdquo;) listed on the
+        Purchase Order for the purchase of commercial goods and services (&ldquo;Goods and Services&rdquo;)
+        in support of Seller&rsquo;s customer (&ldquo;Customer&rdquo;).
+      </p>
+
+      <h3>Definitions</h3>
+      <p>As used in this Purchase Order, the below terms shall have the following meanings:</p>
+      <ul>
+        <li>&ldquo;Buyer&rdquo; means CTG Federal, LLC.</li>
+        <li>&ldquo;Seller&rdquo; means the party identified on the Purchase Order, with whom Buyer is contracting for the procurement of the Supplies.</li>
+        <li>&ldquo;Purchase Order&rdquo; and &ldquo;Order&rdquo; are used interchangeably and refer to this contractual instrument.</li>
+        <li>&ldquo;Customer&rdquo; means the party who issued the prime contract or higher tier subcontract to Buyer.</li>
+        <li>&ldquo;Government&rdquo; means the United States Government.</li>
+        <li>&ldquo;Prime Contract&rdquo; means Buyer&rsquo;s prime contract with the U.S. Government, or higher tier subcontract, with Buyer&rsquo;s Customer, under which this Purchase Order is issued.</li>
+        <li>&ldquo;Supplies&rdquo; means what the Seller is contracted to furnish to Buyer under this Purchase Order and includes, without limitation, the following:</li>
+        <li>&ldquo;The work,&rdquo; &ldquo;materials,&rdquo; &ldquo;articles,&rdquo; &ldquo;deliverable items,&rdquo; &ldquo;items,&rdquo; &ldquo;data,&rdquo; and &ldquo;services,&rdquo; whether tangible or intangible, or any combination thereof; and</li>
+        <li>What is leased or licensed, pursuant to the lease(s) or license(s) signed by both Seller and the Buyer if attached to and made a part of this Purchase Order.</li>
+        <li>&ldquo;Service&rdquo; means products, supplies, engineering support, data or services (including software and software documentation) provided by Seller.</li>
+        <li>&ldquo;Commercial Item&rdquo; means a commercial item as defined in FAR 2.101</li>
+      </ul>
+
+      <h3>Order and Acceptance.</h3>
+      <ul>
+        <li>All communication regarding fulfillment of this Order shall be addressed via email to the Buyer&rsquo;s representative referenced on this Order.</li>
+        <li>This Purchase Order supersedes any prior offers, negotiations, and agreements concerning the subject matter herein and constitutes the entire agreement between Buyer and Seller.</li>
+        <li>Seller must provide notification of receipt of Order within 24 hours and email confirmation of the Order prior to delivery. If the Purchase Order indicates a DPAS Rating (Priority Rating), the seller must notify CTG Federal within one (1) business day if the rated order cannot be accepted and processed accordingly, for any reason.</li>
+        <li>Where Seller fails to email an acknowledgement and confirmation of this Order as requested, this Purchase Order becomes a binding agreement, subject to the specific terms and conditions stated herein, upon, Seller&rsquo;s performance, including, but not limited to, providing any part of the goods or services under this Purchase Order or accepting payment under this Purchase Order.</li>
+        <li>By accepting the Purchase Order, Seller agrees to the incorporation of these terms into the Purchase Order and no condition or additional terms stated or purportedly incorporated by reference by Seller in accepting or acknowledging this Purchase Order will be binding upon Buyer if it is in conflict with, is inconsistent with, or is in addition to the Terms and Conditions contained herein unless expressly accepted in writing by Buyer.</li>
+        <li>No change, modification or revision to this Purchase Order shall be valid and binding unless expressly agreed to in writing and signed by the authorized representative of Buyer.</li>
+      </ul>
+
+      <h3>Changes.</h3>
+      <ul>
+        <li>Buyer may, at any time, in writing, make changes to this order. If any such change causes an increase or decrease in the cost or time required for performance of the work, Seller shall promptly notify buyer and the price and/or delivery schedule shall be equitably adjusted and the Purchase Order so modified. Seller shall commence any such change pending such modification. Seller must assert its right to an equitable adjustment in the purchase order price or delivery schedule under this clause for changes to this purchase order within thirty (30) days from the date of receipt of BUYER&rsquo;s written change order.</li>
+        <li>No one other than an authorized representative of Buyer has the authority to approve any amendments or changes to this Order. BUYER technical personnel may from time-to-time render assistance or give technical advice or discuss or effect exchange or information with Seller&rsquo;s personnel concerning work hereunder. No such action taken by Seller, whether or not accomplished with the concurrence of any Buyer&rsquo;s employees shall be deemed a change order and shall not entitle Seller to an equitable adjustment, unless such action is specifically directed by a written notice issued by an authorized representative of Buyer.</li>
+      </ul>
+
+      <h3>Quantities, Content, and Quality.</h3>
+      <p>It is Seller&rsquo;s responsibility to furnish the proper quantities, labor categories, equipment, and other items called for by this Order. No variation in quantity, quality or affecting form, fit, or function specified herein will be accepted as compliant with this Order. Buyer reserves the right to reject in whole or in part any varied quantities, equipment type or other elements of items in this Order. Buyer reserves the right to revoke acceptance if made without actual knowledge of any varied quantities, equipment type or other elements or items in this Order. Any approvals by Buyer shall not relieve Seller of responsibility for any error or deficiencies that may exist, or for performing the work and furnishing the Supplies and/or Services in strict accordance with the Purchase Order requirements.</p>
+
+      <h3>No Extras/Extra Charges.</h3>
+      <ul>
+        <li>Work shall not be supplied in excess of the quantities specified in this Order. Seller shall be responsible for handling charges and return shipment costs for any excess quantities.</li>
+        <li>The total price payable to Seller for Supplies furnished hereunder shall be stated in this Order. No extra charges of any kind shall apply to this Order, including without limitation, amounts for (i) any future price increases, (ii) the cost of any permits fees or licenses required for the goods and/or services to be delivered hereunder, (iii) premium transportation charges, (iv) service or carrying charges, or (v) packing, packaging, boxing, crating, palletizing, or reusable containers.</li>
+        <li>Except as may be otherwise provided in this Purchase Order, the prices herein include all Federal, State and local taxes applicable to the goods purchased herein. Any taxes not included on the quote from the seller are the responsibility of the seller if imposed. All taxes, (including but not limited to: TERO, sales or Excise taxes) paid under this Purchase Order must be accompanied with a receipt and sent with all invoices.</li>
+      </ul>
+
+      <h3>Inspection/Testing.</h3>
+      <p>Payment for the goods delivered hereunder shall not constitute acceptance thereof. Buyer shall have the right to inspect such goods and to reject any or all of said goods that are in Buyer&rsquo;s judgment defective or nonconforming. Goods rejected and goods supplied in excess of quantities called for herein may be returned to Seller at its expense and, in addition to Buyer&rsquo;s other rights, Buyer may charge Seller all expenses of unpacking, examining, repacking, and reshipping such goods. In the event Buyer receives goods whose defects or nonconformity is not apparent on examination, Buyer reserves the right to require replacement, as well as payment of damages. Nothing contained in this Purchase Order shall relieve in any way the Seller from the obligation of testing, inspection and quality control.</p>
+
+      <h3>Audit/Inspection Right.</h3>
+      <p>Acceptance of Goods and Services under this Purchase Order is subject to the inspection of both Buyer and its Customer. Goods and Services that are either defective, delayed, or otherwise fail to conform to the specifications in the Purchase Order may be rejected. When Seller receives notification of rejection of Goods or Services, Seller shall provide Buyer with instructions for the return of Goods at Seller&rsquo;s exclusive expense. Seller shall not replace any rejected Goods or re-perform Services without the authorized express written and signed consent of Buyer.</p>
+
+      <h3>Remedies for Defects.</h3>
+      <p>If any of the Supplies are found to be defective in material or workmanship, or otherwise not in conformity with the requirements of this Order, Buyer (in addition to any other rights which it may have under warranties or otherwise) may at its option (1) accept all or part of the Supplies with an equitable price reduction; or (2) reject and return such Supplies at Seller&rsquo;s expense, and require Seller, at Seller&rsquo;s expense, to make all repairs, modifications or replacements necessary to bring the Supplies into compliance with the requirements of this Order. Seller shall not re-tender rejected work without disclosing corrective action taken. If Seller fails promptly to remove such Supplies that are required to be removed, or promptly to replace or correct such Supplies, Buyer may either (1) by Purchase Order or otherwise replace or correct such Supplies and charge to Seller the cost occasioned to Buyer thereby, or (2) may terminate this Purchase Order for default; and in either event may charge Seller the costs of damages occasioned to Buyer thereby. Seller shall not re-tender rejected Supplies without disclosing the corrective action taken.</p>
+
+      <h3>Packaging and Packing.</h3>
+      <p>Seller will be responsible for properly packing and packaging the goods in suitable containers for protection during shipment in accordance with transportation regulations and good commercial practice. Buyer&rsquo;s order number must be plainly marked on all invoices, packages, bills of lading, and shipping orders. Packing lists will accompany each shipment showing materials.</p>
+
+      <h3>Shipment.</h3>
+      <p>If in order to comply with Buyer&rsquo;s required delivery date, it becomes necessary for Seller to ship by a more expensive way than specified in this Purchase Order, any increased transportation costs resulting therefrom shall be paid for by Seller unless the necessity for such rerouting or expedited handling has been caused by Buyer.</p>
+
+      <h3>Delivery.</h3>
+      <p>Time is of the essence of this Contract and if delivery of goods or rendering of services is not completed by the time promised, Buyer reserves the right, without liability in addition to its other rights and remedies, to terminate this Contract by notice effective when received by Seller as to goods not yet shipped or services not yet rendered and to purchase substitute goods or services elsewhere and charge Seller with any loss incurred. Seller shall properly mark each package with the Purchase Order Number, part number, serial number, quantity and where multiple packages comprise a single shipment, each package shall also be consecutively numbered. The Purchase Order number, part number, and serial number shall be shown on packing slips, bills of lading and invoices. Delivery shall be made in the quantities and at the time specified by Buyer. Buyer shall include with each package a certificate of conformance certifying that the Goods and Services conform to all specifications set forth in the Purchase Order. Seller agrees that Buyer and Customer reserve the right to refuse shipments of defective, damaged or nonconforming Goods, quantities of Goods that differ from the amount ordered, and shipments delivered either before or after the scheduled delivery date set forth in the Purchase Order. In such case, Buyer shall not be responsible for Goods delivered in excess of the quantities specified in the Purchase Order.</p>
+
+      <h3>Original Equipment from Manufacturer (OEM).</h3>
+      <p>All material, including material incorporated into the Goods delivered under this Purchase Order must be procured from the original equipment or component manufacturer (OEM/OCM), or the OEM/OCM&rsquo;s authorized distributor. Independent distributors or brokers are not acceptable suppliers and shall not be used to provide product delivered under this Purchase Order.</p>
+
+      <h3>Counterfeit Parts.</h3>
+      <p>Seller warrants that it has policies and procedures in place (or similar measures in the absence of such policies and procedures) to ensure that none of the supplies or materials furnished under this Order are &ldquo;suspect or counterfeit parts&rdquo; and certifies to the best of its knowledge and belief that no such parts shall be furnished to Buyer. For the purposes of this Order, &ldquo;suspect or counterfeit parts&rdquo; refers to any parts, including those of new manufacture, that are misleadingly labeled to provide the impression that they are of a different class or quality or from a different source than is actually the case, or that represent gray market parts. Suspect or counterfeit parts also refer to refurbished parts, complete with false labeling, that are represented as new parts. Any parts that are designated as suspect by the US Government, such as parts listed in alerts published by the Defense Contract Management Agency under the Government-Industry Data Exchange Program (GIDEP) are also considered suspect or counterfeit parts. If Buyer reasonably determines that Seller has supplied suspect or counterfeit parts, Buyer shall notify Seller and Seller shall immediately replace the suspect or counterfeit parts with parts acceptable to Buyer. Notwithstanding any other provision contained herein, Seller shall be liable for all costs, fees, and penalties incurred by Buyer associated in any way with the removal and replacement of the suspect or counterfeit parts, including without limitation Buyer&rsquo;s external and internal costs of removing such suspect or counterfeit parts, of reinserting replacement parts and of any testing necessitated by the reinstallation of Seller&rsquo;s goods after suspect or counterfeit parts have been exchanged. The warranties provided by Seller under this paragraph shall survive any termination or expiration of this Order.</p>
+
+      <h3>Section 508 Compliance of Accessibility of Information Technology.</h3>
+      <p>Section 508 Compliance of Accessibility of Information Technology. All electronic and information technology (EIT) procured under this Purchase Order must meet any applicable accessibility standards, including but not limited to those for U.S. federal procurement at 36 CFR 1194, unless the procuring government agency establishes a published exception to this requirement. 36 CFR 1194 implements Section 508 of the Rehabilitation Act of 1973, as amended, and is viewable, with implementing provisions of the Federal Acquisition Regulation, at <a href="https://www.section508.gov" target="_blank" rel="noopener">www.section508.gov</a>. The Seller shall indicate for each line item in the schedule whether each product or service is compliant or non-compliant with the accessibility standards, including (where applicable) those at 36 CFR 1194; in presenting this information, the Seller may use the Voluntary Product Accessibility Template (VPAT) referenced at: <a href="https://www.itic.org/policy/accessibility/vpat" target="_blank" rel="noopener">itic.org/policy/accessibility/vpat</a>. Further, the Seller must indicate where full details of compliance can be found (e.g., Seller&rsquo;s website or other exact location).</p>
+
+      <h3>Confidential Information.</h3>
+      <ul>
+        <li>Supplemental to any existing Nondisclosure or Confidential Information Agreement between the parties, all information including, but not limited to drawings, prints, publications, specifications, process manufacturing techniques, software products and programs (in object code or any other form), and other Intellectual Property, provided by the Buyer to the Seller, or by Seller to Buyer, prior to and during the performance of this order that is identified as proprietary or confidential to the disclosing party will be received in confidence by the receiving party and will remain the property of the disclosing party. Neither party will reproduce, distribute or disclose the other party&rsquo;s proprietary information without written consent, provided, however, Buyer is authorized to reproduce, distribute, and disclose Seller&rsquo;s proprietary information to Buyer&rsquo;s customers, subcontractors, or other parties as necessary to use to complete any of the work under this Contract.</li>
+        <li>The receiving party may use the disclosing party&rsquo;s proprietary information solely as required to perform its obligations or to exercise its rights under this order. The receiving party may disclose the disclosing party&rsquo;s proprietary information to those of its employees or employees of the disclosing party&rsquo;s affiliate who have a &ldquo;need to know&rdquo; the proprietary information to perform its obligations and exercise its rights under this order; provided that: (a) such persons are made aware of the obligations under this order and are bound by written agreements or professional obligations prohibiting the unauthorized disclosure or use of proprietary information that are at least as protective as the terms of this order; and (b) the receiving party remains liable for the acts and omissions of such affiliate with respect to the proprietary information of the disclosing party. Each party will take all reasonable measures to protect the other party&rsquo;s proprietary information, but in no case will that be less than reasonable care. Upon completion of the order, all proprietary information, including digital and hard copies, will be provided to the original disclosing party, or destroyed, at that party&rsquo;s election. A party will not be required to hold the foregoing obligations of confidentiality with respect to proprietary information that (w) was in such party&rsquo;s possession prior to its receipt from the other party, (x) is or becomes publicly known through no fault of the receiving party, (y) is obtained from a third party who had a right to disclose it, or (z) was or is independently developed without access to any proprietary information of the other party.</li>
+      </ul>
+
+      <h3>Warranty.</h3>
+      <p>Seller expressly warrants that all goods or services furnished under this Agreement shall conform to all specifications and appropriate standards, will be new, and will be free from defects in material or workmanship. Seller warrants that all such goods or services will conform to any statements made on the containers or labels or advertisements for such goods, or services, and that any goods will be adequately contained, packaged, marked and labeled. Seller warrants that all goods or services furnished hereunder will be merchantable, and will be safe and appropriate for the purpose for which goods or services of that kind are normally used. If Seller knows or has reason to know the particular purpose for which Buyer intends to use the goods or services, Seller warrants that such goods or services will be fit for such particular purpose. Seller warrants that goods or services furnished will conform in all respects to samples. Inspection, test, acceptance or use of the goods or services furnished hereunder shall not affect the Seller&rsquo;s obligation under this Warranty, and such warranties shall survive inspection, test, acceptance and use. Seller&rsquo;s warranty shall run to Buyer, its successors, assigns and customers, and users of goods sold by Buyer. Seller agrees to replace or correct defects of any goods or services not conforming to the foregoing warranty promptly, without expense to Buyer, when notified of such nonconformity by Buyer, provided Buyer elects to provide Seller with the opportunity to do so. In the event of failure of Seller to correct defects in or replace nonconforming goods or services promptly, Buyer, after reasonable notice to Seller, may make such corrections or replace such goods and services and charge Seller for the cost incurred by Buyer in doing so.</p>
+
+      <h3>Price Warranty.</h3>
+      <p>Seller warrants that the prices for the goods sold Buyer hereunder are not less favorable than those currently extended to any other customer for the same or similar goods in similar quantities. In the event Seller reduces its price for such goods during the term of this Order, Seller agrees to reduce the prices hereof correspondingly. Seller warrants that prices shown on this Purchase Order shall be complete, and no additional charges of any type shall be added without Buyer&rsquo;s express written consent. Such additional charges include, but are not limited to, shipping, packaging, labeling, custom duties, taxes, storage, insurance, boxing, crating.</p>
+
+      <h3>Invoices.</h3>
+      <p>An itemized invoice shall be submitted electronically as outlined on Buyer&rsquo;s purchase order. Invoices should be properly formatted with all accompanying items noted on Buyer&rsquo;s purchase order under section labeled &ldquo;Invoicing Instructions.&rdquo; Invoices that do not comply with Buyer&rsquo;s Invoicing Instructions shall be rejected. Buyer shall not be responsible for and Seller shall not invoice Buyer for interest or carrying charges.</p>
+
+      <h3>Payment Terms.</h3>
+      <ul>
+        <li>Unless otherwise specified in this Purchase Order, terms of payment are &ldquo;Net 60 days.&rdquo; If a discount for prompt payment of Seller&rsquo;s invoice is allowed, payment shall be made within the allowable period to qualify for such discount. The time allowable for payment shall begin after both of the following requirements are met: (a) all items required under Buyer&rsquo;s Invoicing Instructions have been provided to and accepted by Buyer and (b) delivery and Customer acceptance of conforming Supplies. Buyer reserves the right to reject any invoices or adjust Net payment terms based upon missing or incorrect information.</li>
+        <li>Each payment made shall be subject to reduction to the extent of amounts which are found by Buyer or Seller to not have been properly payable, and shall also be subject to reduction for overpayments. Seller shall promptly notify Buyer of any such overpayments and remit the overpaid amount except as otherwise directed by Buyer.</li>
+        <li>Payment shall be deemed to have been made as of the date of mailing Buyer&rsquo;s payment or electronic funds transfer.</li>
+        <li>Unless otherwise specified and agreed to in the Purchase Order, prices include all applicable federal, state, and local taxes, duties, tariffs, and similar government-imposed fees, all of which shall be listed separately on the invoice. Only items and amounts identified on the Purchase Order or otherwise agreed to in writing between the Buyer and Seller shall be included on Seller&rsquo;s invoice.</li>
+      </ul>
+
+      <h3>Right to Use/Title.</h3>
+      <ul>
+        <li>Seller shall provide to Buyer and/or the Customer unencumbered rights to use any software products and unencumbered title for any other products, property or service delivered by Seller under this Purchase Order. Seller shall disclose to Buyer in writing a Free, Libre and Open Source Software (FLOSS) that will be used or delivered in connection with this Purchase Order and obtain Buyer&rsquo;s written consent before using or delivering such FLOSS in connection with the is Purchase Order.</li>
+        <li>Seller agrees to full indemnify and hold Buyer harmless from and against all claims made against Buyer resulting from or related or incidental to encumbrances of right to use or unencumbered title or other rights claimed by third parties upon items provided by Seller. Seller agrees upon receipt of notification to promptly assume full responsibility for defense of any suit or proceeding which may be brought against Buyer or its agents, customers, or other vendors for alleged patent infringement, as well as for any alleged unfair competition resulting from similarity in design, trademark or appearance of goods or services furnished hereunder, and Seller further agrees to indemnify Buyer, its agents and customers against any and all expenses, losses, royalties, profits and damages including court costs and attorney&rsquo;s fees resulting from any such suit or proceeding, including any settlement. Buyer may be represented by and actively participate through its own counsel in any such suit or proceeding if it so desires, and the costs of such representation shall be paid by Seller.</li>
+      </ul>
+
+      <h3>Insurance.</h3>
+      <p>Seller will carry or obtain insurance as required by the Buyer, at Seller&rsquo;s sole cost and expense, prior to commencement and throughout the entire period of Contract performance. Such insurance will include, at a minimum:</p>
+      <ul>
+        <li>Commercial General Liability with limits of no lower than $1,000,000 per occurrence and of $2,000,000 aggregate for personal injury, bodily injury, and property damage,</li>
+        <li>If licensed vehicles will be used in connection with the performance of the work, Seller will maintain Business Automobile Liability insurance covering all vehicles, whether owned, hired, rented, borrowed, or otherwise, with available limits of not less than $1,000,000 per occurrence combined single limit,</li>
+        <li>Employer Liability Insurance coverage with a limit no less than $1,000,000 per claim, and</li>
+        <li>Employee Workers&rsquo; Compensation insurance as may be required by law, regulation, or ordinance.</li>
+      </ul>
+      <p>Should Seller be required to perform on Buyer&rsquo;s or a third party&rsquo;s premises at Buyer&rsquo;s request, Seller will include Buyer as a named insured on its Commercial General Liability policy. Seller will provide a certificate of insurance upon request.</p>
+
+      <h3>Indemnification.</h3>
+      <p>Seller shall defend, indemnify and hold harmless Buyer against all damages, claims or liabilities and expenses (including attorney&rsquo;s fees) arising out of or resulting in any way from any defect in the goods or services purchased hereunder, any breach of the terms and conditions of this Order, or from any act or omission of Seller, its agents, employees or subcontractors. This indemnification shall be in addition to the warranty obligations of Seller.</p>
+
+      <h3>Limit on Buyer&rsquo;s Liability-Statute of Limitations.</h3>
+      <p>In no event shall Buyer be liable for anticipated profits or for incidental or consequential damages. Buyer&rsquo;s liability on any claim of any kind for any loss or damage arising out of or in connection with or resulting from this Agreement or from the performance or breach thereof shall in no case exceed the price allocable to the goods or services or unit thereof which gives rise to the claim.</p>
+      <p>Buyer shall not be liable for penalties of any description. Any action resulting from any breach on the part of Buyer as to the goods or services delivered hereunder must be commenced within one year after the cause of action has accrued.</p>
+
+      <h3>Title and Risk of Loss.</h3>
+      <p>Unless otherwise provided in this Purchase Order, the F.O.B. point shall be the delivery destination indicated in this Order, and title to the Supplies and risk of loss or damage shall pass to Buyer upon Buyer&rsquo;s and Customer&rsquo;s acceptance of the Supplies regardless of where Buyer takes physical possession and in accordance with the FAR Inspection Clauses identified herein.</p>
+
+      <h3>Stop Work Order.</h3>
+      <p>Buyer may, at any time, by written notice to Seller, stop all or any part of the work hereunder for up to ninety (90) days. Upon receiving such notice, Seller shall immediately comply with its terms and take all reasonable steps to avoid incurring any additional cost allocable to such work. Within ninety (90) days after the effective date of the stop work order, Buyer shall either cancel the stop work order or terminate this Order in whole or in part as permitted by this Order. If a stop work order is issued, Buyer shall modify the delivery schedule and/or price in this Order as Buyer deems equitable under the circumstances, provided Seller requests such change within ten (10) days of the end of the stop work order.</p>
+
+      <h3>Termination.</h3>
+      <ul>
+        <li>Termination for Convenience. Buyer may, by written notice to Seller terminate in whole or in part this Purchase Order for convenience if Buyer&rsquo;s Customer has terminated its order. Termination shall be effective upon the date set forth in the termination notice. In the event of such termination, Seller shall immediately stop all work hereunder and shall immediately cause any and all of its suppliers and subcontractors to cease work. Seller shall not be paid for any work done after receipt of the notice of termination, nor for any costs incurred by Seller&rsquo;s suppliers or subcontractors which Seller could reasonably have avoided.</li>
+        <li>Termination for Default. Buyer may terminate all or any part of this Purchase Order by written notice to Seller if: (i) Seller fails to provide the Item or support services within the time specified by this Purchase Order or any written extension authorized by Buyer; (ii) Seller fails to perform any other provision of this Purchase Order or fails to make progress, so as to endanger performance of this Purchase Order and, in either of these two circumstances, does not cure the failure to Buyer&rsquo;s satisfaction within ten days after receipt of notice from Buyer specifying the failure. Buyer may immediately terminate this Purchase Order in the event Seller declares bankruptcy, suspends its business operation, or initiates any reorganization and/or arrangement for the benefit of its creditors.</li>
+        <li>In the event of termination, Buyer&rsquo;s sole financial obligation to Seller shall be to pay for any Supplies or Services delivered to Buyer consistent with the terms of this Purchase Order. Buyer shall have no obligation to Seller for payment of any costs, fees, or expenses relating to its exercise of its termination rights hereunder, including but not limited to termination, restocking, demobilization. Buyer and Seller shall agree on the amount of payment for in process materials, title to which has been transferred and delivered to Buyer. Seller shall not be paid for any work performed or costs incurred that reasonably could have been avoided. Failure to agree shall be a dispute and shall be settled under the Disputes provision of this Purchase Order. Seller must submit all claims within sixty calendar days after the effective date of termination. In no event shall Buyer be obligated to pay Seller any amount in excess of the Purchase Order price.</li>
+      </ul>
+
+      <h3>Survivability.</h3>
+      <p>Any provision of these Terms and Conditions that imposes or contemplates continuing obligations on a party will survive the expiration or termination of the Purchase Order.</p>
+
+      <h3>Seller Contact with Buyer&rsquo;s Customer and Other Third Parties.</h3>
+      <ul>
+        <li>Unless specifically authorized in writing by Buyer, Seller shall not discuss this Order with third parties, including Buyer&rsquo;s Customer. Seller shall immediately notify the Buyer in writing, if at any time the Seller believes the Buyer&rsquo;s Customer is effecting a change to the Seller&rsquo;s scope of work under this Order or otherwise directs the Seller in any way. Seller is prohibited from agreeing to any changes or assuming obligations on behalf of the Buyer.</li>
+        <li>This clause does not prohibit Seller from communicating with the Government with respect to (i) matters unrelated to this Order; (ii) matters that Seller is required by law or regulation to communicate to the Government; (iii) fraud, waste or abuse communicated to a designated investigative or enforcement representative of a Federal department or agency authorized to receive such information; or (iv) any matter for which this Order (including any incorporated FAR provision) expressly provides for direct communication by Seller to the Government.</li>
+      </ul>
+
+      <h3>Force Majeure.</h3>
+      <p>Buyer shall not be liable for delay or failure of performance occasioned by causes beyond its control, including, but not limited to, acts of God or the public enemy, actions or decrees of governmental entities, civil unrest, riots, acts of terrorism, organized labor strikes, declared or undeclared war, fire, floods, unusually severe weather, earthquakes, or volcanoes (&ldquo;Force Majeure Event&rdquo;). If Buyer is affected by a Force Majeure Event, Buyer shall give written notice to Seller, which shall cause, without penalty to Buyer, all obligations under this Order to be immediately suspended for a period of sixty (60) days. If the period of suspension caused by the Force Majeure Event exceeds that first sixty-day period, Buyer either may terminate the Order for convenience in accord with Section 26.1 or issue a Stop Work Order for an additional period under Section 25. Any termination settlement or equitable adjustment sought by Seller following the termination for convenience or Stop Work Order may not include any costs incurred during the first sixty-day suspension.</p>
+
+      <h3>Applicable Laws.</h3>
+      <p>This Purchase Order will be governed by and construed in accordance with the laws of the Commonwealth of Virginia, without regard to its conflict of laws provisions, except that any provision in this Contract that is (i) incorporated in text or by reference from the Federal Acquisition Regulation (FAR) or Defense Federal Acquisition Regulation Supplement (DFARS) or (ii) incorporated by text or reference any agency or regulation that supplements the FAR or DFARS or (iii) that is substantially based on any such agency regulation or FAR clause or DFARS clause, will be construed and interpreted according to federal common law of Government contracts as applied by federal judicial bodies, boards of contract appeals, and quasi-judicial agencies of the federal Government. The United Nations&rsquo; Convention for the International Sale of Goods is expressly excluded from this Order, and shall have no force or effect on the Parties.</p>
+
+      <h3>Compliance with Laws.</h3>
+      <p>Seller warrants that it will comply with all applicable national, state and local laws and regulations, including without limitation, the Procurement Integrity Act, 41 U.S.C. 423, and its implementing regulations. Seller shall immediately report to Buyer any information concerning violation of applicable law or regulation pertaining to the performance of this Order and shall provide Buyer any information and/or certifications reasonably requested and related to its compliance with applicable laws and regulations. Seller agrees to indemnify and hold Buyer harmless against any loss or liability due to Seller&rsquo;s violation or noncompliance with such laws and regulations.</p>
+      <p>Seller also agrees that in connection with activities under this Agreement it shall not make or promise to make any improper payments, or provide or offer to provide anything of value, directly or indirectly, to government officials or other parties in violation of the Foreign Corrupt Practices Act or other applicable anti-bribery laws or regulations to which Seller may be subject.</p>
+      <p>Seller accepts all mandatory U.S. Government flow down clauses under the Prime Contract. If, through mistake or otherwise, such provisions or &ldquo;flow down&rdquo; clauses are not inserted or are incorrectly inserted in this Purchase Order, then this Purchase Order shall promptly be amended so as to comply with the requirements of the Prime Contract. The FAR and DFARS clauses referenced in Appendix A are incorporated herein by reference, with the same force and effect as if they were given in full text, and are applicable, including any notes following the clause citation, to this Contract. The Seller agrees to flow down all applicable FAR and DFARS clauses to its lowest tier suppliers/subcontractors.</p>
+
+      <h3>Compliance with Export Control Laws and Regulations.</h3>
+      <ul>
+        <li>Seller, at its sole expense, shall comply with all applicable U.S. export control laws and regulations in the performance of this Order, including, but not limited to, the International Traffic in Arms Regulations (ITAR), 22 CFR Parts 120 to 130, the Export Administration Regulations (EAR) 15 CFR Parts 730 through 799, and with all other laws, regulations, or executive orders of the United States related to the import, export, or delivery of goods or services contemplated by this Order such as customs laws and regulations, immigration laws and regulations, etc.</li>
+        <li>Seller, at its sole expense, agrees to determine and comply with all export license requirements, to obtain any export license or other official authorization, and to carry out any customs or immigration formalities or similar requirements for the export of any goods or services covered by this Order. Seller also hereby expressly agrees to bear sole responsibility for obtaining export licenses, if required, before utilizing foreign persons (as defined in 22 CFR § 120.16) in the performance of this Order, including instances where the work is to be performed on-site at any Government installation, where the foreign person will have access to export-controlled technical data, equipment or software. Seller also agrees to bear sole responsibility for all regulatory record keeping associated with the use of licenses and license exemptions/exceptions.</li>
+        <li>Seller shall insert the substance of this clause in any lower-tier subcontracts it enters into in connection with this Order.</li>
+      </ul>
+
+      <h3>Certifications to Implement Public Law.</h3>
+      <ul>
+        <li>Debarment. If this Order exceeds $35,000, in satisfaction of FAR 52.209-6(c), Protecting the Government&rsquo;s Interest When Subcontracting with Contractors Debarred, Suspended, or Proposed for Debarment, the Seller by countersignature of this Order, hereby certifies and warrants that neither the Seller nor its principals are debarred, suspended or proposed for debarment by the Federal Government.</li>
+        <li>Anti-Lobbying. If this Order exceeds $150,000, in accordance with FAR 52.203-11, Certification and Disclosure Regarding Payments to Influence Certain Federal Transactions, and FAR 52.203-12, Limitation on Payments to Influence Certain Federal Transactions, the Seller by countersignature of this Order hereby certifies and warrants that, to the best of its knowledge and belief, no Federally appropriated funds have been paid or will be paid to any person for influencing or attempting to influence an officer or employee of any agency, Member of Congress, an officer or employee of Congress, or an employee of Member of Congress on its behalf in connection with the awarding of the Prime Contract.</li>
+      </ul>
+
+      <h3>Gratuities; Conflicts of Interest.</h3>
+      <p>Seller warrants that it has not offered or given, and will not offer or give to any employee, agent, or representative of Buyer, a payment, gratuity, or kickback for obtaining or rewarding favorable treatment by Buyer with respect to the terms, conditions, price, performance, or award of an order. Seller further warrants that neither Seller nor its employees have an organizational or personal conflict of interest in providing the goods and/or services contemplated by this Purchase Order. Further, Seller represents and warrants that it is familiar, and shall comply, with the requirements of the Foreign Corrupt Practices Act in effect during the term of this Order.</p>
+
+      <h3>Conflict Minerals.</h3>
+      <ul>
+        <li>Seller certifies that, regardless of whether Seller is publicly traded or not, Seller does not procure Conflict Minerals from Covered Countries, as those terms are defined by and consistent with the Securities and Exchange Commission&rsquo;s final rule on Conflict Minerals, 17 CFR Parts 240 and 249(b), promulgated pursuant to Section 1502 of the Dodd-Frank Wall Street Reform and Consumer Protection Act (the &ldquo;Rule&rdquo;).</li>
+        <li>Seller certifies and warrants that all products that will be delivered to Buyer by Seller under this Order are Democratic Republic of the Congo (DRC) Conflict Free, as defined by and consistent with the Rule.</li>
+        <li>Seller agrees that, if required by the Rule, it has made, and will continue to make, good faith inquiries reasonably designed to determine whether any Conflict Mineral that is included in any product delivered to Buyer pursuant to this Order originated in the DRC or an Adjoining Country, or is from Recycled or Scrap Sources, as defined in the Rule. Seller further agrees that, if required by the Rule, it has performed, and will continue to perform, due diligence on the source and chain of custody of any Conflict Mineral that is included in any product delivered to Buyer pursuant to this Order, and that such due diligence conforms to a nationally or internationally recognized due diligence framework, if such a framework is available for the Conflict Mineral. Seller agrees that all inquiries and diligence performed shall be consistent with the requirements of the Rule.</li>
+        <li>Seller agrees that it shall require its own subcontractors and suppliers (at any tier in the supply chain for a product delivered to Buyer under this Order) to furnish information to Seller necessary to support Seller&rsquo;s obligations under this Section 33.</li>
+        <li>Seller will maintain records reviewable by Buyer to support its certifications above.</li>
+        <li>Seller acknowledges that Buyer may utilize and disclose Conflict Minerals information provided by Seller in order to satisfy its disclosure obligations under the Rule.</li>
+        <li>If Buyer determines that any certification made by Seller under this Section is inaccurate or incomplete in any respect, then Buyer may terminate this Order for default pursuant to Section 26.2.</li>
+      </ul>
+
+      <h3>Priority Rating.</h3>
+      <p>If this Purchase Order contains a DPAS rating, this order is a &ldquo;rated order&rdquo; certified for national defense, emergency preparedness, and energy program use under the Defense Priorities and Allocation Systems (DPAS) (15 C.F.R. 700). If the Purchase Order indicates a DPAS Rating (Priority Rating), the Seller must notify Buyer within one (1) business day if the rated order cannot be accepted and processed accordingly, for any reason. If the rated order is accepted and processed, it is certified for national defense use, and the Seller is required to follow all provisions of the Defense Priorities and Allocations System regulation (15 C.F.R. 700). Rated orders shall take preference over all unrated customer orders if and as necessary to meet required delivery dates.</p>
+
+      <h3>Equal Employment Opportunity</h3>
+      <p>The Buyer is a federal contractor and, as such, is obligated to comply with certain requirements, including: Section 503 of the Rehabilitation Act, 29 U.S.C. 793; the Vietnam Era Veterans Readjustment Assistance Act, 38 U.S.C. sec 4212, as amended; the Executive Order 11246 of September 24, 1965, and the Executive Order 13496 of January 30, 2009, including the corresponding regulations, 41 C.F.R. secs. 60.1 et al., 60-300 et al., and 60-741 et al., which create certain requirements concerning anti-discrimination and affirmative action; and 29 C.F.R. Part 471, appendix A to subpart A. As a vendor providing services to the Buyer, Seller may be obligated to comply with these requirements. Specifically, where applicable, Seller shall abide by the requirements of 41 C.F.R. 60-300.5(a). This regulation prohibits discrimination against qualified protected veterans, and requires affirmative action by covered prime contractors and subcontractors to employ and advance in employment qualified protected veterans. In addition, where applicable, Seller shall abide by the requirements of 41 C.F.R. 60-741.5(a). This regulation prohibits discrimination against qualified individuals on the basis of disability, and requires affirmative action by covered prime contractors and subcontractors to employ and advance in employment qualified individuals with disabilities.</p>
+
+      <h3>Unauthorized Obligations.</h3>
+      <ul>
+        <li>Except as stated in Subsection 38.2, when any Supply or Service acquired under a Purchase Order is subject to any End User License Agreement (EULA), Terms of Service (TOS), or similar legal instrument or agreement, that includes any clause requiring the Government to indemnify the Contractor or any person or entity for damages, costs, fees, or any other loss or liability that would create an Anti-Deficiency Act violation (31 U.S.C. 1341), the following shall govern:</li>
+        <li>Any such clause is unenforceable against the Buyer and the Government</li>
+        <li>Neither the Buyer, the Government, nor any Government authorized end user shall be deemed to have agreed to such clause by virtue of it appearing in the EULA, TOS, or similar legal instrument or agreement. If the EULA, TOS, or similar legal instrument or agreement is invoked through an &ldquo;I agree&rdquo; click box or other comparable mechanism (e.g., &ldquo;click-wrap&rdquo; or &ldquo;browse-wrap&rdquo; agreements), execution does not bind the Buyer, the Government, or any Government authorized end user to such clause.</li>
+        <li>Any such clause is deemed to be stricken from the EULA, TOS, or similar legal instrument or agreement.</li>
+        <li>Subsection 38.1 does not apply to indemnification by the Government that is expressly authorized by statute and specifically authorized under applicable agency regulations and procedures.</li>
+      </ul>
+
+      <h3>Disputes.</h3>
+      <p>Any disputes under this Purchase Order that are not disposed of by mutual agreement of the Parties may be decided by recourse to an action at law or in equity. Until final resolution of any dispute hereunder, Seller shall diligently proceed with performance of this Purchase Order as directed by Buyer. Any dispute over any question of fact or law arising under this Purchase Order shall be governed by the laws of the Commonwealth of Virginia. Seller consents to personal jurisdiction in Virginia and any litigation under this Order, if commenced by Seller, must be brought exclusively in a court of competent jurisdiction in the Commonwealth of Virginia, without regard to conflicts of law principles. The parties hereby mutually agree to waive their respective rights to trial by jury. The rights and remedies herein reserved to Buyer shall be cumulative and additional to any other or further rights and remedies provided in law or equity.</p>
+
+      <h3>Independent Contractor.</h3>
+      <p>Seller is an independent contractor in all its operations and activities hereunder. The employees utilized by Seller to perform work under this Order shall be Seller&rsquo;s employees exclusively without any relation whatsoever to Buyer.</p>
+
+      <h3>Retention of Records; Audits.</h3>
+      <p>Unless a longer period is specified in this Order or by law or regulation, and except as otherwise directed by Buyer, Seller shall retain all records related to this Order for three (3) years from the date of final payment received by Seller. At no additional cost, Seller shall provide timely access to such records to the US Government and/or Buyer upon request.</p>
+
+      <h3>Entire Agreement.</h3>
+      <p>The Parties agree that this Purchase Order, including all attachments, shall constitute the entire agreement and understanding between the Parties hereto and shall supersede and replace any and all prior or contemporaneous representations, agreements or understandings of any kind, whether written or oral, relating to the subject matter hereof. No terms or conditions of sale set forth in Seller&rsquo;s quotation or acknowledgement shall be included as a part hereof, nor shall any prior course of dealing, custom, or usage in the trade supersede or modify any Purchase Order provisions.</p>
+
+      <h3>Assignments and Subcontracting.</h3>
+      <p>No part of this Order may be assigned or subcontracted without the prior written approval of Buyer.</p>
+
+      <h3>Notice.</h3>
+      <p>Any notices required or permitted to be given hereunder shall be in writing and shall be deemed to be duly given when received if sent by mail to each party&rsquo;s address as stated on this Order, or when delivered by hand or by facsimile transmission if the transmittal report indicates that the facsimile was sent successfully.</p>
+
+      <h3>No Waiver.</h3>
+      <p>Buyer&rsquo;s failure to insist upon or enforce strict compliance by Seller with respect to any aspect of this Purchase Order shall not be deemed a waiver or relinquishment to any extent of any of Buyer&rsquo;s right to assert or rely upon any such provisions or rights in that or any other instance, or as a waiver of any Seller obligation or Buyer right provided under the Order or by law. No right or remedy of Buyer shall be deemed waived or released unless such waiver or release is in writing and signed by an authorized representative of Buyer.</p>
+
+      <h3>Order of Precedence.</h3>
+      <p>Conflicting provisions hereof, if any, will be resolved by (1) first giving precedence to any provision granting greater rights or remedies to the Buyer, or imposing the greater duty, standard, responsibility or obligations on the Seller; and (2) second, if the conflict cannot be resolved by item (1) herein, by giving precedence to the provisions in the following order: (a) the Purchase Order and any continuation pages thereof; (b) these Standard Terms &amp; Conditions; (c) the U.S. Government Clauses set forth in Appendix A; (d) any attachments to these Terms and Conditions; and (e) statements of work, specifications, and drawings. In the event of any ambiguity, discrepancy, or conflict in any of the requirements, Seller shall immediately contact Buyer for a resolution.</p>
+
+      <h2>Appendix A – U.S. Government Clauses</h2>
+      <p>This Order incorporates the following FAR, DFARS &amp; Agency clauses by reference. The clauses have the same force and effect as if they were given in full text. The full text of the clauses can be accessed at: <a href="http://www.acquisition.gov/far/" target="_blank" rel="noopener">acquisition.gov/far</a> and, upon written request, Buyer will provide the Seller the full text copy of the clauses.</p>
+      <p>If the date of any of the clauses listed below differs from the date of the clause incorporated in the Prime Contract (or if the Prime Contract incorporates an Alternate version), the version incorporated in the Prime Contract shall apply instead.</p>
+      <p>Seller shall incorporate these flow-down clauses in any lower-tier Order approved under this Order.</p>
+      <p>Unless otherwise specified below, the terms below shall have the following meaning in the clauses referenced herein:</p>
+      <ul>
+        <li>&ldquo;Disputes&rdquo; clause shall mean the Disputes clause of this Order</li>
+        <li>&ldquo;Commercial Item&rdquo; means a Commercial Item as defined in FAR 2.101.</li>
+        <li>&ldquo;Commercially available off-the-shelf (COTS) item&rdquo; means a COTS item as defined in FAR 2.101</li>
+        <li>&ldquo;Contract&rdquo; means this Order</li>
+        <li>&ldquo;Contracting Officer&rdquo; shall mean the United States Government Contracting Officer for the Prime Contract.</li>
+        <li>&ldquo;Contractor&rdquo; or &ldquo;Offeror&rdquo; shall mean Seller.</li>
+        <li>&ldquo;Prime Contract&rdquo; shall mean the Prime Contract.</li>
+        <li>&ldquo;Subcontract&rdquo; shall mean any contract placed by Prime Contractor or its lower-tier subcontractors under this Order</li>
+      </ul>
+      <p>Seller agrees that upon request of Buyer it will negotiate in good faith with Buyer relative to changes amending this Purchase Order to incorporate additional provisions herein or to change provisions hereof, as Buyer may reasonably deem necessary in order to comply with the provisions of the applicable Prime Contract or with the amendments to that Prime Contract. If any such amendment to this Purchase Order causes an increase or decrease in cost or schedule for any of the work under this Purchase Order, and equitable adjustment may be made pursuant to the &ldquo;Changes&rdquo; clause in this Purchase Order.</p>
+      <p>DFARS 227.7202, entitled Commercial Computer Software and Commercial Computer Software Documentation, shall govern the acquisition of Commercial Computer Software.</p>
+      <p>If any designs, drawings, equipment, tooling, engineering data, or other technical data or proprietary information which the US Government owns or has the right to authorize the use of are furnished by the Buyer to the Seller, nothing herein shall be construed to mean that BUYER, acting on its own behalf, may modify or limit any rights the Government may have to authorize Seller&rsquo;s use of such Furnished Items in support of other US Government prime contracts.</p>
+      <p>If the Government Contracting agency is other than the Department of Defense, the applicable clauses of such Contracting agency that supplement the FAR clauses cited below are hereby incorporated by reference, and the DFARS clauses cited below are hereby deemed deleted.</p>
+      <p>Communication/notification required under this clause from/to Seller from the Contracting Officer shall be through the Buyer.</p>
+      <p>The Seller shall comply with the following Federal Acquisition Regulation (FAR) clauses, which are incorporated in this Purchase Order by reference, for the acquisition of Commercial Items (as defined in FAR 2.101).</p>
+
+      <div class="clause-table">
+        <table>
+          <thead>
+            <tr><th>FAR Reference</th><th>Clause Title (Date)</th><th>Applicability</th></tr>
+          </thead>
+          <tbody>
+            {nonDodFar.map((row) => (
+              <tr>
+                <td>{row.ref}</td>
+                <td>{row.title}</td>
+                <td>{row.applicability}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Archived Terms &amp; Conditions</h2>
+      <p>
+        <a href="/termsandconditions-archived/">Terms and Conditions for Orders placed prior to 12/11/2023</a>
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .pagehero__jump {
+    display: flex;
+    gap: var(--sp-6);
+    margin: var(--sp-6) 0 0;
+  }
+  .pagehero__jump a {
+    color: #9cc7ff;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .pagehero__jump a:hover {
+    color: var(--ctg-white);
+  }
+
+  .clause-table {
+    overflow-x: auto;
+    margin: var(--sp-6) 0 var(--sp-8);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+  .clause-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-14);
+    min-width: 720px;
+  }
+  .clause-table th,
+  .clause-table td {
+    text-align: left;
+    padding: var(--sp-3) var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+    vertical-align: top;
+  }
+  .clause-table th {
+    background: var(--color-bg-subtle);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+  .clause-table tr:last-child td {
+    border-bottom: none;
+  }
+</style>

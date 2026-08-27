@@ -1,0 +1,175 @@
+---
+/**
+ * VMware by Broadcom partner spotlight — hero, Premier Partner overview,
+ * solution competency list, Carahsoft blurb, certifications, and two
+ * downloadable resources.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const outcomes = [
+  'Deliver improved performance and end user experiences for their remote workforces',
+  'Simplify their hybrid and multi-cloud environments',
+  'Reduce security vulnerabilities',
+  'Lower total cost of ownership',
+  'Increase efficiencies',
+  'Mitigate risk',
+];
+
+const competencies = [
+  'Business Continuity',
+  'Cloud Provider',
+  'Desktop Virtualization',
+  'Hyper-Converged Infrastructure',
+  'Management Automation',
+  'Management Operations',
+  'Mobility Management',
+  'Network Virtualization',
+  'Server Virtualization',
+  'Software-Defined Wide Area Network (SD-WAN)',
+  'VMware Cloud on AWS',
+];
+
+const certifications = ['Master Services Competency', 'Data Center Virtualization', 'Network Virtualization'];
+
+const resources = [
+  {
+    title: 'Whitepaper',
+    thumb: '/images/site/VMWare_Broadcom-White_Paper-CTG_Federal_7.20.26-3-pdf.jpg',
+    href: '/downloads/VMWare_Broadcom-White_Paper-CTG_Federal_7.20.26-3.pdf',
+  },
+  {
+    title: 'Solutions Brief',
+    thumb: '/images/site/VMWare_Broadcom-Solutions_Brief-CTG_Federal_7.21.26-1-pdf.jpg',
+    href: '/downloads/VMWare_Broadcom-Solutions_Brief-CTG_Federal_7.21.26-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="VMware by Broadcom - CTG Federal"
+  description="As a Broadcom Premier Partner with Master Services Competencies, CTG Federal helps federal agencies modernize with VMware Cloud Foundation and Tanzu."
+>
+  <PageHero title="VMware by Broadcom">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'VMware by Broadcom' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>A Powerful Partner for Federal Modernization</h2>
+      <p>
+        As a Broadcom Premier Partner, CTG Federal helps agencies realize their modernization goals
+        in a way that highly leverages VMware investments and capabilities. Innovative VMware
+        solutions are enabling federal agencies to bridge their existing VMware environments to the
+        cloud &mdash; securely and on their own terms &mdash; so they can develop and deploy the
+        modern applications they need to advance their missions.
+      </p>
+      <p>VMware solutions, such as VMware Cloud Foundations and Tanzu, help agencies:</p>
+      <ul>
+        {outcomes.map((item) => <li>{item}</li>)}
+      </ul>
+      <p>
+        By investing thousands of hours and substantial funding to build VMware practices and
+        acquire the levels of mastery necessary to ensure that clients obtain the outcomes they
+        desire within their designated timelines, CTG Federal has been designated by Broadcom as
+        achieving Master Services Competencies (MSCs) in the categories of Data Center
+        Virtualization and Network Virtualization.
+      </p>
+      <h3>Solution Competency</h3>
+      <ul>
+        {competencies.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="carahsoft">
+      <img src="/images/site/carahsoft-partnerpage-logo2.png" alt="" loading="lazy" decoding="async" width="200" height="80" />
+      <p>
+        Carahsoft is The Trusted Government IT Solutions Provider&reg;, supporting Federal, State
+        and Local Government and Education and Healthcare organizations with IT products, services
+        and training through our partners and contracts.
+      </p>
+      <img src="/images/site/vmware-cr1.png" alt="VMware by Broadcom Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </div>
+
+    <div class="prose">
+      <h3>Certifications</h3>
+      <ul>
+        {certifications.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .carahsoft {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-6);
+    margin: var(--sp-10) 0;
+    padding: var(--sp-6);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  .carahsoft img {
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .carahsoft p {
+    flex: 1;
+    min-width: 220px;
+    margin: 0;
+    color: var(--color-fg-body);
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

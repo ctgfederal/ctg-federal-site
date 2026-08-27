@@ -1,0 +1,143 @@
+---
+/**
+ * Solutions — the /solutions/ hub page. Hero (3-line H1 + six tech icons) →
+ * intro paragraph → "Enterprise IT Solutions & Expertise" grid → stats bar →
+ * Our Partners → Our Customers → Testimonials.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import IconTile from '../components/IconTile.astro';
+import StatsBar from '../components/StatsBar.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import LogoGrid from '../components/LogoGrid.astro';
+import CustomerLogos from '../components/CustomerLogos.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { strategic } from '../data/partners';
+
+const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26.pdf';
+
+const techIcons = [
+  '/images/site/tech-comms.png',
+  '/images/site/tech-network.png',
+  '/images/site/tech-cloud.png',
+  '/images/site/tech-cyber.png',
+  '/images/site/tec-ai.png',
+  '/images/site/tech-infrastructure.png',
+];
+---
+
+<BaseLayout
+  title="Expert IT Solutions & Engineering Services | CTG Federal"
+  description="Information technology expertise, engineering excellence. Best-in-class service. We design and deliver IT solutions that power and equip businesses nationwide."
+>
+  <!-- Hero -->
+  <section class="solhero hex-bg">
+    <div class="container solhero__inner">
+      <h1 class="solhero__title">
+        <span>Information technology expertise.</span>
+        <span>Engineering excellence.</span>
+        <span>Second-to-none service.</span>
+      </h1>
+      <ul class="solhero__icons">
+        {
+          techIcons.map((src) => (
+            <li>
+              <IconTile src={src} hex />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <Section tone="white">
+    <p class="lede solhero__intro">
+      Our experienced team of sales and elite engineering professionals design and deliver IT
+      solutions that power and equip businesses nationwide.
+    </p>
+  </Section>
+
+  <!-- Solutions grid -->
+  <Section tone="subtle" id="core-anchor">
+    <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+  </Section>
+
+  <!-- Stats -->
+  <StatsBar />
+
+  <!-- Partners -->
+  <Section tone="white" id="partners">
+    <div class="section-heading section-heading--center">
+      <h2>Our Partners</h2>
+      <span class="accent-bar" />
+      <p class="lede">Partnering with best-in-class technology vendors to deliver solutions that enable success.</p>
+      <p><a href="/partners/">Learn more about our technology partners</a></p>
+    </div>
+    <LogoGrid
+      logos={strategic}
+      cols={6}
+      link={{ label: 'See our complete list of partners', href: lineCardPdf, external: true }}
+    />
+  </Section>
+
+  <!-- Customers -->
+  <Section tone="subtle" id="customers">
+    <CustomerLogos
+      heading="Our Customers"
+      intro="We’re trusted by some of the most complex and critical organizations in the nation."
+      link={{ label: 'Learn more here', href: '/customers/' }}
+    />
+  </Section>
+
+  <!-- Testimonials -->
+  <Section tone="navy" hex>
+    <Testimonials eyebrow="Testimonials" />
+  </Section>
+</BaseLayout>
+
+<style>
+  .solhero {
+    background: var(--gradient-brand);
+    color: rgba(255, 255, 255, 0.9);
+    padding-block: clamp(56px, 7vw, 96px);
+  }
+  .solhero__inner {
+    display: grid;
+    gap: clamp(32px, 5vw, 56px);
+    align-items: center;
+    grid-template-columns: 1.2fr 1fr;
+  }
+  .solhero__title {
+    color: var(--ctg-white);
+    max-width: 22ch;
+    margin: 0;
+    font-size: clamp(var(--fs-30), 4vw, var(--fs-48));
+    line-height: 1.16;
+  }
+  .solhero__title span {
+    display: block;
+  }
+  .solhero__icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end;
+  }
+  .solhero__intro {
+    padding-left: var(--sp-6);
+    border-left: 3px solid var(--ctg-azure);
+    max-width: 68ch;
+  }
+  @media (max-width: 900px) {
+    .solhero__inner {
+      grid-template-columns: 1fr;
+    }
+    .solhero__icons {
+      justify-content: flex-start;
+    }
+  }
+</style>

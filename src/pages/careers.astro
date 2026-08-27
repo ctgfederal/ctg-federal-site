@@ -1,0 +1,101 @@
+---
+/**
+ * Careers — replicates the live /careers/ page: hero, intro copy, application
+ * link, hiring-notice links, background screening note, employee quote, badge.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+---
+
+<BaseLayout
+  title="Fast-Track Your IT Career: Growth & Merit-Based Roles | CTG Federal"
+  description="Join CTG Federal, a leading IT solutions provider to the Federal Government. Rapid growth, merit-based environment, and opportunities for skilled professionals. Explore exciting IT career opportunities with us."
+>
+  <PageHero eyebrow="Careers" title="Join the CTG Federal Team" />
+
+  <Section tone="white">
+    <div class="split">
+      <div class="prose">
+        <p>
+          CTG Federal is one of the fastest-growing, trusted IT solution providers to the
+          Federal Government. Since 2017, our team has doubled in size and sales revenue year
+          after year. CTG provides the opportunity for self-motivated individuals to utilize
+          their skillset in a merit-based environment centered around IT sales.
+        </p>
+        <p>
+          We are looking to hire those who align with the company’s core values and desire to
+          bring their work ethic and strengths into the company, alongside of similarly
+          skilled teammates and leaders. Our team is dedicated to giving back to those who are
+          less fortunate through our philanthropy
+          <a href="https://www.ctgfoundation.org/" target="_blank" rel="noopener">CTG Foundation®</a>.
+        </p>
+        <p>
+          Open requisitions and requirements will be posted on the
+          <a href="https://vawc.virginia.gov/vosnet/Default.aspx" target="_blank" rel="noopener">Virginia Workforce Connection</a>.
+          If you are interested in learning more, please contact
+          <a href="mailto:hr@ctgfederal.com">hr@ctgfederal.com</a>.
+        </p>
+        <p>
+          We welcome qualified applicants from all backgrounds and identities, including but
+          not limited to Veterans and those with Disabilities, to apply for employment.
+        </p>
+        <p>
+          <strong>E-Verify and Pay Transparency:</strong><br />
+          <a href="/downloads/EVerifyParticipationPoster.pdf" target="_blank" rel="noopener">E-Verify Participation</a>
+          &nbsp;·&nbsp;
+          <a href="/downloads/pay-transp_-English.pdf" target="_blank" rel="noopener">Pay Transparency</a>
+        </p>
+        <p>
+          <strong>Background Screening:</strong><br />
+          Applicants are advised that voluntary criminal, financial and security background
+          screening is required for employment at CTG Federal.
+        </p>
+      </div>
+
+      <div class="careers-aside">
+        <figure class="quote-card">
+          <blockquote class="quote">
+            I have worked at some great companies along the way however, CTG Federal is the
+            most fun, rewarding and best experience of my career.
+          </blockquote>
+          <figcaption>&ndash; CTG Federal Employee</figcaption>
+        </figure>
+        <a href="https://www.greatplacetowork.com/certified-company/7020449" target="_blank" rel="noopener">
+          <img
+            src="/images/site/work-badges-2026.png"
+            alt="Great Place to Work Certified Badge, May 2024 to May 2025, USA"
+            width="220"
+            height="220"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .careers-aside {
+    display: grid;
+    gap: var(--sp-8);
+    justify-items: start;
+  }
+  .quote-card {
+    margin: 0;
+    padding-left: var(--sp-6);
+    border-left: 3px solid var(--ctg-azure);
+  }
+  .quote-card figcaption {
+    margin-top: var(--sp-4);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .careers-aside img {
+    width: 180px;
+    height: auto;
+  }
+</style>

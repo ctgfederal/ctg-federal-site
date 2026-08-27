@@ -1,0 +1,124 @@
+---
+/**
+ * Cohesity partner spotlight — hero, mission-ready data management overview,
+ * partnership benefits, logo, and two downloadable whitepapers.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const resources = [
+  {
+    title: 'Whitepaper',
+    thumb: '/images/site/Cohesity-White_Paper-CTG_Federal_7.20.26-1-pdf.jpg',
+    href: '/downloads/Cohesity-White_Paper-CTG_Federal_7.20.26-1.pdf',
+  },
+  {
+    title: 'Data Management Whitepaper',
+    thumb: '/images/site/CTG-CohesityDataManagement-1.jpg',
+    href: '/downloads/CTG-CohesityDataManagement.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="Cohesity - CTG Federal"
+  description="CTG Federal delivers Cohesity's FedRAMP Moderate data management platform to federal agencies simplifying backup, recovery, and cloud mobility."
+>
+  <PageHero title="Cohesity">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'Cohesity' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>Mission-Ready Solutions for Efficient Data Management</h2>
+      <p>
+        CTG Federal delivers value to federal agencies looking to simplify data and application
+        management with Cohesity&rsquo;s mission-ready solutions. A single, web-scale platform for
+        backup and recovery, files, objects, dev/test, and analytics. Federal agencies are working
+        harder than ever to achieve mission objectives while securing and managing growing amounts
+        of data. Simplifying management, securing and ensuring workload mobility of your data is
+        our top priority.
+      </p>
+      <p>
+        In addition, Cohesity achieved FedRAMP Moderate Certification in May 2024, and natively
+        integrates with leading FedRAMP clouds including AWS GovCloud, Microsoft Azure Government,
+        and Google Cloud Platform Compute Engine and Storage. Built-in Cohesity cloud capabilities
+        gives federal agencies flexibility to leverage cloud for multiple use cases. Backup clouds
+        protect cloud VMs and storage, platform services, and SaaS apps such as Office 365 with
+        policy-based backup across services.
+      </p>
+      <p>CTG Federal&rsquo;s partnership with Cohesity offers:</p>
+      <ul>
+        <li>Sales and Engineering certified personnel.</li>
+        <li>Speed, efficiency, and accuracy in booking, shipping, and tracking customer purchases.</li>
+        <li>Dedicated and knowledgeable post-sales and logistical support.</li>
+        <li>U.S. Citizen, U.S.-based, TS-cleared personnel at all levels of sales and engineering.</li>
+      </ul>
+    </div>
+
+    <p class="partner-logo">
+      <img src="/images/site/sq_cohesity.jpg" alt="Cohesity Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </p>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

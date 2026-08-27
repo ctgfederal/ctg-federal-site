@@ -1,0 +1,173 @@
+---
+/**
+ * Payment — the live page is a native WPForms submission form (CTG Quote
+ * Number, Payment Amount, Billing/Shipping addresses, End User contact).
+ * It is not a third-party payment processor embed, so it is rebuilt here as
+ * a Netlify form ("payment-inquiry") with the exact same field set.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PageHero from '../components/PageHero.astro';
+
+const states = [
+  'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut',
+  'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois',
+  'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts',
+  'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada',
+  'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina',
+  'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington',
+  'West Virginia', 'Wisconsin', 'Wyoming',
+];
+---
+
+<BaseLayout title="Payment - CTG Federal" description="Submit a payment to CTG Federal.">
+  <PageHero eyebrow="Payments" title="Payments" />
+
+  <Section tone="white" narrow>
+    <form
+      class="form payment-form"
+      name="payment-inquiry"
+      method="POST"
+      action="/thank-you/"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+    >
+      <input type="hidden" name="form-name" value="payment-inquiry" />
+      <p class="visually-hidden">
+        <label>Do not fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div class="field">
+        <label for="quote-number">CTG Quote Number <span aria-hidden="true">*</span></label>
+        <input id="quote-number" name="ctg-quote-number" type="text" required />
+      </div>
+
+      <div class="field">
+        <label for="payment-amount">Payment Amount <span aria-hidden="true">*</span></label>
+        <input id="payment-amount" name="payment-amount" type="text" required />
+      </div>
+
+      <fieldset class="payment-form__group">
+        <legend>Billing Address <span aria-hidden="true">*</span></legend>
+        <div class="field">
+          <label for="billing-address1">Address Line 1</label>
+          <input id="billing-address1" name="billing-address-1" type="text" required />
+        </div>
+        <div class="field">
+          <label for="billing-address2">Address Line 2</label>
+          <input id="billing-address2" name="billing-address-2" type="text" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="billing-city">City</label>
+            <input id="billing-city" name="billing-city" type="text" />
+          </div>
+          <div class="field">
+            <label for="billing-state">State</label>
+            <select id="billing-state" name="billing-state">
+              <option value="">&mdash;Please choose an option&mdash;</option>
+              {states.map((state) => <option value={state}>{state}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="billing-zip">Zip Code</label>
+            <input id="billing-zip" name="billing-zip" type="text" />
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="billing-phone">Billing Phone <span aria-hidden="true">*</span></label>
+        <input id="billing-phone" name="billing-phone" type="tel" required />
+      </div>
+
+      <fieldset class="payment-form__group">
+        <legend>Shipping Address <span aria-hidden="true">*</span></legend>
+        <div class="field">
+          <label for="shipping-address1">Address Line 1</label>
+          <input id="shipping-address1" name="shipping-address-1" type="text" required />
+        </div>
+        <div class="field">
+          <label for="shipping-address2">Address Line 2</label>
+          <input id="shipping-address2" name="shipping-address-2" type="text" />
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="shipping-city">City</label>
+            <input id="shipping-city" name="shipping-city" type="text" />
+          </div>
+          <div class="field">
+            <label for="shipping-state">State</label>
+            <select id="shipping-state" name="shipping-state">
+              <option value="">&mdash;Please choose an option&mdash;</option>
+              {states.map((state) => <option value={state}>{state}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="shipping-zip">Zip Code</label>
+            <input id="shipping-zip" name="shipping-zip" type="text" />
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="shipping-phone">Shipping Phone <span aria-hidden="true">*</span></label>
+        <input id="shipping-phone" name="shipping-phone" type="tel" required />
+      </div>
+
+      <fieldset class="payment-form__group">
+        <legend>End User Point of Contact <span aria-hidden="true">*</span></legend>
+        <div class="form-row">
+          <div class="field">
+            <label for="enduser-first">First</label>
+            <input id="enduser-first" name="end-user-first-name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="enduser-last">Last</label>
+            <input id="enduser-last" name="end-user-last-name" type="text" required />
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="enduser-email">End User Email Address <span aria-hidden="true">*</span></label>
+        <input id="enduser-email" name="end-user-email" type="email" required />
+      </div>
+
+      <div class="field">
+        <label for="enduser-phone">End User Phone <span aria-hidden="true">*</span></label>
+        <input id="enduser-phone" name="end-user-phone" type="tel" required />
+      </div>
+
+      <p class="field-hint">* Required fields</p>
+
+      <div>
+        <button type="submit" class="btn btn--primary">Submit</button>
+      </div>
+    </form>
+  </Section>
+</BaseLayout>
+
+<style>
+  .payment-form {
+    max-width: 640px;
+  }
+  .payment-form__group {
+    display: grid;
+    gap: var(--sp-4);
+    padding: var(--sp-6);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    margin: 0;
+  }
+  .payment-form__group legend {
+    padding: 0 var(--sp-2);
+    font-size: var(--fs-14);
+    font-weight: var(--fw-medium);
+    color: var(--color-fg);
+  }
+  .payment-form .form-row {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+</style>

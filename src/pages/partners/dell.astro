@@ -1,0 +1,151 @@
+---
+/**
+ * Dell Technologies partner spotlight — hero, Gold-level partnership
+ * overview, logo, and three downloadable resources.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const solutions = [
+  'Dell Technologies Data Center Solutions, including Storage and Compute Portfolios',
+  'Customized, Turnkey Solutions',
+  'Broad Portfolio of Technologies',
+];
+
+const benefits = [
+  'Sales and Engineering certified personnel.',
+  'Speed, efficiency, and accuracy in booking, shipping, and tracking customer purchases.',
+  'Dedicated and knowledgeable post-sales and logistical support.',
+  'U.S. Citizen, U.S.-based, TS-cleared personnel at all levels of sales and engineering.',
+];
+
+const resources = [
+  {
+    title: 'Whitepaper',
+    subtitle: 'Navigating the World of HPC and AI with Dell Technologies, CTG Federal, and NVIDIA',
+    thumb: '/images/site/Dell-White_Paper-CTG_Federal_7.20.26-3-pdf.jpg',
+    href: '/downloads/Dell-White_Paper-CTG_Federal_7.20.26-3.pdf',
+  },
+  {
+    title: 'Solutions Brief',
+    thumb: '/images/site/Dell-Solutions_Brief-CTG_Federal_7.20.26-1-pdf.jpg',
+    href: '/downloads/Dell-Solutions_Brief-CTG_Federal_7.20.26-1.pdf',
+  },
+  {
+    title: 'Practice Summary',
+    thumb: '/images/site/DELL-Practice_Summary-CTG_Federal_7.20.26-1-pdf.jpg',
+    href: '/downloads/DELL-Practice_Summary-CTG_Federal_7.20.26-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="Dell Technologies - CTG Federal"
+  description="CTG Federal's Gold-Level partnership with Dell Technologies delivers turnkey data center, storage, and compute solutions to federal agencies."
+>
+  <PageHero title="Dell Technologies">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'Dell Technologies' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>Navigating the Future with CTG Federal and Dell Technologies</h2>
+      <p>
+        As federal agencies navigate the complex landscape of data centers, CTG Federal and Dell
+        Technologies have joined forces to offer transformative solutions that address the unique
+        challenges faced by the public sector. The essence of our partnership lies in providing all
+        the solutions in one place, enabling agencies to streamline their IT infrastructure and
+        focus on innovation and growth. We are dedicated to delivering excellence in technology
+        solutions.
+      </p>
+
+      <h2>Solutions and Services Leveraged through CTG Federal&rsquo;s Gold-Level Partnership with Dell Technologies Include:</h2>
+      <ul>
+        {solutions.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <h2>CTG Federal&rsquo;s partnership with Dell Technologies also offers:</h2>
+      <ul>
+        {benefits.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <p>
+        Dell Technologies helps organizations and individuals build their digital future and
+        transform how they work, live, and play. The company provides customers with the
+        industry&rsquo;s broadest and most innovative technology and services portfolio for the
+        data era.
+      </p>
+    </div>
+
+    <p class="partner-logo">
+      <img src="/images/site/Dell_Federal_GoldPartner_Blue.jpg" alt="Dell Technologies Logo" loading="lazy" decoding="async" width="200" height="120" />
+    </p>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            {item.subtitle && <p class="resource-card__subtitle">{item.subtitle}</p>}
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card__subtitle {
+    font-size: var(--fs-14);
+    color: var(--color-fg-muted);
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

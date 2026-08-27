@@ -1,0 +1,116 @@
+---
+/**
+ * Procurement Options — hero, "Finance with us" list + Contact button,
+ * then Service Options as an accordion (CAPEX / OPEX / As-a-Service /
+ * Consumption-Based), each mapped to its bullets from the live tabs
+ * (verified against the scraped HTML's et_pb_tabs markup).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import Accordion from '../components/Accordion.astro';
+
+const financePoints = [
+  'Expedite implementation schedules',
+  'Speed up asset refresh schedules',
+  'Stretch budgets further to meet business or project needs',
+  'Better anticipate and plan out quarterly and yearly finances',
+  'Lower total cost of ownership relative to unpredictable consumption models',
+  'Simplify acquisition cycles including expansions and add-ons',
+  'Release share of up-front funding for other projects',
+  'Service level options',
+];
+
+const serviceOptions = [
+  {
+    q: 'CAPEX',
+    a: '<ul><li>Any mix of CTG Federal offered IT hardware, software, and services</li></ul>',
+  },
+  {
+    q: 'OPEX',
+    a: '<ul><li>Base + Financing</li><li>Flexible Leasing Options</li></ul>',
+  },
+  {
+    q: 'As-a-Service',
+    a: `<ul>
+      <li>Ability to finance all or a portion of a project</li>
+      <li>Monthly, Quarterly or Annual installment payments</li>
+      <li>Flexible payment terms aligned to budget availability and project duration</li>
+      <li>Terms ranging from 12 to 60 months</li>
+      <li>Agreements built on base plus option payment periods</li>
+      <li>Stepped (uneven) installments to align to available budget</li>
+      <li>Modify at any time to add or expand technologies and capabilities</li>
+    </ul>`,
+  },
+  {
+    q: 'Consumption-Based',
+    a: '<ul><li>Flexibility to match your needs and your budget</li><li>Scale your usage up and down as your needs change</li></ul>',
+  },
+];
+---
+
+<BaseLayout
+  title="Procurement Options - CTG Federal"
+  description="We offer a variety of flexible payment solutions and terms to meet your unique business needs and objectives."
+>
+  <PageHero
+    eyebrow="Procurement Options"
+    title="Flexible payment structures designed for our customers’ budget and project needs."
+    intro="We offer a variety of flexible payment solutions and terms to meet your unique business needs and objectives."
+  />
+
+  <!-- Finance with us -->
+  <Section tone="white">
+    <div class="finance">
+      <div>
+        <p class="eyebrow">Finance with us</p>
+        <h2>Finance with us &ndash; the way you want to:</h2>
+        <span class="accent-bar"></span>
+      </div>
+      <div class="finance__body">
+        <ul class="finance__list">
+          {financePoints.map((point) => <li>{point}</li>)}
+        </ul>
+        <p>
+          Contact your CTG Federal account team to learn more and discover a solution with an
+          acquisition model that fit your business requirements.
+        </p>
+        <Button href="/contacts/">Contact</Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Service Options -->
+  <Section tone="subtle" narrow>
+    <div class="section-heading">
+      <h2>Service Options</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <Accordion items={serviceOptions} open={0} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .finance {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .finance__list {
+    margin: 0 0 var(--sp-6);
+    padding-left: 1.1em;
+  }
+  .finance__list li {
+    margin-bottom: var(--sp-2);
+  }
+  .finance__body p {
+    max-width: 62ch;
+  }
+  @media (max-width: 900px) {
+    .finance {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

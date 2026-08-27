@@ -1,0 +1,154 @@
+---
+/**
+ * NetApp partner spotlight — hero, A-Team overview, partnership benefits,
+ * badge/logo, certifications, and five downloadable resources.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const certifications = [
+  'NetApp Prestige Partner',
+  'NetApp PS Certified',
+  'NetApp FlexPod Certified',
+  'NetApp Subject Matter Expert Elite',
+  'Validated for NetApp NVIDIA DGX SuperPOD',
+  'Validated for Commercial Solutions for Classified (CSfC)',
+];
+
+const resources = [
+  {
+    title: 'NetApp DON ESL Ordering Guide',
+    thumb: '/images/site/NetAppDONESLOrderingGuide-Icon.jpg',
+    href: '/downloads/NetApp-DON-ESL-Ordering-Guide-_11.28.23.pdf',
+  },
+  {
+    title: 'Solution Brief',
+    thumb: '/images/site/NetApp-Solutions-Brief-CTG_Federal_7.21.26-1-pdf.jpg',
+    href: '/downloads/NetApp-Solutions-Brief-CTG_Federal_7.21.26-1.pdf',
+  },
+  {
+    title: 'Whitepaper',
+    thumb: '/images/site/NetApp-White_Paper-CTG_Federal_7.20.26-1-pdf.jpg',
+    href: '/downloads/NetApp-White_Paper-CTG_Federal_7.20.26-1.pdf',
+  },
+  {
+    title: 'One-Minute Whitepaper',
+    thumb: '/images/site/NetApp-One-Minute-White-Paper.7.15.26-1-pdf.jpg',
+    href: '/downloads/NetApp-One-Minute-White-Paper.7.15.26-1.pdf',
+  },
+  {
+    title: 'Practice Summary',
+    thumb: '/images/site/NetApp-Practice_Summary-CTG_Federal_7.20.26-1-pdf.jpg',
+    href: '/downloads/NetApp-Practice_Summary-CTG_Federal_7.20.26-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="NetApp - CTG Federal"
+  description="CTG Federal is a NetApp A-Team member delivering data infrastructure modernization, promotional pricing, and certified engineering support to federal agencies."
+>
+  <PageHero title="NetApp">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'NetApp' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>An Indispensable Agency Partner for NetApp Modernizations</h2>
+      <p>
+        CTG Federal delivers unrivaled expertise and value to federal agencies looking to simplify,
+        streamline, and modernize their data infrastructures with NetApp solutions. We are one of
+        only a handful of value-added resellers that carry NetApp A-Team membership. As NetApp
+        A-Team members, CTG Federal has access to privileged product roadmap information, product
+        and corporate engineering, and escalations support services. In fact, CTG Federal staff
+        help write the engineering certification exams for industry. In addition, CTG Federal
+        offers:
+      </p>
+      <ul>
+        <li>A century of combined NetApp experience within our sales, engineering and operations staff.</li>
+        <li>A sales and engineering staff that is fully certified and NetApp-accredited on the full portfolio of NetApp solutions and products.</li>
+        <li>Best practices on the design, architecture, and sizing of NetApp solutions.</li>
+        <li>NetApp product updates and NDA (non-disclosure agreement) roadmaps to help agencies future-proof their modernization plans.</li>
+        <li>Promotional pricing, discount programs, and value-added price breaks.</li>
+        <li>Speed, efficiency, and accuracy in booking, shipping, and tracking customer purchases.</li>
+        <li>Dedicated and knowledgeable post-sales and logistical support.</li>
+        <li>NetApp-certified and accredited engineering staff for pre-sales support and post-sales implementation and migration work.</li>
+        <li>U.S. Citizen, U.S.-based, TS- and Q-cleared personnel at all levels of sales and engineering.</li>
+      </ul>
+    </div>
+
+    <p class="partner-logo partner-logo--pair">
+      <img src="/images/site/NetApp-Badge-Picture-for-Website-5.14.png" alt="" loading="lazy" decoding="async" width="140" height="140" />
+      <img src="/images/site/NetApp.png" alt="NetApp Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </p>
+
+    <div class="prose">
+      <h3>Certifications and Validations</h3>
+      <ul>
+        {certifications.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    gap: var(--sp-8);
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

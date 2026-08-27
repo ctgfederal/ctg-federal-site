@@ -66,9 +66,9 @@ export const mainNav: NavItem[] = [
       { label: 'When to Engage', href: '/when-to-engage/' },
       { label: 'Online Order Status Tool', href: '/online-status-tool/' },
       { label: 'Become a Customer', href: '/customers/#become-a-customer' },
-      { label: 'Procurement Options', href: '/procurement-options/' },
     ],
   },
+  { label: 'Procurement Options', href: '/procurement-options/' },
 ];
 
 export const ctaButton: NavLink = { label: 'Contact', href: '/contacts/' };
@@ -85,22 +85,17 @@ export const footerColumns: { links: NavLink[] }[] = [
         href: '/downloads/CTG_Sustainability_Management_and_ESG_Report-May_2024.pdf',
         external: true,
       },
+      { label: 'Careers', href: '/careers/' },
     ],
   },
   {
     links: [
-      { label: 'Careers', href: '/careers/' },
       { label: 'Solutions', href: '/solutions/' },
       { label: 'Customers', href: '/customers/' },
       { label: 'Online Order Status Tool', href: '/online-status-tool/' },
-    ],
-  },
-  {
-    links: [
       { label: 'Procurement Options', href: '/procurement-options/' },
       { label: 'Contracts', href: '/contracts/' },
       { label: 'Tech Support', href: '/techsupport/' },
-      { label: 'Contact', href: '/contacts/' },
     ],
   },
 ];

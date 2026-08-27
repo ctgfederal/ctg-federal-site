@@ -1,0 +1,229 @@
+---
+/**
+ * Culture — replicates the live /culture/ page, in order:
+ * hero → accolade strip + intro → Our Difference / pillars → careers band.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+
+const badges = [
+  {
+    src: '/images/site/CTGFederal-ISO-9001-V1.jpg',
+    alt: 'ISO 9001 Certified Company Badge, QMS Certification',
+  },
+  {
+    src: '/images/site/Fortune-Accolade-GPTW-Small-Workplaces-rgb-scaled.png',
+    alt: 'Fortune Best Small Workplaces 2025 Badge',
+    href: 'https://www.greatplacetowork.com/best-workplaces/small/2025',
+  },
+  {
+    src: '/images/site/CRN26-TechElite250-Vertical.png',
+    alt: 'CRN Tech Elite 250 2026 Badge',
+    href: 'https://www.crn.com/rankings-and-lists/te2026-details?c=64',
+  },
+  {
+    src: '/images/site/CRN26-SP500-Logo-2.png',
+    alt: 'CRN Solution Provider 500 2026 Badge',
+    href: 'https://www.crn.com/sp-500/sp2026-details?c=92',
+  },
+  {
+    src: '/images/site/CTG_Federal__National_US_English_2026_Certification_Badge-scaled.png',
+    alt: 'Great Place to Work Certified Badge, May 2024 to May 2025, USA',
+    href: 'https://www.greatplacetowork.com/certified-company/7020449',
+  },
+];
+
+const pillars = [
+  {
+    title: 'Culture',
+    body: 'Large enough to serve you, small enough to know you.',
+  },
+  {
+    title: 'Experience',
+    body: 'Proven time and again in providing mission critical IT solutions to the nation’s largest and most complex organizations.',
+  },
+  {
+    title: 'Expertise',
+    body: 'Elevating our customers’ experience with technology through unrivaled engineering.',
+  },
+  {
+    title: 'Optimization',
+    body: 'Saving customers time and money through simplified and streamlined architectural design, acquisition, and implementation.',
+  },
+];
+---
+
+<BaseLayout
+  title="CTG Federal Culture: People. Purpose. Partnerships."
+  description="The Human Advantage: we’re more than solutions providers; we’re in the business of building real relationships."
+>
+  <PageHero
+    eyebrow="Culture"
+    title="A Certified Great Place to Work® for 8 years running and rated #4 on Fortune Best Small Workplaces™ 2025 list. We have employees who stick around — and a team our customers can count on for the long run."
+  />
+
+  <Section tone="white">
+    <p class="quote culture-quote">
+      “I love that we are driven by an entrepreneurial spirit, determination, and good old
+      fashioned common sense.“
+    </p>
+    <ul class="badges">
+      {
+        badges.map((badge) => (
+          <li>
+            {badge.href ? (
+              <a href={badge.href} target="_blank" rel="noopener">
+                <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" />
+              </a>
+            ) : (
+              <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" />
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <p class="lede culture-intro">
+      We’re more than solutions providers; we’re in the business of building real
+      relationships. The CTG Federal experience – for our customers, for our partners, and for
+      our family of employees – is one built on mutual respect, transparency, trust, and
+      intention. We provide the human advantage where customers feel confident and cared for,
+      partners are heard, teammates are supported, and all are positioned to grow and to
+      thrive.
+    </p>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="split">
+      <div>
+        <p class="eyebrow">Our Difference</p>
+        <h2>People. Purpose. Partnerships.</h2>
+        <p>
+          Three crucial components that don’t just keep a business running; they keep people
+          engaged, energized, and empowered. We’re proud of our company, our unique company
+          culture and to have employees that are challenged by their work and recognized for
+          their efforts.
+        </p>
+      </div>
+      <div class="culture-praise">
+        <p class="quote">“The partners started the company with a strong desire for a culture that supports employees professionally and personally.”</p>
+        <p class="quote">“I love the focus on family and personal health while balancing work excellence.”</p>
+        <p class="quote">“CTG is a fantastic “people first” company.”</p>
+      </div>
+    </div>
+
+    <div class="section-heading section-heading--center pillars-heading">
+      <p class="eyebrow">Pillars</p>
+    </div>
+    <div class="grid grid--4">
+      {
+        pillars.map((pillar) => (
+          <div class="card">
+            <h3 class="h4">{pillar.title}</h3>
+            <p>{pillar.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section tone="navy" hex>
+    <div class="split careers-band">
+      <div>
+        <p class="eyebrow">Careers</p>
+        <h2>Join the CTG Federal Team</h2>
+        <p>
+          CTG Federal is one of the fastest-growing, trusted IT solution providers around.
+          Since 2017, our team has doubled in size and sales revenue year after year. We’re
+          proud to provide opportunities for self-motivated individuals to grow their skill
+          sets in an environment centered around IT sales.
+        </p>
+        <p>
+          We hire people who align with the company’s core values and who find satisfaction in
+          celebrating the victories of their team, the company, our partners and our
+          customers. We foster a culture of collaboration and forward thinking.
+        </p>
+        <p><a class="btn btn--primary" href="/careers/">Learn more</a></p>
+        <blockquote class="quote careers-band__quote">“Great leadership and top-notch talent.”</blockquote>
+        <p class="careers-band__attribution">&ndash; CTG Employee</p>
+      </div>
+      <div class="careers-band__media">
+        <img
+          src="/images/site/work-badges-2026.png"
+          alt="Great Place to Work Certified Badge, May 2024 to May 2025, USA"
+          width="320"
+          height="320"
+          loading="lazy"
+          decoding="async"
+        />
+        <p>
+          CTG Federal has been rated a Great Place to Work by our employees eight years in a
+          row. In addition, we ranked #4 on Fortune Best Small Workplaces 2025 list.
+        </p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .culture-quote {
+    max-width: 60ch;
+    margin-bottom: var(--sp-8);
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-8);
+    list-style: none;
+    margin: 0 0 var(--sp-10);
+    padding: 0;
+  }
+  .badges img {
+    height: 72px;
+    width: auto;
+    object-fit: contain;
+  }
+  .culture-intro {
+    max-width: 72ch;
+  }
+  .culture-praise {
+    display: grid;
+    gap: var(--sp-5);
+  }
+  .culture-praise .quote {
+    font-size: var(--fs-18);
+  }
+  .pillars-heading {
+    margin-top: var(--sp-16);
+  }
+  .careers-band {
+    align-items: center;
+  }
+  .careers-band h2,
+  .careers-band p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+  .careers-band .eyebrow {
+    color: #7fb8ff;
+  }
+  .careers-band__quote {
+    color: var(--ctg-white);
+    margin-top: var(--sp-8);
+  }
+  .careers-band__attribution {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7fb8ff;
+  }
+  .careers-band__media img {
+    width: 100%;
+    max-width: 260px;
+    margin-inline: auto var(--sp-5);
+  }
+  .careers-band__media p {
+    color: rgba(255, 255, 255, 0.86);
+  }
+</style>

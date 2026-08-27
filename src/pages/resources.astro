@@ -1,0 +1,298 @@
+---
+/**
+ * Resources — Quick Facts, the WhitePapers & Briefs library, and the two
+ * featured videos from the live page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PageHero from '../components/PageHero.astro';
+import QuickFacts from '../components/QuickFacts.astro';
+
+interface Paper {
+  title: string;
+  pdf: string;
+  thumb: string;
+  desc?: string;
+}
+
+const papers: Paper[] = [
+  {
+    title: 'Capabilities Overview',
+    pdf: '/downloads/CTG_Federal-Overview_Capabilities_Statement_7.20.26-1.pdf',
+    thumb: '/images/site/CTG_Federal-Overview_Capabilities_Statement_7.20.26-1-pdf.jpg',
+    desc: 'Servicing Federal Needs with Best-in-Class Expertise & Solutions. Download the CTG Government Overview to learn more about what we do, our approach and what we deliver to our federal government customers.',
+  },
+  {
+    title: 'Nurture Program',
+    pdf: '/downloads/Nurture_Program-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/Nurture_Program-CTG_Federal.7.20.26-pdf.jpg',
+    desc: 'CTG Federal has implemented a robust Nurture Program that is designed to maintain focus on our customers 365 days of the year.',
+  },
+  {
+    title: 'Contracts Capabilities',
+    pdf: '/downloads/CTG-Federal-Contracts-Capabilities_External_7.20.26-2.pdf',
+    thumb: '/images/site/CTG-Federal-Contracts-Capabilities_External_7.20.26-2-pdf.jpg',
+    desc: 'CTG Federal is an SBA-certified small business that excels in servicing dozens of federal defense, intelligence, and civilian organizations with best-in-class information technology. Download the Contracts Capabilities document to learn more.',
+  },
+  {
+    title: 'Line Card',
+    pdf: '/downloads/Line_Card-CTG_Federal_7.20.26-2.pdf',
+    thumb: '/images/site/Line_Card-CTG_Federal_7.20.26-2-pdf.jpg',
+    desc: 'CTG Federal has partnered with best in class technology vendors to deliver solutions that enable mission success. Download our Line Card to learn more about our vendors and available contracts for government procurement.',
+  },
+  {
+    title: 'Warehouse Capabilities',
+    pdf: '/downloads/CTG-Federal-Secure-Warehousing-Integration-Deployment-Services.7.20.26-2.pdf',
+    thumb: '/images/site/CTG-Federal-Secure-Warehousing-Integration-Deployment-Services.7.20.26-2-pdf.jpg',
+    desc: "Our warehousing, integration, staging, and deployment services extend CTG's role well beyond a traditional value-added reseller. We provide customers with a single source for asset custody, preparation, configuration, and delivery across the full program lifecycle.",
+  },
+  {
+    title: 'Data Center & Cloud Modernization',
+    pdf: '/downloads/Data-Center-Cloud-Solutions_Brief-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/Data-Center-Cloud-Solutions_Brief-CTG_Federal.7.20.26-pdf.jpg',
+    desc: 'A Trusted Federal Partner for Data Center & Cloud Modernization. Download the CTG Data Center & Cloud Solution Brief to learn more about how we approach and deliver IT modernization strategies for our federal government customers.',
+  },
+  {
+    title: 'Cybersecurity Modernization',
+    pdf: '/downloads/Cybersecurity_Modernization-Solutions_Brief-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/Cybersecurity_Modernization-Solutions_Brief-CTG_Federal.7.20.26-pdf.jpg',
+    desc: 'A Trusted Federal Partner for Cybersecurity Modernization. Download the CTG Cybersecurity Solution Brief to learn more about how we approach and deliver modern, secure networks for our federal government customers.',
+  },
+  {
+    title: 'Network Modernization',
+    pdf: '/downloads/Network_Modernization-Solutions_Brief-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/Network_Modernization-Solutions_Brief-CTG_Federal.7.20.26-pdf.jpg',
+    desc: 'CTG Federal is committed to helping U.S. federal agencies modernize their network infrastructure in alignment with Zero Trust Network Architecture (ZTNA) principles. Our solutions integrate advanced security models and innovative networking technologies to deliver a secure, compliant, and high-performance network framework.',
+  },
+  {
+    title: 'Program Management',
+    pdf: '/downloads/Program_Management-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/Program_Management-CTG_Federal.7.20.26-pdf.jpg',
+  },
+  {
+    title: 'AI Transformation',
+    pdf: '/downloads/AI_Transformation-Solutions_Brief-CTG_Federal.7.20.26.pdf',
+    thumb: '/images/site/AI_Transformation-Solutions_Brief-CTG_Federal.7.20.26-pdf.jpg',
+    desc: 'CTG Federal helps agencies navigate this complex landscape by delivering pragmatic, end-to-end AI solutions. We combine deep expertise in enterprise infrastructure with a proven delivery methodology to bridge the gap between AI potential and production reality. We partner with you to discover, design, pilot, and scale high-impact AI solutions—from intelligent document processing to autonomous systems—that reduce costs, increase revenue, and lower risk, ensuring your organization is prepared for the demands of tomorrow.',
+  },
+  {
+    title: 'AI-Driven Deployment',
+    pdf: '/downloads/AI-Driven-Deployment_7.16.26.pdf',
+    thumb: '/images/site/AI-Driven-Deployment_7.16.26-pdf.jpg',
+    desc: 'AI-Driven Automation for Rapid Deployment of a NeoCloud GPU Cluster explores how CTG Federal used AI-assisted automation to provision a 24-node, 192-GPU cluster in just four days — reducing traditional deployment timelines by 85% or more. The paper outlines the vendor-agnostic framework behind the results and what it means for organizations looking to accelerate AI infrastructure delivery at scale.',
+  },
+  {
+    title: 'Cohesity Whitepaper',
+    pdf: '/downloads/Cohesity-White_Paper-CTG_Federal_7.20.26.pdf',
+    thumb: '/images/site/Cohesity-White_Paper-CTG_Federal_7.20.26-pdf.jpg',
+    desc: "CTG has partnered with Cohesity to deliver value to federal agencies looking to simplify data and application management with Cohesity's mission-ready solutions. Download our Whitepaper to learn more about the benefits of Cohesity including flexibility, consolidated storage and interoperability between other data protection solutions.",
+  },
+  {
+    title: 'Cohesity Dept of Defense Solution Brief',
+    pdf: '/downloads/CTG-CohesityDataManagement.pdf',
+    thumb: '/images/site/CTG-CohesityDataManagement-1.jpg',
+    desc: "Understanding DoD's three main interconnected strategies for emphasizing data and shared access to it with technology modernization from CTG Federal and Cohesity.",
+  },
+  {
+    title: 'NetApp Solutions Brief',
+    pdf: '/downloads/NetApp-Solutions-Brief-CTG_Federal_7.21.26.pdf',
+    thumb: '/images/site/NetApp-Solutions-Brief-CTG_Federal_7.21.26-pdf.jpg',
+    desc: "Federal agencies know NetApp as leading storage provider to U.S. government and they trust CTG Federal's unmatched experience and expertise designing and deploying NetApp-based solutions to store, manage and protect the U.S. government's most precious mission asset: their data.",
+  },
+  {
+    title: 'NetApp Whitepaper',
+    pdf: '/downloads/NetApp-White_Paper-CTG_Federal_7.20.26.pdf',
+    thumb: '/images/site/NetApp-White_Paper-CTG_Federal_7.20.26-pdf.jpg',
+    desc: "CTG has partnered with NetApp, a leading storage provider in U.S. government, to deliver federal agencies high-performance storage solutions. Download our Whitepaper to learn more about NetApp's exceptionally scalable, efficient and capable storage options.",
+  },
+  {
+    title: 'NetApp One-Minute Whitepaper',
+    pdf: '/downloads/NetApp-One-Minute-White-Paper.7.15.26.pdf',
+    thumb: '/images/site/NetApp-One-Minute-White-Paper.7.15.26-pdf.jpg',
+    desc: 'As the government’s reliance on digital data increases, so too do the risks of data loss and misuse. Learn why many public sector organizations are turning to NetApp Snapshots and solutions from CTG Federal for improved data protection and recovery.',
+  },
+  {
+    title: 'NetApp Practice Summary',
+    pdf: '/downloads/NetApp-Practice_Summary-CTG_Federal_7.20.26.pdf',
+    thumb: '/images/site/NetApp-Practice_Summary-CTG_Federal_7.20.26-pdf.jpg',
+  },
+  {
+    title: 'Cisco Solutions Brief',
+    pdf: '/downloads/Cisco-Solutions_Brief-CTG_Federal_7.20.26-2.pdf',
+    thumb: '/images/site/Cisco-Solutions_Brief-CTG_Federal_7.20.26-2-pdf.jpg',
+    desc: 'CTG has partnered with Cisco to offer innovative hardware, software, and top-flight professional services to help government enterprises solve their most vexing challenges. Download our Solutions Brief to learn more about how CTG and Cisco are helping agencies transform all aspects of their IT infrastructure.',
+  },
+  {
+    title: 'Cisco Whitepaper',
+    pdf: '/downloads/Cisco-White_Paper-CTG_Federal_7.20.26-2.pdf',
+    thumb: '/images/site/Cisco-White_Paper-CTG_Federal_7.20.26-2-pdf.jpg',
+    desc: 'CTG has partnered with Cisco to provide architectural solutions geared at delivering strategic digital transformation in direct alignment with Federal IT Modernization guidelines. Download our Whitepaper to learn more about our solution for data center modernization as a service.',
+  },
+  {
+    title: 'Cisco Practice Summary',
+    pdf: '/downloads/Cisco-Practice_Summary-CTG_Federal_7.17.26.pdf',
+    thumb: '/images/site/Cisco-Practice_Summary-CTG_Federal_7.17.26-pdf.jpg',
+  },
+  {
+    title: 'VMware by Broadcom Solutions Brief',
+    pdf: '/downloads/VMWare_Broadcom-Solutions_Brief-CTG_Federal_7.21.26.pdf',
+    thumb: '/images/site/VMWare_Broadcom-Solutions_Brief-CTG_Federal_7.21.26-pdf.jpg',
+    desc: 'Federal defense, civilian, and intelligence agencies are transitioning more of their day-to-day services and operations to virtual platforms, pushing the limits of existing IT infrastructures. As a Broadcom Premier Partner, CTG Federal helps agencies realize these modernization goals in a way that highly leverages their existing VMware investments and capabilities. Download our Solution Brief to learn how VMware solutions are enabling federal agencies to bridge their existing VMware environments to the cloud — securely and on their own terms — so they can develop and deploy the modern applications they need to advance their missions.',
+  },
+  {
+    title: 'VMware by Broadcom Whitepaper',
+    pdf: '/downloads/VMWare_Broadcom-White_Paper-CTG_Federal_7.20.26-2.pdf',
+    thumb: '/images/site/VMWare_Broadcom-White_Paper-CTG_Federal_7.20.26-2-pdf.jpg',
+    desc: 'CTG has partnered with Broadcom to help your agency embrace, optimize, and secure any multi-cloud environment. Download our whitepaper to learn more about powering advanced digital operations with VMware NSX solutions.',
+  },
+  {
+    title: 'Dell Technologies Solutions Brief',
+    pdf: '/downloads/Dell-Solutions_Brief-CTG_Federal_7.20.26.pdf',
+    thumb: '/images/site/Dell-Solutions_Brief-CTG_Federal_7.20.26-pdf.jpg',
+  },
+  {
+    title: 'Dell Technologies Practice Summary',
+    pdf: '/downloads/DELL-Practice_Summary-CTG_Federal_7.20.26.pdf',
+    thumb: '/images/site/DELL-Practice_Summary-CTG_Federal_7.20.26-pdf.jpg',
+  },
+  {
+    title: 'Dell Technologies Whitepaper',
+    pdf: '/downloads/Dell-White_Paper-CTG_Federal_7.20.26-2.pdf',
+    thumb: '/images/site/Dell-White_Paper-CTG_Federal_7.20.26-2-pdf.jpg',
+    desc: 'Navigate the World of HPC and AI with Dell Technologies, CTG Federal, and NVIDIA in this Whitepaper.',
+  },
+  {
+    title: 'NVIDIA Solutions Brief',
+    pdf: '/downloads/NVIDIA-CTG-Federal-Solutions-Brief_7.20.26.pdf',
+    thumb: '/images/site/NVIDIA-CTG-Federal-Solutions-Brief_7.20.26-pdf.jpg',
+    desc: 'Agencies trust NVIDIA as a global leader in accelerated computing—with a state-of-the-art infrastructure that powers AI workloads at scale. They also know CTG Federal’s proven track record as a trusted technology advisor to the federal government. Now, as an Authorized NVIDIA DGX Solution Provider, CTG Federal can help organizations harness NVIDIA to speed AI deployments, optimize workloads and derive new data insights. Together, our solutions can empower agencies to drive innovation and efficiency in nearly every segment of their operations.',
+  },
+  {
+    title: 'NVIDIA Whitepaper',
+    pdf: '/downloads/NVIDIA-CTG-Federal-White_Paper_7.20.26.pdf',
+    thumb: '/images/site/NVIDIA-CTG-Federal-White_Paper_7.20.26-pdf.jpg',
+    desc: 'To derive the most value from their enterprise data, federal agencies need generative AI models that are accurate and trustworthy, with an accelerated infrastructure to make deployments fast and easy. As an authorized NVIDIA Partner and value-added reseller in the federal marketplace, CTG Federal can help agencies harness NVIDIA solutions to efficiently deploy RAG-powered LLMs on an enterprise scale.',
+  },
+  {
+    title: 'Everpure Practice Summary',
+    pdf: '/downloads/Everpure_Practice_Summary_EXTERNAL_7.20.26.pdf',
+    thumb: '/images/site/Everpure_Practice_Summary_EXTERNAL_7.20.26-pdf.jpg',
+  },
+  {
+    title: 'CTG Federal Offerings & Contracts for ORNL',
+    pdf: '/downloads/ORNL-Offerings-CTG_Federal_Line-Card_7.21.26.pdf',
+    thumb: '/images/site/ORNL-Offerings-CTG_Federal_Line-Card_7.21.26-pdf.jpg',
+  },
+];
+
+const videos = [
+  {
+    title: 'HPC & AI in the Federal Government',
+    thumb: '/images/site/video-HPC-AI-thumbnail.jpg',
+    desc: 'Mosa Emamjomeh, Bob Ciotti & Steve Grewal from CTG Federal discuss in this panel-style interview everything HPC & AI related to the Federal Government, and how it affects its customers.',
+  },
+  {
+    title: 'CTG Federal Zero Trust Security With Multidomain Fabrics v1',
+    thumb: '/images/site/video-zero-trust-security-thumbnail.jpg',
+    desc: 'Brian Trentham and Jeff Fossett discuss the tenants of multi-domain architectures and how they’re the most thorough path forward for a zero trust architectural posture.',
+  },
+];
+---
+
+<BaseLayout
+  title="Resources - CTG Federal"
+  description="Quick facts, compliance certifications, and downloadable whitepapers and briefs from CTG Federal."
+>
+  <PageHero eyebrow="Resources" title="Resources" align="center" />
+
+  <Section tone="white">
+    <QuickFacts />
+  </Section>
+
+  <Section tone="subtle">
+    <div class="section-heading">
+      <h2>WhitePapers & Briefs</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="papers-grid">
+      {
+        papers.map((paper) => (
+          <a class="card card--link paper-card" href={paper.pdf} target="_blank" rel="noopener">
+            <img class="paper-card__thumb" src={paper.thumb} alt={`${paper.title} download thumbnail`} loading="lazy" width="400" height="518" />
+            <h3>{paper.title}</h3>
+            {paper.desc && <p>{paper.desc}</p>}
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>Videos</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="grid grid--2">
+      {
+        videos.map((video) => (
+          <div class="card video-card">
+            <img class="video-card__thumb" src={video.thumb} alt={`${video.title} video thumbnail`} loading="lazy" width="480" height="270" />
+            <h4>{video.title}</h4>
+            <p>{video.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .papers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-6);
+  }
+  .paper-card {
+    padding: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+  }
+  .paper-card__thumb {
+    width: 100%;
+    aspect-ratio: 4 / 5.18;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--sp-4);
+    border: 1px solid var(--color-border);
+  }
+  .paper-card h3 {
+    font-size: var(--fs-18);
+  }
+  .paper-card p {
+    font-size: var(--fs-14);
+    color: var(--color-fg-body);
+  }
+  @media (max-width: 1024px) {
+    .papers-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 820px) {
+    .papers-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .papers-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .video-card__thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--sp-4);
+  }
+</style>

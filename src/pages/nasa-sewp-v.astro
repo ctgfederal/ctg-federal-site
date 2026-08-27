@@ -1,0 +1,208 @@
+---
+/**
+ * NASA SEWP V — contract detail page: overview, ordering resources, contacts,
+ * and the Fair Opportunity Clause required on the live page.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const overview = [
+  { label: 'Sponsoring Agency', value: 'NASA' },
+  { label: 'Contract Type', value: 'GWAC, IDIQ' },
+  { label: 'Contract Holder', value: 'CTG Federal, LLC' },
+  { label: 'Contract #', value: 'NNG15SD12B – Group B – Small Business' },
+  { label: 'Period of Performance', value: 'Valid through September 30, 2026' },
+  { label: 'Contract Fee', value: '0.34%' },
+];
+
+const orderingGuidePdf = '/downloads/Ordering-Guide.pdf';
+---
+
+<BaseLayout
+  title="NASA SEWP V | CTG Federal"
+  description="Providing the latest in commercial ICT/AV products and services, the NASA SEWP contract vehicle has an outstanding track record of serving up fresh technology for Federal Agencies."
+>
+  <PageHero eyebrow="Contracts" title="NASA SEWP V">
+    <Breadcrumb light items={[{ label: 'Contracts', href: '/contracts/' }, { label: 'NASA SEWP V' }]} />
+  </PageHero>
+
+  <Section tone="white">
+    <p class="lede">
+      The NASA SEWP (Solutions for Enterprise-Wide Procurement) GWAC (Government-Wide Acquisition Contract)
+      provides the latest in Information Technology (IT) products and services for all Federal Agencies and
+      their approved contractors. Providing the latest in commercial ICT/AV products and services, the NASA
+      SEWP contract vehicle has an outstanding track record of serving up fresh technology for Federal
+      Agencies. SEWP is a GWAC consisting of over 140 pre-competed Prime Contract Holders, including more
+      than 100 small businesses.
+    </p>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="section-heading">
+      <h2>Contract Overview</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <dl class="overview-grid">
+      {
+        overview.map((row) => (
+          <div class="overview-grid__row">
+            <dt>{row.label}</dt>
+            <dd>{row.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>Contract Resources</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="grid grid--3">
+      <div class="card">
+        <h3>Program Manager</h3>
+        <p>
+          Kendra Nelson<br />
+          <a href="mailto:kendra@ctgfederal.com">kendra@ctgfederal.com</a><br />
+          <a href="tel:720-220-7196">720-220-7196</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>Deputy Program Manager</h3>
+        <p>
+          Brooke Ronan<br />
+          <a href="mailto:brooke@ctgfederal.com">brooke@ctgfederal.com</a><br />
+          <a href="tel:303-356-2275">303-356-2275</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>Customer Support</h3>
+        <p>
+          <a href="mailto:contact@ctgfederal.com">contact@ctgfederal.com</a><br />
+          <a href="tel:703-278-3885">703-278-3885</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>SEWP Contact Information</h3>
+        <p>
+          Helpline: <a href="tel:301-286-1478">301-286-1478</a><br />
+          <a href="mailto:help@sewp.nasa.gov">help@sewp.nasa.gov</a>
+        </p>
+        <p>
+          Orders: FAX 301-286-0317<br />
+          <a href="mailto:sewporders@sewp.nasa.gov">sewporders@sewp.nasa.gov</a>
+        </p>
+        <p>
+          Ordering Guide: <a href={orderingGuidePdf} target="_blank" rel="noopener">Download</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>SEWP Website</h3>
+        <p>
+          <a href="http://www.sewp.nasa.gov/" target="_blank" rel="noopener">www.sewp.nasa.gov</a>
+        </p>
+      </div>
+      <div class="card">
+        <h3>Contract Holder Information</h3>
+        <p>
+          – CTG Federal<br />
+          <a
+            href="https://www.sewp.nasa.gov/sewp5public/contractholders#/detail/128"
+            target="_blank"
+            rel="noopener"
+          >
+            SEWP Contract Holder Detail
+          </a>
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="subtle" narrow>
+    <div class="prose">
+      <h2>Fair Opportunity Clause:</h2>
+      <p>
+        The NASA Solutions for Enterprise-Wide Procurement (SEWP) V contract is a multi-award
+        government-wide acquisition contract (GWAC) and includes the following clause:
+      </p>
+      <p>A.1.21. FAIR OPPORTUNITY AND REQUESTS FOR QUOTES</p>
+      <p>
+        Contractors will be provided fair opportunity at the individual order level as appropriate per FAR
+        Part 16.505(b), including the SEWP RFQ tools. No documentation for the order selection is required
+        to be submitted with the order. All such documentation is to be maintained by the issuing
+        procurement office.
+      </p>
+      <p>
+        The Contractor shall not market, quote or otherwise offer for sale, under this contract, any
+        products not listed in Attachment F, Pricing Exhibits as defined in the SEWP database of record
+        until the said products are included in the SEWP database, and available to all Government
+        end-users.
+      </p>
+      <p>
+        If the Government issues a Request For Information (RFI) as part of market research, the Contractor
+        may provide items not yet listed on their SEWP contract as part of a market research quote if:
+      </p>
+      <p>1. all such items are clearly marked as not yet available on their SEWP contract;</p>
+      <p>2. the contractor submits a technology refreshment request to add those products to their contract</p>
+      <p>
+        If the Government issues a Request For Quote (RFQ) or a Market Research Request (MRR), the
+        Contractor may only respond with items available on their Contract. If the Contractor has
+        insufficient items on their contract to fully respond to the Formal RFQ, the Contractor must
+        respond with a No Bid. Unless the RFQ specifically allows for partial quotes, the Contractor must
+        respond fully to all requirements specified in the RFQ.
+      </p>
+      <p>
+        When the Contractor markets, quotes or otherwise offers for sale a product under this contract, the
+        price of each item shall be the no greater than the price in Attachment F, Pricing Exhibits as
+        defined in the SEWP database of record at the time the quote is issued.
+      </p>
+      <p>
+        When submitting a quote to a Government end-user, the contractor must clearly state the length of
+        time the quote is valid. The contractor shall honor any order submitted within the stated time
+        period of a quote.
+      </p>
+      <p>
+        When responding to an RFQ or MRR issued from the NASA SEWP on-line quoting system, the Contractor
+        must respond as outlined in Attachment D, Section D.1. On-line Quoting.
+      </p>
+      <p>
+        As a result of the Small Business jobs act, the issuing Contracting Officer can set aside an order
+        for small businesses as long as there are two or more with that designation.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .overview-grid {
+    display: grid;
+    gap: 0;
+    max-width: 900px;
+    margin: 0;
+  }
+  .overview-grid__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+    padding-block: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+  }
+  .overview-grid__row dt {
+    color: var(--color-fg-muted);
+    font-weight: var(--fw-medium);
+  }
+  .overview-grid__row dd {
+    margin: 0;
+    color: var(--ctg-navy);
+    font-weight: var(--fw-medium);
+  }
+  @media (max-width: 640px) {
+    .overview-grid__row {
+      grid-template-columns: 1fr;
+      gap: var(--sp-1);
+    }
+  }
+</style>

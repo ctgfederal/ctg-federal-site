@@ -1,0 +1,84 @@
+---
+/**
+ * Timeline — replicates the live /timeline/ page: intro copy plus the five
+ * clickable timeline slide images, presented as a stacked gallery, and the
+ * PDF download link.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+
+const pdf = '/downloads/CTG-Timeline-7.17.26.pdf';
+
+const slides = [
+  { src: '/images/site/1994-2004.png', alt: 'CTG Federal timeline, 1994 to 2004' },
+  { src: '/images/site/TimelineSLIDE-2@2x.jpg', alt: 'CTG Federal timeline, 2005 to 2012' },
+  { src: '/images/site/2013-2019.png', alt: 'CTG Federal timeline, 2013 to 2019' },
+  { src: '/images/site/2020-2024.png', alt: 'CTG Federal timeline, 2020 to 2024' },
+  { src: '/images/site/2025-Now.png', alt: 'CTG Federal timeline, 2025 to now' },
+];
+---
+
+<BaseLayout
+  title="CTG Federal Over the Years | Timeline"
+  description="In 2017, a team of four talented IT veterans came together to start a forward-thinking company dedicated to delivering best-in-class IT services. The new company would be defined not only by superior technical solutions but by people and partnerships dedicated to transforming and accelerating businesses."
+>
+  <PageHero
+    title="CTG Over the Years"
+    intro="In 2017, a team of four talented IT veterans came together to start a forward-thinking company dedicated to delivering best-in-class IT services. The new company would be defined not only by superior technical solutions but by people and partnerships dedicated to transforming and accelerating businesses. Here’s a bit about our history."
+  />
+
+  <Section tone="white">
+    <p class="lede timeline-caption">Click an image below to follow our timeline.</p>
+    <ul class="timeline-gallery">
+      {
+        slides.map((slide) => (
+          <li>
+            <a href={pdf} target="_blank" rel="noopener">
+              <img src={slide.src} alt={slide.alt} loading="lazy" decoding="async" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="timeline-download">
+      <a class="btn btn--primary" href={pdf} target="_blank" rel="noopener">Download the CTG Timeline</a>
+    </p>
+  </Section>
+</BaseLayout>
+
+<style>
+  .timeline-caption {
+    margin-bottom: var(--sp-8);
+  }
+  .timeline-gallery {
+    display: grid;
+    gap: var(--sp-6);
+    list-style: none;
+    margin: 0 0 var(--sp-10);
+    padding: 0;
+  }
+  .timeline-gallery li {
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-xs);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .timeline-gallery li:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .timeline-gallery a {
+    display: block;
+  }
+  .timeline-gallery img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .timeline-download {
+    text-align: center;
+  }
+</style>

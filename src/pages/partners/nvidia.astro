@@ -1,0 +1,126 @@
+---
+/**
+ * NVIDIA partner spotlight — hero, accelerated AI overview, logo,
+ * certifications, and two downloadable resources.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const certifications = [
+  'Authorized NVIDIA DGX Solution Provider',
+  'NVIDIA DGX AI Compute Systems Competency',
+  'NVIDIA Compute Systems Elite Competency',
+  'NVIDIA Networking Competency',
+  'NVIDIA AI Advisors for Sales and Engineering',
+  'Validated for NVIDIA DGX SuperPOD',
+];
+
+const resources = [
+  {
+    title: 'Solutions Brief',
+    thumb: '/images/site/NVIDIA-CTG-Federal-Solutions-Brief_7.20.26-1-pdf.jpg',
+    href: '/downloads/NVIDIA-CTG-Federal-Solutions-Brief_7.20.26-1.pdf',
+  },
+  {
+    title: 'Whitepaper',
+    thumb: '/images/site/NVIDIA-CTG-Federal-White_Paper_7.20.26-1-pdf.jpg',
+    href: '/downloads/NVIDIA-CTG-Federal-White_Paper_7.20.26-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="NVIDIA - CTG Federal"
+  description="As an Authorized NVIDIA DGX Solution Provider, CTG Federal helps federal agencies speed AI deployments and optimize accelerated computing workloads."
+>
+  <PageHero title="NVIDIA">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'NVIDIA' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>Accelerating AI for Government</h2>
+      <p>
+        Agencies trust NVIDIA as a global leader in accelerated computing&mdash;with a
+        state-of-the-art infrastructure that powers AI workloads at scale. They also know CTG
+        Federal&rsquo;s proven track record as a trusted technology advisor to the federal
+        government. Now, as an Authorized NVIDIA DGX Solution Provider, CTG Federal can help
+        organizations harness NVIDIA to speed AI deployments, optimize workloads and derive new
+        data insights. Together, our solutions can empower agencies to drive innovation and
+        efficiency in nearly every segment of their operations.
+      </p>
+    </div>
+
+    <p class="partner-logo">
+      <img src="/images/site/sq_nvidia.jpg" alt="NVIDIA Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </p>
+
+    <div class="prose">
+      <h3>Certifications &amp; Validations</h3>
+      <ul>
+        {certifications.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

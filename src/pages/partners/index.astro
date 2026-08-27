@@ -1,0 +1,274 @@
+---
+/**
+ * Partners index — replicates the live /partners/ page in order:
+ * hero → Technology Partners intro → Strategic OEMs logo grid → solution
+ * filter + line card link → full A–Z partner grid (with letter jump) →
+ * Become a Partner CTA + form.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import LogoGrid from '../../components/LogoGrid.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { strategic, all as allPartners, solutionFilters } from '../../data/partners';
+
+const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26-1.pdf';
+
+const letters = ['#', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')];
+const grouped = new Map<string, typeof allPartners>();
+for (const partner of allPartners) {
+  const first = partner.name.charAt(0).toUpperCase();
+  const key = /[A-Z]/.test(first) ? first : '#';
+  if (!grouped.has(key)) grouped.set(key, []);
+  grouped.get(key)!.push(partner);
+}
+const activeLetters = letters.filter((letter) => grouped.has(letter));
+---
+
+<BaseLayout
+  title="CTG Federal Partners: leading OEMs, best-in-class technology vendors"
+  description="We partner with the best-in-class technology vendors to deliver solutions that enable success. See our complete list of partners."
+>
+  <PageHero
+    title="Partnerships that provide our customers a business advantage."
+    intro="We partner with the best-in-class technology vendors to deliver solutions that enable success."
+  />
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>Technology Partners</h2>
+      <span class="accent-bar"></span>
+      <p class="lede">
+        Our partners are our allies in a collective commitment to serving our customers. We work
+        with the leading OEMs to deliver our customers the insights, advocacy and price advantages
+        that improve business outcomes, save money, and reduce risk.
+      </p>
+    </div>
+
+    <h3 class="strategic-heading">Strategic OEMs</h3>
+    <LogoGrid logos={strategic} cols={6} center={false} />
+
+    <div class="filter-bar">
+      <label for="partner-filter">Filter by:</label>
+      <select id="partner-filter">
+        {solutionFilters.map((option) => (
+          <option value={option.value}>{option.label}</option>
+        ))}
+      </select>
+      <a class="filter-bar__pdf" href={lineCardPdf} target="_blank" rel="noopener">
+        See our complete list of partners
+      </a>
+    </div>
+
+    <nav class="az-jump" aria-label="Jump to letter">
+      {letters.map((letter) =>
+        grouped.has(letter) ? (
+          <a href={`#letter-${letter}`}>{letter}</a>
+        ) : (
+          <span aria-hidden="true">{letter}</span>
+        )
+      )}
+    </nav>
+
+    <div class="partner-az">
+      {activeLetters.map((letter) => (
+        <div class="partner-az__group" id={`letter-${letter}`} data-letter-group>
+          <h3 class="partner-az__letter">{letter}</h3>
+          <ul class="partner-az__grid">
+            {grouped.get(letter)!.map((partner) => (
+              <li class="partner-tile" data-solutions={partner.solutions.join(' ')}>
+                <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" width="80" height="80" />
+                <span class="partner-tile__name">{partner.name}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="section-heading section-heading--center">
+      <h2>Become a Partner</h2>
+      <span class="accent-bar"></span>
+      <p class="lede">
+        We carefully select and work with leading OEM&rsquo;s as well as emerging, cutting-edge
+        technology and service providers that offer turnkey designed and integrated solutions to
+        meet unique customer challenges.
+      </p>
+    </div>
+    <h3 class="form-heading">Get in Touch</h3>
+    <ContactForm
+      name="become-a-partner"
+      fields={['name', 'email', 'phone', 'message']}
+      required={['name', 'email', 'phone']}
+    />
+  </Section>
+</BaseLayout>
+
+<script>
+  const select = document.getElementById('partner-filter') as HTMLSelectElement | null;
+  const tiles = document.querySelectorAll<HTMLLIElement>('.partner-tile');
+  const groups = document.querySelectorAll<HTMLDivElement>('[data-letter-group]');
+
+  select?.addEventListener('change', () => {
+    const value = select.value;
+    tiles.forEach((tile) => {
+      const solutions = (tile.dataset.solutions || '').split(' ').filter(Boolean);
+      const match = value === 'all' || solutions.includes(value);
+      tile.hidden = !match;
+    });
+    groups.forEach((group) => {
+      const visible = group.querySelector('.partner-tile:not([hidden])');
+      group.hidden = !visible;
+    });
+  });
+</script>
+
+<style>
+  .strategic-heading {
+    margin-bottom: var(--sp-5);
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3) var(--sp-5);
+    margin: var(--sp-10) 0 var(--sp-8);
+    padding: var(--sp-5);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+  .filter-bar label {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+  }
+  .filter-bar select {
+    font-family: var(--font-body);
+    font-size: var(--fs-16);
+    color: var(--color-fg);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 6px;
+    padding: var(--sp-2) var(--sp-3);
+  }
+  .filter-bar select:focus-visible {
+    outline: 2px solid var(--ctg-azure);
+    outline-offset: 2px;
+  }
+  .filter-bar__pdf {
+    margin-left: auto;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .az-jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-6);
+    padding-bottom: var(--sp-4);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--ctg-white);
+  }
+  .az-jump a,
+  .az-jump span {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+  }
+  .az-jump a {
+    color: var(--color-fg);
+    background: var(--color-bg-subtle);
+  }
+  .az-jump a:hover {
+    color: var(--ctg-white);
+    background: var(--ctg-azure);
+  }
+  .az-jump span {
+    color: var(--color-border-strong);
+  }
+
+  .partner-az__group {
+    scroll-margin-top: var(--sp-16);
+  }
+  .partner-az__letter {
+    margin: var(--sp-10) 0 var(--sp-4);
+    padding-bottom: var(--sp-2);
+    border-bottom: 2px solid var(--color-accent-soft);
+    color: var(--ctg-yale-blue);
+  }
+  .partner-az__group:first-child .partner-az__letter {
+    margin-top: 0;
+  }
+  .partner-az__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--sp-3);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .partner-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-4) var(--sp-3);
+    text-align: center;
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: box-shadow var(--dur-med) var(--ease-standard), border-color var(--dur-med) var(--ease-standard);
+  }
+  .partner-tile:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-sm);
+  }
+  .partner-tile img {
+    max-width: 100%;
+    height: 44px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition: filter var(--dur-med) var(--ease-standard), opacity var(--dur-med) var(--ease-standard);
+  }
+  .partner-tile:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  .partner-tile__name {
+    font-size: var(--fs-12);
+    color: var(--color-fg-muted);
+  }
+
+  .form-heading {
+    max-width: 860px;
+    margin: 0 auto var(--sp-6);
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .filter-bar__pdf {
+      margin-left: 0;
+    }
+    .partner-az__grid {
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+  }
+</style>

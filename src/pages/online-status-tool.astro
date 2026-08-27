@@ -1,0 +1,83 @@
+---
+/**
+ * Online Order Status Tool — hero, intro paragraph, link out to the order
+ * status portal, security note, then the Customer Nurture Team contact
+ * form.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+import ContactForm from '../components/ContactForm.astro';
+import site from '../data/site';
+---
+
+<BaseLayout
+  title="Online Order Status Tool | Track Your Order on Your Time"
+  description="Track Your Order on Your Time – Any Time at All. CTG Federal is pleased to provide our customers with a one-of-a-kind order status tracking tool. Check your order status here."
+>
+  <PageHero eyebrow="Online Order Status Tool" title="Track Your Order on Your Time – Any Time at All" />
+
+  <Section tone="white" narrow>
+    <div class="prose">
+      <p>
+        CTG Federal is pleased to provide our customers with a one-of-a-kind order status tracking
+        tool. Our customer success and nurture team are dedicated to regularly updating order status
+        so you can be assured the information you receive is timely and up to date. We hope that this
+        unique experience further enhances the service that you enjoy when choosing CTG Federal for
+        your technology needs.
+      </p>
+      <p class="status__button">
+        <Button href={site.orderStatusUrl} external>Check your order status here</Button>
+      </p>
+      <p>
+        For security purposes, customer specific order information is required. Your PO number,
+        along with your unique CTG generated order number can be found in your order confirmation
+        email. Feel free to contact our <a href="#nurture-team">customer nurture team</a> with any
+        questions.
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="subtle" id="nurture-team">
+    <div class="team">
+      <div>
+        <h3>Customer Nurture Team</h3>
+        <p class="team__email"><a href="mailto:nurture@ctgfederal.com">nurture@ctgfederal.com</a></p>
+      </div>
+      <div class="team__form">
+        <ContactForm
+          name="order-status-nurture"
+          fields={['name', 'email', 'message']}
+          required={['name', 'email']}
+          submitLabel="Send"
+        />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .status__button {
+    text-align: center;
+    margin-block: var(--sp-8);
+  }
+  .team {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .team h3 {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .team__email {
+    font-size: var(--fs-18);
+  }
+  @media (max-width: 900px) {
+    .team {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

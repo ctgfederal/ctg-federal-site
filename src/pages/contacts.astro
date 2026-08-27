@@ -1,0 +1,71 @@
+---
+/**
+ * Contacts — hero, "Let's connect." intro, careers pointer, address/phone/
+ * email/LinkedIn, then the Netlify contact form with the department
+ * select.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import ContactForm from '../components/ContactForm.astro';
+import site from '../data/site';
+---
+
+<BaseLayout
+  title="How to Contact CTG Federal"
+  description="Let’s connect. We welcome inquiries about our solutions and capabilities. Contact us via email, telephone, or online form."
+>
+  <PageHero title="Contact" />
+
+  <Section tone="white">
+    <div class="contact">
+      <div class="contact__intro">
+        <h2>Let’s connect.</h2>
+        <span class="accent-bar"></span>
+        <p class="lede">We welcome inquiries about our solutions and capabilities.</p>
+        <p>
+          Looking for information about a career with CTG Federal?
+          <a href="/careers/">Visit our Careers page here</a>
+        </p>
+        <div class="contact__details">
+          <p class="contact__org">{site.name}</p>
+          <p class="contact__address">
+            <a href={site.address.mapUrl} target="_blank" rel="noopener">{site.address.full}</a>
+          </p>
+          <p><a href={site.phoneHref}>{site.phone}</a></p>
+          <p><a href={site.emailHref}>{site.email}</a></p>
+          <p><a href={site.linkedin} target="_blank" rel="noopener">CTG Federal on LinkedIn</a></p>
+        </div>
+      </div>
+      <div class="contact__form">
+        <ContactForm name="contact" departmentSelect />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .contact__details p {
+    margin: 0 0 var(--sp-2);
+  }
+  .contact__org {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ctg-navy);
+    margin-top: var(--sp-6) !important;
+    margin-bottom: var(--sp-1) !important;
+  }
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

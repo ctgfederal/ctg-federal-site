@@ -1,0 +1,140 @@
+---
+/**
+ * Commvault partner spotlight — hero, cyber-resilience overview, partnership
+ * benefits, logo, and four downloadable whitepapers/datasheets.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const resources = [
+  {
+    title: 'Cyber Resilience Whitepaper',
+    thumb: '/images/site/Proactive-Defense-from-Tomorrows-Cyber-Threats-Whitepaper-1-pdf.jpg',
+    href: '/downloads/Proactive-Defense-from-Tomorrows-Cyber-Threats-Whitepaper.pdf',
+  },
+  {
+    title: 'Forest Recovery Scenarios',
+    thumb: '/images/site/CVLTs-Guide-to-Active-Directory-Forest-Recovery-Scenarios-2-pdf.jpg',
+    href: '/downloads/CVLTs-Guide-to-Active-Directory-Forest-Recovery-Scenarios.pdf',
+  },
+  {
+    title: 'Commvault and Clumio',
+    thumb: '/images/site/CVLT_1PG_06_25_Clumio_v2.0-1-pdf.jpg',
+    href: '/downloads/CVLT_1PG_06_25_Clumio_v2.0-1.pdf',
+  },
+  {
+    title: 'Cloud Backup and Recovery',
+    thumb: '/images/site/commvault-backup-and-recovery-for-active-directory-datasheet-7-25-v3.4-1-pdf.jpg',
+    href: '/downloads/commvault-backup-and-recovery-for-active-directory-datasheet-7-25-v3.4-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="Commvault - CTG Federal"
+  description="CTG Federal partners with Commvault to deliver FedRAMP High cyber resilience and zero trust data protection for federal agencies."
+>
+  <PageHero title="Commvault">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'Commvault' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>Maximum Preparedness with Bulletproof Recovery</h2>
+      <p>
+        Our digitally transformed world runs on data. Government agencies are no different. Their
+        mission&rsquo;s success requires their team to have easy access to the right data at the
+        right time, regardless of where they are working from. CTG Federal and Commvault are
+        helping federal customers find the right balance between seamless virtual access and data
+        protection. The federal government is turning to a new cyber architecture called Zero
+        Trust that promises a comprehensive, automated approach, leveraging integrated AI and ML to
+        find the right balance between access and protection. CTG Federal and Commvault are here to
+        help educate, transact and deliver the best of breed technology.
+      </p>
+      <p>
+        Commvault is the gold standard in cyber resilience meeting the federal government&rsquo;s
+        ZTA requirements and the only FedRAMP High cyber resilience platform on the market today.
+        CTG and Commvault have been leading the charge to protect the world against ransomware and
+        other cyberthreats by helping federal agencies reduce risk, minimize downtime, and control
+        costs; and with an intuitive user interface delivering operational readiness. The new
+        Commvault&reg; Cloud, powered by Metallic&reg; AI, represents decades of innovation,
+        industry leadership, customer trust, and a deep ecosystem of partnerships. It&rsquo;s the
+        only cyber resilience platform built for the hybrid world, offering the best data security
+        for all workloads, anywhere, combined with rapid, enterprise-scale recovery. And the best
+        part: the solution fully integrates into ZTA and meets the Data Pillar requirements today.
+      </p>
+      <p>CTG Federal&rsquo;s Elite partnership with Commvault offers:</p>
+      <ul>
+        <li>Sales and Engineering certified personnel.</li>
+        <li>Speed, efficiency, and accuracy in booking, shipping, and tracking customer purchases.</li>
+        <li>Dedicated and knowledgeable post-sales and logistical support.</li>
+        <li>U.S. Citizen, U.S.-based, TS-cleared personnel at all levels of sales and engineering.</li>
+      </ul>
+    </div>
+
+    <p class="partner-logo">
+      <img src="/images/site/sq_commvault.jpg" alt="Commvault Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </p>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

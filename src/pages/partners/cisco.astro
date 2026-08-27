@@ -1,0 +1,215 @@
+---
+/**
+ * Cisco partner spotlight — hero, digital transformation overview,
+ * specializations, federal mandates, delivery capabilities, logo,
+ * certifications, and three downloadable resources.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Section from '../../components/Section.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+const specializations = [
+  'Cisco Gold Integrator',
+  'Cisco Customer Experience Specialization (“CX”)',
+  'Advanced Data Center Architecture Specialization',
+  'Advanced Enterprise Network Architecture Specialization',
+  'Advanced Security Architecture Specialization',
+  'Advanced Collaboration Architecture Specialization',
+  'Advanced Service Provider Architecture Specialization',
+  'AppDynamics Specialization',
+  'Hyperflex Authorization',
+  'IoT Specialization',
+  'Collaboration SaaS Specialization',
+  'Unified Contact Center Express Specialization',
+  'Small Business Specialization',
+  'Cross-Domain Enterprise Agreement Authorizations',
+  'Amongst other Cisco Product-based authorizations such as Hyperflex, App Dynamics, etc.',
+];
+
+const mandates = [
+  'Executive Order 14028 on Improving the Nation’s Cybersecurity',
+  'Executive 13800 on Strengthening the Cybersecurity of Federal Networks and Critical Infrastructure',
+];
+
+const pathways = [
+  'Rapid Remediation of current threats',
+  'Establish end-to-end visibility across domains with integration between key OEMs',
+  'Expedited and achievable IT Modernization geared at deploying zero-trust architectures end-to-end',
+  'Compliance-focused delivery of said IT Modernization from Day-1 onward',
+  'Sensical Day-2 Operations capabilities, enabling agencies to realize OpEx reduction via the power of AI/ML',
+];
+
+const services = [
+  'Cross-domain integrated fabrics delivering zero trust segmentation (Microsegmentation, Microsegmentation) such as SD-Access, ACI, and SD-WAN',
+  'Data Center Compute, Storage, and Infrastructure solutions such as Nexus Dashboard, Intersight, UCS, FlexPod, App-Dynamics, and advanced 3rd party integrations',
+  'Cyber Security orchestration/automation solutions such as Cisco SecureX, SD-Access, Identity Services Engine, Stealthwatch, Umbrella, FirePOWER, and DUO',
+  'Robust visibility via Cisco solutions such as DNA Center, Nexus Dashboard, Secure Workload, ThousandEyes and Telemetry Appliances',
+  'Wireless solutions including indoor and outdoor wireless focused on WiFi6 / 6E',
+  'Extended Enterprise offerings such as Cyber Vision, Kinetic, encrypted 5G/WiFi6, and other leading-edge OT/ICS architectures',
+  'Integrated Cisco Collaboration solutions such as Webex, UCM, Contact Center, Voice Gateways, and Call Center Solutions',
+  'AI/ML insight solutions to deliver visibility and optimization across IT disciplines',
+];
+
+const certifications = [
+  'Cisco Gold Integrator',
+  'Cisco Customer Experience Specialization (“CX”)',
+  'Advanced Data Center Architecture Specialization',
+  'Advanced Enterprise Network Architecture Specialization',
+  'Advanced Security Architecture Specialization',
+  'Advanced Collaboration Architecture Specialization',
+  'Advanced Service Provider Architecture Specialization',
+  'AppDynamics Specialization',
+  'Hyperflex Authorization',
+  'IoT Specialization',
+  'Collaboration SaaS Specialization',
+  'Unified Contact Center Express Specialization',
+  'Small Business Specialization',
+  'Cross-Domain Enterprise Agreement Authorizations',
+];
+
+const resources = [
+  {
+    title: 'Solutions Brief',
+    thumb: '/images/site/Cisco-Solutions_Brief-CTG_Federal_7.20.26-3-pdf.jpg',
+    href: '/downloads/Cisco-Solutions_Brief-CTG_Federal_7.20.26-3.pdf',
+  },
+  {
+    title: 'Whitepaper',
+    thumb: '/images/site/Cisco-White_Paper-CTG_Federal_7.20.26-3-pdf.jpg',
+    href: '/downloads/Cisco-White_Paper-CTG_Federal_7.20.26-3.pdf',
+  },
+  {
+    title: 'Practice Summary',
+    thumb: '/images/site/Cisco-Practice_Summary-CTG_Federal_7.17.26-1-pdf.jpg',
+    href: '/downloads/Cisco-Practice_Summary-CTG_Federal_7.17.26-1.pdf',
+  },
+];
+---
+
+<BaseLayout
+  title="Cisco - CTG Federal"
+  description="CTG Federal is a Cisco Gold Integrator delivering architectural solutions across data center, security, collaboration, and networking for federal agencies."
+>
+  <PageHero title="Cisco">
+    <Breadcrumb items={[{ label: 'Partners', href: '/partners/' }, { label: 'Cisco' }]} light />
+  </PageHero>
+
+  <Section tone="white">
+    <div class="prose">
+      <h2>Digital Transformation Solutions for Government</h2>
+      <p>
+        Cisco and CTG Federal partner closely together across the federal space, from sciences to
+        defense and intelligence. We work in concert with Cisco to provide architectural solutions
+        geared at delivering strategic digital transformation in direct alignment with Federal IT
+        Modernization guidelines. CTG Federal excels in delivering industry-best architectures
+        utilizing best of breed hardware, software, analytics, AI/ML, and professional services
+        packaged together to offer agencies the turnkey solutions they require. CTG Federal&rsquo;s
+        investment in Cisco is evident, with nearly half of our employees possessing Cisco career
+        certifications. We also possess advanced architecture specializations in a wide array of
+        Cisco disciplines, SaaS structures, and sales operations skillsets. These demonstrate our
+        unique capabilities across the Cisco spectrum. These include:
+      </p>
+      <ul>
+        {specializations.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <p>
+        CTG has end to end solutions sets in place that meet the demands of several federal
+        mandates. Examples include (but not limited to):
+      </p>
+      <ul>
+        {mandates.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <p>
+        Our unique approaches deliver robust pathways to realize architectures that deliver
+        sensical, achievable solutions that enable agencies to rapidly modernize their
+        infrastructure while delivering key feature sets. These include:
+      </p>
+      <ul>
+        {pathways.map((item) => <li>{item}</li>)}
+      </ul>
+
+      <p>
+        To provide service delivery, we also possess an advanced services delivery ecosystem with
+        strong federal pedigree, well versed in navigating the unique challenges that are unique to
+        federal environments. Our seamless teaming arrangements enable us to deliver cutting-edge
+        Cisco solutions such as:
+      </p>
+      <ul>
+        {services.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <p class="partner-logo">
+      <img src="/images/site/sq_cisco.jpg" alt="Cisco Partner Gold Integrator Logo" loading="lazy" decoding="async" width="140" height="140" />
+    </p>
+
+    <div class="prose">
+      <h3>Certifications</h3>
+      <ul>
+        {certifications.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="resource-grid">
+      {resources.map((item) => (
+        <div class="resource-card">
+          <img src={item.thumb} alt="" loading="lazy" decoding="async" width="120" height="155" />
+          <div>
+            <h3>{item.title}</h3>
+            <a href={item.href}>Download now</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .partner-logo {
+    display: flex;
+    justify-content: center;
+    margin: var(--sp-10) 0;
+  }
+  .partner-logo img {
+    object-fit: contain;
+  }
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .resource-card {
+    display: flex;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+  }
+  .resource-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .resource-card img {
+    flex-shrink: 0;
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+  }
+  .resource-card h3 {
+    margin-bottom: var(--sp-2);
+  }
+  .resource-card a {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>

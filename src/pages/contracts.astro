@@ -1,0 +1,179 @@
+---
+/**
+ * Contracts — CTG Federal's registration identifiers, held contract vehicles
+ * (with links to the two detail pages below), the Contracts Capabilities PDF,
+ * and the list of contracts available via teaming.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PageHero from '../components/PageHero.astro';
+import Button from '../components/Button.astro';
+
+const identifiers = [
+  { label: 'DUN & Bradstreet', value: '080932836' },
+  { label: 'CAGE Code', value: '7ZHE9' },
+  { label: 'NAICS Code(s)', value: '541519' },
+  { label: 'UEI', value: 'G2D4Q7UKR5P5' },
+];
+
+const heldContracts = [
+  {
+    name: 'NASA SEWP V',
+    number: 'NNG15SD12B',
+    group: 'Group B – Small Business',
+    href: '/nasa-sewp-v/',
+  },
+  { name: 'GSA Multiple Award Schedule (MAS)', number: '47QTCA25D003P' },
+  { name: 'DOE ICPT', number: 'ICPT CISCO BOA 4I-30062-0008A' },
+  { name: 'Dell Technologies ICPT Agreement', number: '4I-31841 Small Business' },
+  { name: 'Horizon ELA', number: 'W519TC-25-D-A005' },
+  { name: 'ITES-4H', number: 'W519TC25DA013', href: '/ites-4h/' },
+];
+
+const teamingContracts = [
+  'CIO-CS',
+  'GSA',
+  'FirstSource II',
+  'DoD ESI',
+  'DOE ICPT',
+  'USAF 2GIT',
+  'SPAWAR C2 MAC',
+  'FAA SAVES',
+  'DLA SOE Troop Support',
+  '8a Small Business Direct Award',
+  'Agency Specific BPA’s & Marketplaces',
+];
+
+const capabilitiesPdf = '/downloads/CTG-Federal-Contracts-Capabilities_External_7.20.26.pdf';
+---
+
+<BaseLayout
+  title="Contracts - CTG Federal"
+  description="Consult the list of CTG Federal held contracts. Know more about our contracts capabilities and corporate information."
+>
+  <PageHero
+    eyebrow="Contracts"
+    title="Contracts"
+    intro="Consult the list of CTG Federal held contracts and available contracts via teaming, along with our contracts capabilities and corporate information."
+    image="/images/generated/contracts.jpg"
+    imageAlt="CTG Federal contracts"
+  />
+
+  <Section tone="white" tight>
+    <dl class="identifiers">
+      {
+        identifiers.map((id) => (
+          <div class="identifiers__item">
+            <dt>{id.label}</dt>
+            <dd>{id.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="section-heading">
+      <h2>CTG Held Contracts</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="grid grid--3">
+      {
+        heldContracts.map((c) =>
+          c.href ? (
+            <a class="card card--link" href={c.href}>
+              <h3>{c.name}</h3>
+              <p>Contract Number: {c.number}</p>
+              {c.group && <p>Group: {c.group}</p>}
+            </a>
+          ) : (
+            <div class="card">
+              <h3>{c.name}</h3>
+              <p>Contract Number: {c.number}</p>
+              {c.group && <p>Group: {c.group}</p>}
+            </div>
+          )
+        )
+      }
+    </div>
+    <p class="contracts__cta">
+      <Button href={capabilitiesPdf} external>Contracts Capabilities</Button>
+    </p>
+  </Section>
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>Available contracts via teaming</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <ul class="teaming-list">
+      {teamingContracts.map((t) => <li>{t}</li>)}
+    </ul>
+  </Section>
+</BaseLayout>
+
+<style>
+  .identifiers {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-6);
+    margin: 0;
+  }
+  .identifiers__item {
+    padding: var(--sp-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-align: center;
+  }
+  .identifiers__item dt {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-12);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+    margin-bottom: var(--sp-2);
+  }
+  .identifiers__item dd {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--fs-24);
+    color: var(--ctg-navy);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 820px) {
+    .identifiers {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .contracts__cta {
+    margin-top: var(--sp-10);
+    text-align: center;
+  }
+
+  .teaming-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-3) var(--sp-6);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-width: 900px;
+  }
+  .teaming-list li {
+    padding: var(--sp-3) 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-fg);
+    font-weight: var(--fw-medium);
+  }
+  @media (max-width: 820px) {
+    .teaming-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .teaming-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

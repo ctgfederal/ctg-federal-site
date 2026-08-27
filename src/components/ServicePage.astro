@@ -1,0 +1,135 @@
+---
+/**
+ * ServicePage — shared template for the six solution pages. Reads its
+ * copy, images, and capability list from src/data/services.ts by slug.
+ *
+ *   <ServicePage slug="cybersecurity" />
+ *
+ * Renders, in the live site's order: PageHero (eyebrow + H1 + condensed
+ * intro + hero photo) → expanded paragraph + capability grid →
+ * Technology Partners (23 strategic logos + line-card PDF) → Our Customers
+ * (agency seals) → Testimonials.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from './Section.astro';
+import PageHero from './PageHero.astro';
+import LogoGrid from './LogoGrid.astro';
+import CustomerLogos from './CustomerLogos.astro';
+import Testimonials from './Testimonials.astro';
+import { getService } from '../data/services';
+import { strategic } from '../data/partners';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const service = getService(slug);
+if (!service) {
+  throw new Error(`ServicePage: unknown service slug "${slug}"`);
+}
+
+const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26.pdf';
+
+// The live pages agree word for word except these two small variations.
+const testimonialsEyebrow = slug === 'hpc-ai-ml-genai' ? 'Raving fans' : 'Testimonials';
+const customersLinkLabel =
+  slug === 'modern-infrastructure' || slug === 'advanced-networking' ? 'Learn more' : 'Learn more here';
+---
+
+<BaseLayout title={service.seoTitle} description={service.seoDescription} image={service.image}>
+  <PageHero eyebrow={service.eyebrow} title={service.title} intro={service.tagline} image={service.image} />
+
+  <Section tone="white" id="solution-anchor">
+    <p class="lede service-intro">{service.expanded}</p>
+    <ul class="capgrid">
+      {
+        service.capabilities.map((cap) => (
+          <li class="capgrid__item">
+            <img src={cap.icon} alt="" width="48" height="48" loading="lazy" decoding="async" />
+            <h3>{cap.title}</h3>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <Section tone="subtle" id="partners">
+    <div class="section-heading section-heading--center">
+      <h2>Technology Partners</h2>
+      <span class="accent-bar" />
+      <p class="lede">
+        Our partners are our allies in a collective commitment to serving our customers. We work with
+        the leading OEMs to deliver our customers the insights, advocacy and price advantages that
+        improve business outcomes, save money, and reduce risk.
+      </p>
+    </div>
+    <LogoGrid
+      logos={strategic}
+      cols={6}
+      link={{ label: 'Download our complete list of partners', href: lineCardPdf, external: true }}
+    />
+  </Section>
+
+  <Section tone="white" id="customers">
+    <div class="section-heading section-heading--center">
+      <h2>Our Customers</h2>
+      <span class="accent-bar" />
+      <h3 class="service-customers__sub">Elevating the customer experience</h3>
+      <p class="lede">
+        We’re more than solutions providers; we’re in the business of building real relationships. And
+        while technology is the basis for what we do, our standards consist of equal parts technical
+        excellence and superior customer service.
+      </p>
+    </div>
+    <CustomerLogos intro={false} link={{ label: customersLinkLabel, href: '/customers/' }} />
+  </Section>
+
+  <Section tone="navy" hex>
+    <Testimonials eyebrow={testimonialsEyebrow} />
+  </Section>
+</BaseLayout>
+
+<style>
+  .service-intro {
+    max-width: 72ch;
+    margin-bottom: var(--sp-10);
+  }
+  .capgrid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-8) var(--sp-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .capgrid__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  .capgrid__item img {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+  }
+  .capgrid__item h3 {
+    margin: 0;
+    font-size: var(--fs-18);
+    line-height: var(--lh-snug);
+    color: var(--ctg-navy);
+  }
+  .service-customers__sub {
+    margin-top: var(--sp-2);
+  }
+  @media (max-width: 900px) {
+    .capgrid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .capgrid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

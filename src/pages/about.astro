@@ -1,0 +1,675 @@
+---
+/**
+ * About — replicates the live /about/ page, in order:
+ * hero → sticky sub-nav → culture (who/what/who-we-serve, mission/vision/values) →
+ * stats → culture spotlight → testimonials → quick facts → history →
+ * leadership → philanthropy → sustainability → careers → conference.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import StatsBar from '../components/StatsBar.astro';
+import Testimonials from '../components/Testimonials.astro';
+import QuickFacts from '../components/QuickFacts.astro';
+import IconTile from '../components/IconTile.astro';
+
+const subnav = [
+  { id: 'culture', label: 'Culture' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'quick-facts', label: 'Quick Facts' },
+  { id: 'history', label: 'History' },
+  { id: 'leadership', label: 'Leadership' },
+  { id: 'philanthropy', label: 'Philanthropy' },
+  { id: 'sustainability', label: 'Sustainability' },
+  { id: 'careers', label: 'Careers' },
+  { id: 'conference', label: 'Conference' },
+];
+
+const values = [
+  {
+    label: 'People',
+    body: 'Tech is our platform; people are our purpose. The CTG Federal experience — for our customers, for our partners, and for our employees — is one built on mutual respect, transparency, trust, and intention. Customers feel confident and cared for; partners are heard; teammates are positioned to grow and to thrive.',
+  },
+  {
+    label: 'Integrity',
+    body: 'We correct mistakes. We take responsibility. Words matter; actions are proof. We provide honest advice on the best solution and work diligently to deliver. We begin and end by doing the right thing.',
+  },
+  {
+    label: 'Service',
+    body: 'We are first and foremost in the business of providing superior customer service. As trusted advisors we elevate the experience and differentiate the delivery. We immerse ourselves in organizations’ motivators, challenges, needs, and potential — and our success is measured by their success.',
+  },
+  {
+    label: 'Excellence',
+    body: 'Best-in-class team, superior skills, surpassed expectations, dedication to details, and a cultural commitment to collaboration with our customers and partners. The intangible spark inspired by a humble hunger to be the best.',
+  },
+];
+
+const leaders = [
+  {
+    photo: '/images/site/Brian-Reynolds-profile.jpg',
+    name: 'Brian Reynolds',
+    role: 'Co-Founder and Managing Partner',
+    short:
+      'As the President and CEO of CTG Federal, Brian is responsible for the overall executive management, health, and well-being of the company, along with oversight of the day-to-day operations of CTG’s employees, customers, and partners. His diverse background spans over 25 years in the Information Technology field.',
+    more: [
+      'Brian’s 25 plus years of experience includes hands-on Information Technology and business management, sales, and engineering roles. From small business, to high-tech and Fortune 500, to medical institutions and universities, to US Federal Agencies and Commands, Brian has spent significant time in the varying seats of customer, employee, and business leader. His objective is to utilize these collective experiences and vantage points to equip CTG Federal with the highest level of thought leadership, execution, quality and care for its customers, partners, and employees.',
+      'Brian currently resides Southeast Florida with his wife of 25 years and three of his five children and 2 daughters-in-law, with the others being nearby. He enjoys spending leisure time with his family doing just about anything in the great outdoors, traveling, and giving of his time and resources to help those in need both spiritually, emotionally, and physically. Brian is co-founder and an active participant in CTG Foundation®, a non-profit organization that helps impoverished communities break the cycle of generational poverty.',
+    ],
+  },
+  {
+    photo: '/images/site/Dennis-Yoon-profile.jpg',
+    name: 'Dennis Yoon',
+    role: 'Co-Founder and Managing Partner',
+    short:
+      'Prior to becoming co-founder of CTG Federal, Dennis had a diverse career that helped develop a variety of skills that were pivotal in founding of CTG Federal. Dennis’s career includes serving as a US Marine, systems engineer for various US Federal contracts, sales engineer at NetApp, and account executive role for multiple companies before becoming a co-founder of CTG Federal.',
+    more: [
+      'Dennis started his career as a US Marines (1994-2000) where he attended University of Maryland to study Information Systems Management and earned various IT certifications. After his military service, Dennis worked as a government contractor to begin a career in IT where he managed a variety of systems – including Microsoft Windows, Sun Microsystems Solaris, Oracle Database, Storage Area Networks, and server virtualization. Prior to becoming co-founder of CTG Federal, Dennis worked in IT sales for 10 years where he developed strategic OEM and customer relationships as well as his entrepreneurial spirit. Dennis’s unique career path helped him develop various skills that were essential in founding and managing CTG Federal.',
+      'Dennis currently resides in Orlando, Florida. He enjoys traveling, playing golf, and hiking. He loves to spend time with his wife, Sun, and his son, Brandon. Dennis is a man of faith who actively serves at a local church as a group leader. He is also a co-founder of CTG Foundation®, a Christian non-profit organization that helps impoverished communities break the cycle of generational poverty.',
+    ],
+  },
+  {
+    photo: '/images/site/Clay-Goldberg_BW_sq.png',
+    name: 'Clay Goldberg',
+    role: 'Co-Founder and Managing Partner',
+    short:
+      'Clay’s 25+ year sales career has propelled him to a pivotal role at CTG Federal, where he helps lead the expanding sales team with strategic vision and inspirational leadership while remaining actively engaged in direct sales.',
+    more: [
+      'Clay’s extensive career in sales spans over 25 years, during which he has worked with multiple Value Added Resellers (VARs). This experience has endowed him with a profound understanding of the intricacies and nuances of sales, making him a valuable asset to CTG Federal.',
+      'His role at CTG Federal is multifaceted. Clay remains actively engaged in direct sales efforts and also plays a pivotal role in helping manage the company’s expanding sales team. This hands-on approach allows him to maintain strong relationships with key customers and vendors, ensuring that their needs are met with the highest standards of service.',
+      'Clay’s experience extends to working with all branches of the federal government, contractors, and commercial entities. His expertise in navigating these complex landscapes enables him to develop tailored solutions that meet the specific needs of CTG’s clients, while adhering to budgetary constraints. He continuously strives to ensure that the company stays ahead of the curve by leveraging cutting edge technologies and industry best practices. Clay’s commitment to excellence is reflected in his relentless pursuit of solutions that not only meet but exceed client expectations.',
+      'Clay currently resides in the Washington, D.C. area. He enjoys playing golf and tennis, traveling, and spending time with his wife, Eifer, and his two children, Nick and Brooke. He also loves catching up with friends and exploring all the amazing restaurants the DMV area has to offer.',
+    ],
+  },
+  {
+    photo: '/images/site/Brad-Baker-profile.jpg',
+    name: 'Brad Baker',
+    role: 'Co-Founder and Managing Partner',
+    short:
+      'With a career spanning from the early days of BBS networks to pioneering NVIDIA CUDA for the U.S. Navy, Brad has consistently been at the forefront of technology innovation. His journey includes building custom PCs, developing autonomous submarines, and continuously exploring emerging tech that drives real value for clients. Under Brad’s leadership, CTG Federal has established itself as an early adopter of disruptive technologies, bringing cutting-edge solutions to market first. His passion is clear: to lead the search for transformative technologies that meet and exceed client expectations.',
+    more: [
+      'Brad began his career in mechanical engineering, working on sonar systems at General Dynamics. There, he honed his skills in coding, testing new technologies, and eventually transitioned into a role as a business development systems engineer. Later, Brad joined NetApp as a Systems Engineer, supporting several civilian agencies, and then moved into an Account Executive role. Throughout his career, he maintained a strong customer-first perspective and a passion for tackling complex technical challenges. His next step was a position at a VAR, where he specialized in building multi-OEM solutions. Driven by his vision to create a new kind of VAR with top talent, Brad’s goal became a reality when he teamed up with the other founders of CTG Federal.',
+      'Brad lives in Driftwood, TX, just outside Austin, where he starts each day with a cold plunge by the pool (and maybe a little bragging about it). As CTO of CTG, he occasionally answers calls, fires off emails, and hops on planes to talk tech and business. A dirt bike enthusiast, he’s traveled to amazing places worldwide to ride, but lately, his adventures mostly involve being the backup chauffeur for his two busy kids, a duty he shares with his wonderful wife, Apollina. They homeschool the kids, so if you’re on a video call with Brad, there’s a good chance one of them might make a surprise appearance.',
+    ],
+  },
+];
+
+const philanthropyItems = [
+  {
+    icon: '/images/site/i-water.png',
+    title: 'Clean Water',
+    body: 'We’re working with individual, church, and corporate partners to deliver life-sustaining water to families reliant on contaminated water sources.',
+  },
+  {
+    icon: '/images/site/i-health.png',
+    title: 'Health & Nourishment',
+    body: 'We’re supporting efforts to provide access to better medical care at local clinics, which can reduce exposure to disease.',
+  },
+  {
+    icon: '/images/site/i-school.png',
+    title: 'Education',
+    body: 'We’re focusing on programs that promote children and youth education. They can focus on their education with fewer days home sick, and less time spent helping their family to meet their basic needs for water and food.',
+  },
+  {
+    icon: '/images/site/i-economic.png',
+    title: 'Economic Empowerment',
+    body: 'We’re helping communities meet their basic needs to break the cycle of generational poverty.',
+  },
+];
+
+const sustainabilityItems = [
+  {
+    title: 'Supply Chain Risk Management',
+    body: 'We take supply chain risk and authenticity very seriously.',
+  },
+  {
+    title: 'Cyber Risk Management',
+    body: 'We recognize the importance of protecting sensitive supplier and customer data.',
+  },
+  {
+    title: 'Sustainability (ESG)',
+    body: 'We follow an established Environmental, Social, and Governance (ESG) policy for continuous improvement.',
+    link: {
+      label: 'Learn more',
+      href: '/downloads/CTG_Sustainability_Management_and_ESG_Report-May_2024.pdf',
+    },
+  },
+  {
+    title: 'Quality',
+    body: 'We prioritize energy-efficiency, waste reduction, and responsible procurement.',
+  },
+];
+---
+
+<BaseLayout
+  title="Best-in-class Information Technology - CTG Federal"
+  description="Headquartered in Virginia, CTG Federal serves customers nationwide with top-tier IT solutions. Scalable, secure, and cost-effective."
+>
+  <PageHero
+    title="Your trusted advisor specializing in smart, secure, and scalable solutions"
+    intro="CTG Federal, a Cohesive Technology Group company™, provides customers with best-in-class information technology. Our experienced team of sales and elite engineering professionals design and deliver IT hardware and software solutions that save time and money for our customers. Headquartered in Virginia, we have dedicated resources in all regions across the continental United States."
+  />
+
+  <!-- Sticky sub-nav -->
+  <nav class="subnav" aria-label="On this page">
+    <div class="container subnav__inner">
+      <ul>
+        {subnav.map((item) => <li><a href={`#${item.id}`}>{item.label}</a></li>)}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Culture: who/what/who-we-serve -->
+  <Section tone="white" id="culture">
+    <div class="grid grid--3 who-grid">
+      <div>
+        <h3>Who We Are</h3>
+        <p>
+          We’re a team of experienced IT professionals who design and deliver IT hardware and
+          software solutions that save our customers time, money and help them transform,
+          advance, and scale their operations.
+        </p>
+      </div>
+      <div>
+        <h3>What We Do</h3>
+        <p>
+          We provide our customers with best-in-class information technology expertise by
+          combining engineering excellence and second-to-none service.
+        </p>
+        <p><a href="/solutions/">Learn more about our services here</a></p>
+      </div>
+      <div>
+        <h3>Who We Serve</h3>
+        <p>We serve organizations across the nation in a variety of industries.</p>
+        <p><a href="/customers/">Learn more about our customers here</a></p>
+      </div>
+    </div>
+
+    <div class="split mission-grid">
+      <div class="stack">
+        <div>
+          <h3>Our Mission</h3>
+          <p>
+            To provide an exceptional experience for our federal customers, defined not only by
+            superior technical solutions but by the people and partnership that support and
+            enhance their mission.
+          </p>
+        </div>
+        <div>
+          <h3>Our Vision</h3>
+          <p>
+            The provider and partner of choice for federal IT solutions and expertise — known as
+            best of the best, with an unmatched reputation for technical expertise and
+            exceptional customer care.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h3>Our Values</h3>
+        <p>Focusing on what matters most:</p>
+        <div class="values-grid">
+          {
+            values.map((value) => (
+              <details class="value-card">
+                <summary>
+                  <span>{value.label}</span>
+                  <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" /></svg>
+                </summary>
+                <p>{value.body}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Stats -->
+  <StatsBar />
+
+  <!-- Culture spotlight -->
+  <Section tone="white">
+    <div class="split">
+      <div class="culture-media">
+        <img
+          src="/images/generated/about-team.jpg"
+          alt="CTG Federal team members collaborating in the office"
+          width="1200"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+        <img
+          class="culture-media__badge"
+          src="/images/site/work-badges-2026.png"
+          alt="Great Place to Work Certified Badge, May 2024 to May 2025, USA"
+          width="120"
+          height="120"
+          loading="lazy"
+        />
+        <p class="quote culture-media__quote">
+          “The amount of camaraderie and collaboration far exceeds anything I’ve experienced
+          before.”
+        </p>
+      </div>
+      <div>
+        <h2>
+          A Certified Great Place to Work® for 8 years running and rated #4 on Fortune Best
+          Small Workplaces™ 2025 list. We have employees who stick around — and a team our
+          customers can count on for the long run.
+        </h2>
+        <p>
+          We’re more than solutions providers; we’re in the business of building relationships.
+          The CTG Federal experience – for our customers, for our partners, and for our family
+          of employees – is one built on mutual respect, transparency, trust, and intention. We
+          provide the human advantage where customers feel confident and cared for, partners
+          are heard, teammates are supported while all are positioned to grow and to thrive.
+        </p>
+        <p><a href="/culture/">Learn more about our culture</a></p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Testimonials -->
+  <Section tone="navy" hex id="testimonials">
+    <Testimonials eyebrow="Testimonials" />
+  </Section>
+
+  <!-- Quick Facts -->
+  <Section tone="subtle" id="quick-facts">
+    <QuickFacts />
+  </Section>
+
+  <!-- History -->
+  <Section tone="white" id="history">
+    <div class="section-heading">
+      <p class="eyebrow">History</p>
+      <h2>Our history is deep, and our experience is vast.</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="prose">
+      <p>
+        In 2017, a team of four talented IT veterans came together to start a forward-thinking
+        company dedicated to delivering best-in-class IT services. The new company would be
+        defined not only by superior technical solutions but by people and partnerships
+        dedicated to transforming and accelerating businesses.
+      </p>
+      <p>In just 9 years the company has grown significantly and implemented over $2.5B in solutions.</p>
+      <p>
+        Today, we’re a trusted advisor to hundreds of OEMs, federal agencies, and systems
+        integrators that count on us to design and deliver IT solutions that operate
+        effectively and save both time and money.
+      </p>
+      <p><a href="/timeline/">Explore our full timeline</a></p>
+    </div>
+  </Section>
+
+  <!-- Leadership -->
+  <Section tone="subtle" id="leadership">
+    <div class="section-heading section-heading--center">
+      <h2>Leadership</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="leaders-grid">
+      {
+        leaders.map((leader) => (
+          <details class="leader-card">
+            <summary>
+              <img
+                src={leader.photo}
+                alt={`Portrait of ${leader.name}`}
+                width="240"
+                height="240"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="leader-card__name">{leader.name}</span>
+              <span class="leader-card__role">{leader.role}</span>
+              <span class="leader-card__short">{leader.short}</span>
+              <span class="leader-card__toggle" aria-hidden="true">
+                <svg viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" /></svg>
+              </span>
+            </summary>
+            <div class="leader-card__more">
+              {leader.more.map((paragraph) => <p>{paragraph}</p>)}
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Philanthropy -->
+  <Section tone="white" id="philanthropy">
+    <div class="section-heading">
+      <p class="eyebrow">Philanthropy</p>
+      <h2>We are committed to communities at home and around the world.</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <p class="lede">
+      Launched in 2018, the <a href="https://www.ctgfoundation.org/" target="_blank" rel="noopener">CTG Foundation</a>®
+      focuses on finding ways to help people in need in tangible ways that enable others to
+      break free from the bonds of circumstantial poverty, resource scarcity, and physical,
+      mental or emotional illness and disease.
+    </p>
+    <p class="lede">
+      While there are many organizations working to help impoverished communities, our
+      nonprofit is unique because we focus on small, rural communities that are
+      off-the-beaten-path and often overlooked. Some of the causes we support include:
+    </p>
+    <div class="grid grid--4 philanthropy-grid">
+      {
+        philanthropyItems.map((item) => (
+          <div>
+            <IconTile src={item.icon} />
+            <h3 class="h4">{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p><a class="btn btn--primary" href="/philanthropy/">Learn more</a></p>
+  </Section>
+
+  <!-- Sustainability -->
+  <Section tone="subtle" id="sustainability">
+    <div class="section-heading">
+      <p class="eyebrow">Sustainability</p>
+      <h2>Environmental responsibility, social consciousness, and the highest ethical standards.</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <p class="lede">
+      By prioritizing environmental sustainability, social responsibility, and sound governance
+      practices, we create a positive impact on our employees, customers, communities, and the
+      broader world.
+    </p>
+    <div class="grid grid--4 sustainability-grid">
+      {
+        sustainabilityItems.map((item) => (
+          <div class="card">
+            <h3 class="h4">{item.title}</h3>
+            <p>{item.body}</p>
+            {item.link && (
+              <p>
+                <a href={item.link.href} target="_blank" rel="noopener">
+                  {item.link.label}
+                </a>
+              </p>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Careers -->
+  <Section tone="white" id="careers">
+    <div class="split">
+      <div>
+        <p class="eyebrow">Careers</p>
+        <h2>Join the CTG Federal Team</h2>
+        <p>
+          CTG Federal is one of the fastest-growing, trusted IT solution providers around.
+          Since 2017, our team has doubled in size and sales revenue year after year. We’re
+          proud to provide opportunities for self-motivated individuals to grow their skill
+          sets in an environment centered around IT sales.
+        </p>
+        <p><a class="btn btn--primary" href="/careers/">Learn more</a></p>
+      </div>
+      <figure class="quote-card">
+        <blockquote class="quote">
+          I have worked at some great companies along the way however, CTG Federal is the most
+          fun, rewarding and best experience of my career.
+        </blockquote>
+        <figcaption>&ndash; CTG Employee</figcaption>
+      </figure>
+    </div>
+  </Section>
+
+  <!-- Conference -->
+  <Section tone="navy" hex id="conference">
+    <div class="section-heading section-heading--center">
+      <p class="eyebrow">Conference</p>
+      <h2>Conference</h2>
+      <p class="lede">
+        Stay in the loop. See the latest updates and announcements on where CTGF will be and
+        what we are up to at the industry’s biggest conferences.
+      </p>
+      <p><a class="btn btn--primary" href="/conference/">Don’t miss out. Click here</a></p>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  /* ---- Sub-nav ---- */
+  .subnav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: var(--ctg-white);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-xs);
+  }
+  .subnav__inner {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .subnav__inner::-webkit-scrollbar {
+    display: none;
+  }
+  .subnav ul {
+    display: flex;
+    gap: var(--sp-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+  .subnav a {
+    display: block;
+    padding: var(--sp-4) var(--sp-3);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ctg-navy);
+  }
+  .subnav a:hover {
+    color: var(--ctg-azure);
+    text-decoration: none;
+  }
+
+  /* ---- Culture grid ---- */
+  .who-grid {
+    margin-bottom: var(--sp-16);
+  }
+  .mission-grid {
+    align-items: start;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-3);
+    margin-top: var(--sp-6);
+  }
+  .value-card {
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-4) var(--sp-5);
+  }
+  .value-card summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2);
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-condensed);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: var(--fs-14);
+    color: var(--ctg-navy);
+  }
+  .value-card summary::-webkit-details-marker {
+    display: none;
+  }
+  .value-card summary svg {
+    flex: none;
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: var(--ctg-azure);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    transition: transform var(--dur-med) var(--ease-standard);
+  }
+  .value-card[open] summary svg {
+    transform: rotate(45deg);
+  }
+  .value-card p {
+    margin: var(--sp-3) 0 0;
+    font-size: var(--fs-14);
+  }
+
+  /* ---- Culture spotlight media ---- */
+  .culture-media {
+    position: relative;
+  }
+  .culture-media img:first-child {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+  .culture-media__badge {
+    position: absolute;
+    left: var(--sp-5);
+    bottom: var(--sp-5);
+    width: 96px;
+    height: 96px;
+    background: var(--ctg-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--sp-2);
+  }
+  .culture-media__quote {
+    margin-top: var(--sp-5);
+    color: var(--ctg-navy);
+  }
+
+  /* ---- Leadership ---- */
+  .leaders-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--sp-6);
+  }
+  .leader-card {
+    background: var(--ctg-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xs);
+    overflow: hidden;
+  }
+  .leader-card summary {
+    display: block;
+    cursor: pointer;
+    list-style: none;
+    padding: var(--sp-6);
+  }
+  .leader-card summary::-webkit-details-marker {
+    display: none;
+  }
+  .leader-card img {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--sp-4);
+  }
+  .leader-card__name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-20);
+    color: var(--ctg-navy);
+    margin-bottom: var(--sp-1);
+  }
+  .leader-card__role {
+    display: block;
+    font-family: var(--font-condensed);
+    font-size: var(--fs-12);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ctg-azure);
+    margin-bottom: var(--sp-3);
+  }
+  .leader-card__short {
+    display: block;
+    font-size: var(--fs-14);
+    color: var(--color-fg-body);
+  }
+  .leader-card__toggle {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    margin-top: var(--sp-4);
+    border: 1.5px solid var(--ctg-azure);
+    border-radius: var(--radius-pill);
+  }
+  .leader-card__toggle svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: var(--ctg-azure);
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    transition: transform var(--dur-med) var(--ease-standard);
+  }
+  .leader-card[open] .leader-card__toggle svg {
+    transform: rotate(45deg);
+  }
+  .leader-card__more {
+    padding: 0 var(--sp-6) var(--sp-6);
+    font-size: var(--fs-14);
+  }
+  .leader-card__more p {
+    margin-bottom: var(--sp-3);
+  }
+
+  /* ---- Philanthropy / Sustainability ---- */
+  .philanthropy-grid,
+  .sustainability-grid {
+    margin: var(--sp-10) 0 var(--sp-8);
+  }
+
+  /* ---- Careers quote ---- */
+  .quote-card {
+    margin: 0;
+    padding-left: var(--sp-6);
+    border-left: 3px solid var(--ctg-azure);
+  }
+  .quote-card figcaption {
+    margin-top: var(--sp-4);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 980px) {
+    .leaders-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 640px) {
+    .leaders-grid {
+      grid-template-columns: 1fr;
+    }
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

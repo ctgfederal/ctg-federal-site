@@ -1,0 +1,247 @@
+---
+/**
+ * Conference — replicates the live /conference/ page: hero, the NLIT 2026
+ * event details, one-on-one booking link, daily agenda, and the CTG members
+ * in attendance with their DOE region assignments.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+
+const bookingUrl =
+  'https://calendly.com/marissa-ctgfederal/nlit-2026-meeting-with-ctg-federal?month=2026-05&date=2026-05-06';
+const floorPlanUrl = 'https://fbcinc.expocad.com/Events/2026nli/index.html';
+const welcomeReceptionUrl =
+  'https://www.eventbrite.com/e/keys-cocktails-tickets-1985459383463?aff=oddtdtcreator&keep_tld=true';
+const closingReceptionUrl =
+  'https://www.eventbrite.com/e/heartland-hoedown-tickets-1985456449688?aff=oddtdtcreator&keep_tld=true';
+
+const attendees = [
+  {
+    name: 'Brad Baker, DOE Lead',
+    role: 'Co-Founder and Managing Partner',
+    phone: '571-366-7146',
+    email: 'brad@ctgfederal.com',
+  },
+  {
+    name: 'Josh Schultz',
+    role: 'Executive Director, Digital Transformation and Supply Chain',
+    phone: '512-927-7163',
+    email: 'jschultz@ctgfederal.com',
+  },
+  {
+    name: 'Andrew Kirsch',
+    role: 'Sr. Account Executive',
+    phone: '571-364-5236',
+    email: 'ak@ctgfederal.com',
+    region: 'DOE (Western US) – INL, NREL, SPR, WAPA, LANL, LLNL, PNNL, SNL',
+  },
+  {
+    name: 'Jonathan Thomas (JT)',
+    role: 'Account Executive',
+    phone: '505-362-0848',
+    email: 'jct@ctgfederal.com',
+    region: 'DOE (Western US) – INL, NREL, SPR, WAPA, LANL, LLNL, PNNL, SNL',
+  },
+  {
+    name: 'Scott Sjothun',
+    role: 'Account Executive',
+    phone: '208-715-1267',
+    email: 'sjothun@ctgfederal.com',
+    region: 'DOE (Western US) – INL, NREL, SPR, WAPA, LANL, LLNL, PNNL, SNL',
+  },
+  {
+    name: 'Matt Odle',
+    role: 'Technical Account Manager',
+    phone: '505-479-1938',
+    email: 'matto@ctgfederal.com',
+    region: 'DOE (Western US) – INL, NREL, SPR, WAPA, LANL, LLNL, PNNL, SNL',
+  },
+  {
+    name: 'Chris Guidry',
+    role: 'Sr. Account Executive',
+    phone: '703-967-2606',
+    email: 'guidry@ctgfederal.com',
+    region: 'DOE – NNL, KAPL, BPMI',
+  },
+  {
+    name: 'Brian Trentham',
+    role: 'Sr. Account Executive',
+    phone: '865-292-9426',
+    email: 'bt@ctgfederal.com',
+    region: 'DOE (TN Region) – ORNL, ORAU, CNS, Y-12, OOS, TVA, ANL',
+  },
+  {
+    name: 'Nate Beauchamp',
+    role: 'Account Executive',
+    phone: '727-773-7563',
+    email: 'nate@ctgfederal.com',
+    region: 'DOE (TN Region) – ORNL, ORAU, CNS, Y-12, OOS, TVA, ANL',
+  },
+  {
+    name: 'Jonathan Boc',
+    role: 'Sr. Account Executive',
+    phone: '401-497-3893',
+    email: 'boc@ctgfederal.com',
+    region: 'DOE – HQ, OOS, OCIO, SRS, EIA, NRC, ANL, FERC, PPPO/DUF6, JLAB, BNL',
+  },
+];
+---
+
+<BaseLayout
+  title="Conference | CTG Federal"
+  description="The latest updates and announcements on where CTG Federal will be and what we are up to at the IT industry’s biggest conferences."
+>
+  <PageHero eyebrow="Conference" title="Conference" />
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>NLIT 2026</h2>
+      <p class="eyebrow">May 4–May 7 | Kansas City Convention Center, Bartle Hall | Kansas City, MO</p>
+      <span class="accent-bar"></span>
+    </div>
+    <p class="prose">
+      The 2026 NLIT Summit is sponsored by the NLIT Society, a professional society founded to
+      facilitate the exchange of best practices and ideas among IT and Cybersecurity
+      professionals within the DOE complex, strengthen the infrastructure, and identify
+      efficiencies within the DOE laboratory system. The Summit facilitates sharing
+      information regarding all aspects of IT and Cybersecurity operations, technology,
+      policies, and practices in support of research conducted at the Laboratories. It is open
+      to all personnel in the IT and Cybersecurity fields working at Laboratories and Plants
+      affiliated with government funded activities, as well as Federal government employees in
+      the IT or Cybersecurity fields that work at agencies associated with the participating
+      Laboratories.
+    </p>
+
+    <div class="conference-booking">
+      <h3>Do you want one-on-one time with one of our rockstar team members?</h3>
+      <p>Book a time to meet here at the Kansas City Marriott Downtown.</p>
+      <p>
+        <a class="btn btn--primary" href={bookingUrl} target="_blank" rel="noopener">Big Joe Turner B, 3rd Floor</a>
+      </p>
+    </div>
+  </Section>
+
+  <Section tone="subtle">
+    <div class="section-heading">
+      <h2>Agenda</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <p class="h4">Booth 401</p>
+    <p><a href={floorPlanUrl} target="_blank" rel="noopener">Floor Plan</a></p>
+
+    <div class="agenda-day">
+      <p class="agenda-day__date">Monday, May 4</p>
+      <h4>Exhibit Hall Welcome Reception</h4>
+      <ul>
+        <li>Location: Exhibit Hall</li>
+        <li>Time: 5:00pm–7:00pm</li>
+      </ul>
+      <p class="eyebrow">CTGF Event</p>
+      <h4>Keys and Cocktails Post-Welcome Reception</h4>
+      <ul>
+        <li>Location: Hotel No Vacancy</li>
+        <li>Time: 7:00pm – 9:00pm</li>
+        <li>For more details and to register, click <a href={welcomeReceptionUrl} target="_blank" rel="noopener">here</a>.</li>
+      </ul>
+    </div>
+
+    <div class="agenda-day">
+      <p class="agenda-day__date">Tuesday, May 5</p>
+      <p>NLIT Summit begins with a full day of sessions.</p>
+      <h4>Josh Schultz presents – From Chatbots to Coworkers: Building Intelligence That Persists</h4>
+      <ul>
+        <li>Time: 9:00AM – 9:30AM</li>
+        <li>Room: 2210</li>
+      </ul>
+    </div>
+
+    <div class="agenda-day">
+      <p class="agenda-day__date">Wednesday, May 6</p>
+      <p>NLIT Summit continues with a full day of sessions.</p>
+      <h4>Brad Baker presents – Sovereign AI Foundations: Secure Infrastructure for DOE Missions in a GenAI World</h4>
+      <ul>
+        <li>Time: 10:40AM – 11:10AM</li>
+        <li>Room: 2102B</li>
+      </ul>
+      <p class="eyebrow">CTGF Event</p>
+      <h4>Heartland Hoedown Closing Reception</h4>
+      <ul>
+        <li>Location: PBR Big Sky</li>
+        <li>Time: 7:00pm–10:00pm</li>
+        <li>For more details and to register, click <a href={closingReceptionUrl} target="_blank" rel="noopener">here</a>.</li>
+      </ul>
+    </div>
+
+    <div class="agenda-day">
+      <p class="agenda-day__date">Thursday, May 7</p>
+      <p>NLIT Summit continues with a full morning of sessions to conclude by 1pm. Afternoon workshops to follow.</p>
+    </div>
+  </Section>
+
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>CTG Members in Attendance</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <ul class="attendee-grid">
+      {
+        attendees.map((person) => (
+          <li class="card">
+            <h4>{person.name}</h4>
+            <p>{person.role}</p>
+            <p>T: <a href={`tel:${person.phone}`}>{person.phone}</a></p>
+            <p>E: <a href={`mailto:${person.email}`}>{person.email}</a></p>
+            {person.region && <p class="attendee-grid__region">{person.region}</p>}
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+</BaseLayout>
+
+<style>
+  .conference-booking {
+    margin-top: var(--sp-10);
+    padding-top: var(--sp-10);
+    border-top: 1px solid var(--color-border);
+  }
+  .agenda-day {
+    margin-top: var(--sp-10);
+    padding-top: var(--sp-8);
+    border-top: 1px solid var(--color-border);
+  }
+  .agenda-day:first-of-type {
+    margin-top: var(--sp-8);
+  }
+  .agenda-day__date {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ctg-azure);
+    margin-bottom: var(--sp-2);
+  }
+  .attendee-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-5);
+    list-style: none;
+    margin: var(--sp-8) 0 0;
+    padding: 0;
+  }
+  .attendee-grid__region {
+    font-size: var(--fs-12);
+    color: var(--color-fg-muted);
+  }
+  @media (max-width: 900px) {
+    .attendee-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .attendee-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,260 @@
+---
+/**
+ * When to Engage — replicates the live page in order: hero → PRE-SALES /
+ * POST-SALES routing steps → "Download the Infographic" → four team
+ * sections (Sales, Operations, Solutions Architects, Nurture), each with
+ * its own Netlify form.
+ *
+ * The routing graphic is a PRE-SALES / POST-SALES infinity loop with 14
+ * numbered steps (see SCRATCH/shots/when-to-engage.png). Step labels and
+ * routing below are taken directly from that screenshot. Rebuilt as two
+ * columns of step cards rather than the loop graphic itself — each card
+ * links to the #sales/#ops/#solutions/#nurture anchor its step routes to
+ * on the live site.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Button from '../components/Button.astro';
+
+const infographicPdf = '/downloads/WHEN-TO-ENGAGE_CTGF_Download.7.17.26-1.pdf';
+
+const teamTags: Record<string, string> = {
+  sales: 'Sales',
+  ops: 'Operations',
+  solutions: 'Solutions',
+  nurture: 'Nurture',
+};
+
+const preSales = [
+  { text: 'Identify gaps, constraints or challenges that need to be addressed', anchor: 'sales' },
+  { text: 'Provide a Solution to meet the business requirements', anchor: 'solutions' },
+  { text: 'Translate business requirements into IT requirements', anchor: 'solutions' },
+  { text: 'Build Solution Quotes and Establish Budgetary Pricing', anchor: 'sales' },
+  { text: 'Deliver Solution Builds and Iterate with any modifications', anchor: 'solutions' },
+  { text: 'Finalize Pricing', anchor: 'sales' },
+  { text: 'Deliver Final Proposal, Quotes and Pricing', anchor: 'sales' },
+  { text: 'Process Purchase Order', anchor: 'ops' },
+];
+
+const postSales = [
+  { text: 'Shipping / Delivery / Tracking', anchor: 'ops' },
+  { text: 'Installation / Transition / Migration / Training', anchor: 'solutions' },
+  { text: 'Solution Implementation Completion', anchor: 'ops' },
+  { text: 'Client Deliverables Completed', anchor: 'nurture' },
+  { text: 'Expand / Renew / Repeat', anchor: 'nurture' },
+  { text: 'Client Nurture Engagement', anchor: 'nurture' },
+];
+---
+
+<BaseLayout title="When to Engage - CTG Federal" description="We meet you where you are. Click on your specific need below to be connected with a CTG Federal team member who can help with your specific needs.">
+  <PageHero
+    title="When to Engage"
+    intro="We meet you where you are. Click on your specific need below to be connected with a CTG Federal team member who can help with your specific needs."
+  />
+
+  <!-- Routing steps: Pre-Sales / Post-Sales -->
+  <Section tone="white" id="when-anchor">
+    <div class="loop">
+      <div class="loop__col">
+        <p class="eyebrow">Pre-Sales</p>
+        <ol class="loop__list">
+          {
+            preSales.map((step, index) => (
+              <li>
+                <a class="card loop__step" href={`#${step.anchor}`}>
+                  <span class="loop__num">{index + 1}</span>
+                  <span class="loop__text">{step.text}</span>
+                  <span class="loop__tag">{teamTags[step.anchor]}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+      <div class="loop__col">
+        <p class="eyebrow">Post-Sales</p>
+        <ol class="loop__list" start={preSales.length + 1}>
+          {
+            postSales.map((step, index) => (
+              <li>
+                <a class="card loop__step" href={`#${step.anchor}`}>
+                  <span class="loop__num">{preSales.length + index + 1}</span>
+                  <span class="loop__text">{step.text}</span>
+                  <span class="loop__tag">{teamTags[step.anchor]}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Download infographic -->
+  <Section tone="subtle" tight>
+    <p class="routes__download">
+      <Button href={infographicPdf} external>Download the Infographic</Button>
+    </p>
+  </Section>
+
+  <!-- SALES -->
+  <Section tone="white" id="sales">
+    <div class="team">
+      <div>
+        <h3>Sales</h3>
+        <p class="team__email"><a href="mailto:contact@ctgfederal.com">contact@ctgfederal.com</a></p>
+      </div>
+      <div class="team__form">
+        <ContactForm
+          name="when-to-engage-sales"
+          fields={['name', 'email', 'message']}
+          required={['name', 'email']}
+          submitLabel="Send"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <!-- OPERATIONS -->
+  <Section tone="subtle" id="ops">
+    <div class="team">
+      <div>
+        <h3>Operations</h3>
+        <p class="team__email"><a href="mailto:operations@ctgfederal.com">operations@ctgfederal.com</a></p>
+      </div>
+      <div class="team__form">
+        <ContactForm
+          name="when-to-engage-ops"
+          fields={['name', 'email', 'message']}
+          required={['name', 'email']}
+          submitLabel="Send"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <!-- SOLUTIONS ARCHITECTS -->
+  <Section tone="white" id="solutions">
+    <div class="team">
+      <div>
+        <h3>Solutions Architects</h3>
+        <p class="team__email"><a href="mailto:architects@ctgfederal.com">architects@ctgfederal.com</a></p>
+      </div>
+      <div class="team__form">
+        <ContactForm
+          name="when-to-engage-solutions"
+          fields={['name', 'email', 'message']}
+          required={['name', 'email']}
+          submitLabel="Send"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <!-- NURTURE -->
+  <Section tone="subtle" id="nurture">
+    <div class="team">
+      <div>
+        <h3>Nurture</h3>
+        <p class="team__email"><a href="mailto:nurture@ctgfederal.com">nurture@ctgfederal.com</a></p>
+      </div>
+      <div class="team__form">
+        <ContactForm
+          name="when-to-engage-nurture"
+          fields={['name', 'email', 'message']}
+          required={['name', 'email']}
+          submitLabel="Send"
+        />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .loop {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 64px);
+  }
+  .loop__col .eyebrow {
+    text-align: center;
+  }
+  .loop__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-4);
+  }
+  .loop__step {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-5) var(--sp-6);
+    text-align: left;
+  }
+  .loop__num {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--color-accent-soft);
+    color: var(--ctg-navy);
+    font-family: var(--font-condensed);
+    font-weight: var(--fw-medium);
+  }
+  .loop__text {
+    font-size: var(--fs-16);
+    color: var(--color-fg);
+  }
+  .loop__tag {
+    flex: none;
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--ctg-navy);
+    color: var(--ctg-white);
+    font-family: var(--font-condensed);
+    font-size: var(--fs-12);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .routes__download {
+    margin: 0;
+    text-align: center;
+  }
+  @media (max-width: 780px) {
+    .loop {
+      grid-template-columns: 1fr;
+    }
+    .loop__step {
+      grid-template-columns: auto 1fr;
+    }
+    .loop__tag {
+      grid-column: 2;
+    }
+  }
+  .team {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .team h3 {
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .team__email {
+    font-size: var(--fs-18);
+  }
+  @media (max-width: 900px) {
+    .team {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

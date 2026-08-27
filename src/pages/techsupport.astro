@@ -1,0 +1,140 @@
+---
+/**
+ * Tech Support — hero/intro, 24x7 phone + email line, then a bespoke
+ * Netlify form (`tech-support`) matching the live page's field set exactly:
+ * First Name, Last Name, Email, solution/issue text, severity (1-5),
+ * business-risk (1-5), sales rep name, and a detailed description. This
+ * field set doesn't match the shared ContactForm component's shape, so it
+ * is hand-built here (page-scoped only, no component changes) using the
+ * same .form / .field / .btn classes the rest of the site's forms use.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+
+const severityOptions = [1, 2, 3, 4, 5];
+---
+
+<BaseLayout
+  title="Tech Support | How can we help?"
+  description="Contact our tech support team. For immediate assistance or emergencies, please call our toll-free line available 24×7 at (888) 876-6885."
+>
+  <PageHero
+    eyebrow="Tech Support"
+    title="How can we help?"
+    intro="Please be as detailed as possible with your inquiry and include your current vendor(s) of choice and any specific requests. We encourage you to describe the issue(s) you are having and what you would like to achieve. For immediate assistance or emergencies, please call our toll-free line available 24×7 at (888) 876-6885."
+  />
+
+  <Section tone="white">
+    <div class="support">
+      <div class="support__intro">
+        <p class="eyebrow">24&times;7 Technical Assistance</p>
+        <p class="support__phone"><a href="tel:1-888-876-6885">Toll free (888) 876-6885</a></p>
+        <p>Email <a href="mailto:techsupport@ctgfederal.com">techsupport@ctgfederal.com</a></p>
+      </div>
+
+      <div class="support__form">
+        <form
+          class="form"
+          name="tech-support"
+          method="POST"
+          action="/thank-you/"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="tech-support" />
+          <p class="visually-hidden">
+            <label>Do not fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="ts-fname">First Name<span aria-hidden="true"> *</span></label>
+              <input id="ts-fname" name="first-name" type="text" autocomplete="given-name" required />
+            </div>
+            <div class="field">
+              <label for="ts-lname">Last Name<span aria-hidden="true"> *</span></label>
+              <input id="ts-lname" name="last-name" type="text" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ts-email">Email<span aria-hidden="true"> *</span></label>
+            <input id="ts-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <div class="field">
+            <label for="ts-solution">
+              What solution are you currently having an issue with?<span aria-hidden="true"> *</span>
+            </label>
+            <textarea id="ts-solution" name="solution" required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="field">
+              <label for="ts-severity">
+                On a scale of 1-5 how severe is your issue?<span aria-hidden="true"> *</span>
+              </label>
+              <select id="ts-severity" name="severity" required>
+                <option value="">&mdash;Please choose an option&mdash;</option>
+                {severityOptions.map((n) => <option value={n}>{n}</option>)}
+              </select>
+            </div>
+            <div class="field">
+              <label for="ts-risk">
+                On a scale of 1-5 is your business at risk or preventing normal operating
+                procedures?<span aria-hidden="true"> *</span>
+              </label>
+              <select id="ts-risk" name="risk" required>
+                <option value="">&mdash;Please choose an option&mdash;</option>
+                {severityOptions.map((n) => <option value={n}>{n}</option>)}
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="ts-rep">
+              If you know your CTG sales rep, please provide his/her name here.<span aria-hidden="true"> *</span>
+            </label>
+            <input id="ts-rep" name="sales-rep" type="text" required />
+          </div>
+
+          <div class="field">
+            <label for="ts-description">
+              Please describe your issue below and be as detailed as possible:<span aria-hidden="true"> *</span>
+            </label>
+            <textarea id="ts-description" name="description" required></textarea>
+          </div>
+
+          <p class="field-hint">* Required fields</p>
+
+          <div>
+            <button type="submit" class="btn btn--primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .support {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .support__phone {
+    font-size: var(--fs-24);
+    font-weight: var(--fw-medium);
+    color: var(--ctg-navy);
+  }
+  .field-hint {
+    margin: 0;
+  }
+  @media (max-width: 900px) {
+    .support {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

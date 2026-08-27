@@ -1,0 +1,106 @@
+---
+/**
+ * Customers — replicates the live page in order: hero → Quick Facts →
+ * Become a Customer (contact details + Netlify form) → stats bar →
+ * Our Customers (agency seals) → testimonials.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import QuickFacts from '../components/QuickFacts.astro';
+import ContactForm from '../components/ContactForm.astro';
+import StatsBar from '../components/StatsBar.astro';
+import CustomerLogos from '../components/CustomerLogos.astro';
+import Testimonials from '../components/Testimonials.astro';
+import site from '../data/site';
+---
+
+<BaseLayout
+  title="IT Expertise Elevating the Customer Experience | CTG Federal"
+  description="We’re more than a solutions provider; we’re in the business of building real relationships. And while technology is the basis for what we do, our standards consist of equal parts technical excellence and superior client service."
+>
+  <PageHero
+    title="Elevating the customer experience"
+    intro="We’re more than solutions providers; we’re in the business of building real relationships. And while technology is the basis for what we do, our standards consist of equal parts technical excellence and superior customer service."
+    image="/images/generated/customers.jpg"
+    imageAlt="CTG Federal account team meeting with a government customer"
+  />
+
+  <!-- Quick Facts -->
+  <Section tone="white">
+    <QuickFacts />
+  </Section>
+
+  <!-- Become a Customer -->
+  <Section tone="subtle" id="become-a-customer">
+    <div class="become">
+      <div class="become__intro">
+        <p class="eyebrow">Become a Customer</p>
+        <h2>Let’s connect.</h2>
+        <span class="accent-bar"></span>
+        <p class="lede">We welcome inquiries about our solutions and capabilities.</p>
+        <div class="become__contact">
+          <p class="become__org">{site.name}</p>
+          <p class="become__address">
+            <a href={site.address.mapUrl} target="_blank" rel="noopener">{site.address.full}</a>
+          </p>
+          <p><a href={site.phoneHref}>{site.phone}</a></p>
+          <p><a href={site.emailHref}>{site.email}</a></p>
+          <p><a href={site.linkedin} target="_blank" rel="noopener">CTG Federal on LinkedIn</a></p>
+        </div>
+      </div>
+      <div class="become__form">
+        <ContactForm name="become-a-customer" fields={['name', 'email', 'phone', 'message']} />
+      </div>
+    </div>
+  </Section>
+
+  <!-- Stats -->
+  <StatsBar />
+
+  <!-- Our Customers -->
+  <Section tone="white" id="customers-logos">
+    <div class="section-heading section-heading--center">
+      <h2>Our Customers</h2>
+      <span class="accent-bar"></span>
+      <p class="lede">
+        Our account teams, elite architects and engineers have deep experience working with large,
+        complex organizations and get the job done with a standard of excellence.
+      </p>
+    </div>
+    <CustomerLogos heading={undefined} intro={false} />
+  </Section>
+
+  <!-- Testimonials -->
+  <Section tone="navy" hex>
+    <Testimonials eyebrow="Testimonials" />
+  </Section>
+</BaseLayout>
+
+<style>
+  .become {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: start;
+  }
+  .become__intro .lede {
+    margin-bottom: var(--sp-6);
+  }
+  .become__contact p {
+    margin: 0 0 var(--sp-2);
+  }
+  .become__org {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ctg-navy);
+    margin-bottom: var(--sp-1) !important;
+  }
+  @media (max-width: 900px) {
+    .become {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

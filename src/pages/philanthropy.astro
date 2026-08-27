@@ -1,0 +1,350 @@
+---
+/**
+ * Philanthropy — replicates the live /philanthropy/ page, in order:
+ * hero → giving-back stats + contributions list → four program summaries →
+ * partners logo list → funding/donate band → four detailed program sections.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import Section from '../components/Section.astro';
+import IconTile from '../components/IconTile.astro';
+
+const givingStats = [
+  { value: '24', label: 'sustainable clean water wells' },
+  { value: '2,000', label: 'families helped' },
+  { value: 'Thousands', label: 'of meals to local communities' },
+  { value: '30', label: 'child sponsorships' },
+  { value: '12', label: 'student scholarships' },
+];
+
+const contributions = [
+  '2,000 impoverished families in dozens of communities helped',
+  '24 deep, sustainable clean water wells in communities who without a source of water prior',
+  '4 water distributions projects bringing clean, running water to over 400 family homes who were previously without',
+  '6 school repairs and classroom construction projects in impoverished rural communities supporting over 500 children and 25 teachers',
+  '12 student scholarships for one full year each of university or trade school per student',
+  'Thousands of meals provided to local communities where underprivileged children and families can seek refuge and nourishment',
+  '30 child sponsorships for year-round monthly education, nourishment, counseling and extracurricular growth activities for the child and his/her family',
+  '3 baseball and soccer leagues and clinics for youth in regions where partnerships with individual donors and large corporations have provided thousands of dollars of equipment and improvements',
+];
+
+const programSummaries = [
+  {
+    icon: '/images/site/i-water.png',
+    title: 'Clean Water',
+    body: 'With the help of our individual, church, and corporate partners, we’re delivering life-giving water to families who previously relied on contaminated water sources.',
+  },
+  {
+    icon: '/images/site/i-health.png',
+    title: 'Health & Nourishment',
+    body: 'Access to clean water provides for better medical care at local clinics, reduced exposure to disease and the ability to grow food during dry seasons.',
+  },
+  {
+    icon: '/images/site/i-school.png',
+    title: 'Education',
+    body: 'With fewer days home sick and less time spent helping their family to meet their basic needs for water and food. This means children can focus on their education.',
+  },
+  {
+    icon: '/images/site/i-economic.png',
+    title: 'Economic Power',
+    body: 'Economic opportunities grow as the community’s basic needs are met. Access to clean water creates opportunities for small business and tourism to grow.',
+  },
+];
+
+const partners = [
+  { name: 'NICA Water Project (Proyecto Agua)', logo: '/images/site/nica-water-project.png' },
+  { name: 'El Transito Center for the Arts', logo: '/images/site/etca-logo.png' },
+  { name: 'Wounded Warrior Project', logo: '/images/site/wonded-warrior-project-logo.png' },
+  { name: 'SUNA (Surf Nature)', logo: '/images/site/SUNA.jpg' },
+  { name: 'Days for Girls', logo: '/images/site/days-for-girls-logo.png' },
+  { name: 'Leukemia & Lymphoma Society', logo: '/images/site/leukemia-lymphom-society-logo.png' },
+  { name: 'DELMARVA Region Church of God', logo: '/images/site/Church-of-God.png' },
+  { name: 'NICA Angels', logo: '/images/site/NicaAngels-logo.png' },
+  { name: 'Church of God World Mission', logo: '/images/site/world-missions-logo.png' },
+];
+
+const programDetails = [
+  {
+    icon: '/images/site/i-water-blue.png',
+    title: 'Clean Water',
+    intro:
+      'With the help of our individual, church, and corporate partners, we’re delivering life-giving water to families who previously relied on contaminated water sources.',
+    paragraphs: [
+      'Delivering clean drinking water to rural third-world communities. We believe that access to safe drinking water is a basic human right, but the need is great. According to the World Health Organization, in 2020, approximately 26% of the global population did not use water from a safely managed drinking water service.',
+      'There are millions of people without access to clean water across the globe. We’re doing what we can to provide sustainable access to rural communities in Nicaragua, the second poorest country in the Western Hemisphere.',
+      'Access to clean water lifts up the entire community, giving rise to educational and economic opportunities. Something as simple as water provides a path out of generational poverty for a whole community of people.',
+      'We have built relationships with the local government, hired and trained local workers, obtained the necessary equipment, and have a long list of viable well sites. With the help of our donors and partners, we’re digging dozens of wells per year, delivering life-giving water to hundreds of people who previously relied on contaminated water sources that made them sick.',
+      'Deep water wells are a good solution. We provide safe drinking water by digging deep water wells on community property secured legally with the local government. This improves community health although still requires families to walk to the water source and carry their water back to their home.',
+      'Water distribution systems are even better. We distribute safe drinking water to individual homes by building a reservoir and piping system connected to a previously dug well. This improves access to clean water as it is piped directly to their home location versus requiring them to carry heavy containers to their homes.',
+    ],
+    list: null,
+  },
+  {
+    icon: '/images/site/i-health-blue.png',
+    title: 'Health & Nourishment',
+    intro:
+      'Access to clean water provides for better medical care at local clinics, reduced exposure to disease and the ability to grow food during dry seasons.',
+    paragraphs: [
+      'As we build relationships during the well-digging process, we see additional opportunities to lift up the community through health and nourishment support. On a case-by-case basis, we provide:',
+    ],
+    list: [
+      'Hygiene workshops',
+      'Women’s health classes',
+      'Emergency food distribution',
+      'Community garden resources',
+      'Sustainable farming education',
+      'Clean water for health clinics',
+    ],
+  },
+  {
+    icon: '/images/site/i-school-blue.png',
+    title: 'Education',
+    intro:
+      'With fewer days home sick and less time spent helping their family to meet their basic needs for water and food. This means children can focus on their education.',
+    paragraphs: [
+      'Breaking the cycle of poverty through education. As we dig wells in underserved communities, we also invest in educational opportunities for children and youth. Our goal is to empower and propel the youngest generation toward self-sufficiency. Our past efforts include:',
+    ],
+    list: [
+      'Renovating local school buildings',
+      'Supporting after-school tutoring programs',
+      'Organizing sports programs',
+      'Funding scholarships',
+      'Hosting youth sports camps and leagues',
+      'Hosting Vacation Bible School',
+    ],
+    outro: 'We believe that after basic necessities are met, education is the path out of generational poverty.',
+  },
+  {
+    icon: '/images/site/i-economic-blue.png',
+    title: 'Economic Power',
+    intro:
+      'Economic opportunities grow as the community’s basic needs are met. Access to clean water creates opportunities for small business and tourism to grow.',
+    paragraphs: [
+      'Supporting goals and dreams in impoverished communities. Out of access to clean water springs economic growth. As families have access to basic necessities, homeownership rises, small businesses open, tourism and industry grows, and the government’s investment in utilities and infrastructure increases. We seek to propel this growth through:',
+    ],
+    list: [
+      'Small business investments',
+      'Job-related education and training',
+      'Relationships with local government',
+      'Facilitating mission trips that bolster the hospitality industry',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Philanthropy - CTG Federal"
+  description="Launched in 2018, the CTG Foundation focuses on finding tangible ways to help people in need break free from the bonds of circumstantial poverty, resource scarcity, and physical, mental or emotional illness and disease."
+>
+  <PageHero
+    eyebrow="Philanthropy"
+    title="We are committed to communities at home and around the world."
+    intro="Launched in 2018, the CTG Foundation® focuses on finding tangible ways to help people in need break free from the bonds of circumstantial poverty; resource scarcity; and physical, mental or emotional illness and disease."
+  >
+    <img
+      class="foundation-logo"
+      src="/images/site/CTG-Foundation-Logo.png"
+      alt="CTG Foundation logo"
+      width="386"
+      height="160"
+      loading="eager"
+      decoding="async"
+    />
+  </PageHero>
+
+  <!-- Giving back -->
+  <Section tone="white">
+    <div class="section-heading">
+      <h2>Giving Back</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <p class="lede">
+      Our philanthropic efforts focus on sustainable clean water and nourishment projects,
+      education scholarships, after school programs, vacation bible schools, financial
+      assistance, youth sports programs, and mentoring and leadership programs.
+    </p>
+    <ul class="giving-stats">
+      {
+        givingStats.map((stat) => (
+          <li>
+            <span class="giving-stats__value">{stat.value}</span>
+            <span class="giving-stats__label">{stat.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 class="contributions-heading">Our Contributions</h2>
+    <p>Each year we assist communities at home and abroad in a variety of ways. Some of our recent contributions include:</p>
+    <ul class="prose">
+      {contributions.map((item) => <li>{item}</li>)}
+    </ul>
+  </Section>
+
+  <!-- Our Programs (summary) -->
+  <Section tone="subtle">
+    <div class="section-heading section-heading--center">
+      <h2>Our Programs</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <div class="grid grid--4">
+      {
+        programSummaries.map((item) => (
+          <div class="text-center">
+            <IconTile src={item.icon} />
+            <h3 class="h4">{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  <!-- Partners -->
+  <Section tone="white">
+    <div class="section-heading section-heading--center">
+      <h2>Our Partners</h2>
+      <span class="accent-bar"></span>
+      <p class="lede">
+        The CTG Foundation® strives to make a difference in the lives of children and families
+        in need. Our philanthropic partners include the following organizations:
+      </p>
+    </div>
+    <ul class="partners-grid">
+      {
+        partners.map((partner) => (
+          <li>
+            <img src={partner.logo} alt={partner.name} loading="lazy" decoding="async" />
+            <h3 class="h4">{partner.name}</h3>
+          </li>
+        ))
+      }
+    </ul>
+  </Section>
+
+  <!-- Funding / donate -->
+  <Section tone="navy" hex>
+    <div class="section-heading section-heading--center">
+      <p class="eyebrow">Funding</p>
+      <p class="lede">
+        Our efforts are funded through the generous donations of corporations, churches, and
+        individual partners. Donations are quickly translated from dollars to life-giving
+        access to clean water, health, nourishment, education, and economic development
+        programs. All donations are tax deductible.
+      </p>
+      <p><a class="btn btn--primary" href="https://www.ctgfoundation.org/donate" target="_blank" rel="noopener">Donate to the CTG Foundation</a></p>
+      <p class="lede">
+        While we’re pleased with our accomplishments, we know there is more work to be done.
+        As a responsible supplier and partner, we’ll continue to take deliberate steps to
+        drive meaningful change.
+      </p>
+      <p class="funding-attribution">
+        &ndash; Brian Reynolds, CTG Federal President and CEO, CTG Foundation Founding Member
+        and Co-Chair
+      </p>
+    </div>
+  </Section>
+
+  <!-- Program detail sections -->
+  {
+    programDetails.map((program, index) => (
+      <Section tone={index % 2 === 0 ? 'white' : 'subtle'}>
+        <div class="split program-detail">
+          <div>
+            <IconTile src={program.icon} />
+            <h3>{program.title}</h3>
+            <p class="lede">{program.intro}</p>
+          </div>
+          <div class="prose">
+            {program.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            {program.list && (
+              <ul>
+                {program.list.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+            {program.outro && <p>{program.outro}</p>}
+          </div>
+        </div>
+      </Section>
+    ))
+  }
+</BaseLayout>
+
+<style>
+  .foundation-logo {
+    width: 200px;
+    height: auto;
+    margin-bottom: var(--sp-6);
+    filter: brightness(0) invert(1);
+  }
+  .giving-stats {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--sp-6);
+    list-style: none;
+    margin: var(--sp-8) 0 var(--sp-16);
+    padding: 0;
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--color-border);
+  }
+  .giving-stats__value {
+    display: block;
+    font-family: var(--font-condensed);
+    font-weight: var(--fw-medium);
+    font-size: var(--fs-30);
+    color: var(--ctg-navy);
+  }
+  .giving-stats__label {
+    display: block;
+    font-size: var(--fs-14);
+    color: var(--color-fg-muted);
+  }
+  .contributions-heading {
+    margin-top: var(--sp-4);
+  }
+
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--sp-8);
+    list-style: none;
+    margin: var(--sp-10) 0 0;
+    padding: 0;
+    text-align: center;
+  }
+  .partners-grid img {
+    height: 64px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto var(--sp-3);
+  }
+  .partners-grid h3 {
+    margin: 0;
+  }
+
+  .funding-attribution {
+    font-family: var(--font-condensed);
+    font-size: var(--fs-14);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7fb8ff;
+  }
+
+  .program-detail {
+    align-items: start;
+  }
+
+  .text-center :global(.icon-tile) {
+    margin-inline: auto;
+  }
+
+  @media (max-width: 900px) {
+    .giving-stats {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .partners-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
