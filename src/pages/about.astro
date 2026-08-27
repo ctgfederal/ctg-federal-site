@@ -284,7 +284,7 @@ const sustainabilityItems = [
   <!-- History -->
   <Section tone="white" id="history">
     <div class="section-heading">
-      <p class="eyebrow">History</p>
+      <p class="tag">History</p>
       <h2>Our history is deep, and our experience is vast.</h2>
       <span class="accent-bar"></span>
     </div>
@@ -343,7 +343,7 @@ const sustainabilityItems = [
   <!-- Philanthropy -->
   <Section tone="white" id="philanthropy">
     <div class="section-heading">
-      <p class="eyebrow">Philanthropy</p>
+      <p class="tag">Philanthropy</p>
       <h2>We are committed to communities at home and around the world.</h2>
       <span class="accent-bar"></span>
     </div>
@@ -375,7 +375,7 @@ const sustainabilityItems = [
   <!-- Sustainability -->
   <Section tone="subtle" id="sustainability">
     <div class="section-heading">
-      <p class="eyebrow">Sustainability</p>
+      <p class="tag">Sustainability</p>
       <h2>Environmental responsibility, social consciousness, and the highest ethical standards.</h2>
       <span class="accent-bar"></span>
     </div>
@@ -407,7 +407,7 @@ const sustainabilityItems = [
   <Section tone="white" id="careers">
     <div class="split">
       <div>
-        <p class="eyebrow">Careers</p>
+        <p class="tag">Careers</p>
         <h2>Join the CTG Federal Team</h2>
         <p>
           CTG Federal is one of the fastest-growing, trusted IT solution providers around.
@@ -430,7 +430,7 @@ const sustainabilityItems = [
   <!-- Conference -->
   <Section tone="navy" hex id="conference">
     <div class="section-heading section-heading--center">
-      <p class="eyebrow">Conference</p>
+      <p class="tag">Conference</p>
       <h2>Conference</h2>
       <p class="lede">
         Stay in the loop. See the latest updates and announcements on where CTGF will be and
@@ -447,21 +447,13 @@ const sustainabilityItems = [
     position: sticky;
     top: 0;
     z-index: 20;
-    background: var(--ctg-white);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--shadow-xs);
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
   }
   .subnav__inner {
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-  }
-  @media (max-width: 900px) {
-    /* Fade the right edge so the bar reads as scrollable, not cut off. */
-    .subnav__inner {
-      -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
-      mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
-    }
   }
   .subnav__inner::-webkit-scrollbar {
     display: none;
@@ -474,17 +466,36 @@ const sustainabilityItems = [
     padding: 0;
     white-space: nowrap;
   }
+  .subnav li {
+    margin-bottom: 0;
+  }
+  /* Wrap rather than scroll on narrow screens: nothing gets clipped, and the
+     brand system has no edge-fade gradient to signal a cut-off. */
+  @media (max-width: 900px) {
+    .subnav__inner {
+      overflow-x: visible;
+    }
+    .subnav ul {
+      flex-wrap: wrap;
+      gap: 0 var(--sp-2);
+      white-space: normal;
+    }
+    .subnav a {
+      padding: var(--sp-3) var(--sp-2);
+    }
+  }
   .subnav a {
     display: block;
     padding: var(--sp-4) var(--sp-3);
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.1em;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--fs-ui);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ctg-navy);
+    color: var(--navy);
   }
   .subnav a:hover {
-    color: var(--ctg-azure);
+    color: var(--medium);
     text-decoration: none;
   }
 
@@ -514,12 +525,12 @@ const sustainabilityItems = [
     gap: var(--sp-2);
     cursor: pointer;
     list-style: none;
-    font-family: var(--font-condensed);
-    font-weight: var(--fw-medium);
-    letter-spacing: 0.08em;
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    font-size: var(--fs-14);
-    color: var(--ctg-navy);
+    font-size: var(--fs-ui);
+    color: var(--navy);
   }
   .value-card summary::-webkit-details-marker {
     display: none;
@@ -529,8 +540,8 @@ const sustainabilityItems = [
     width: 12px;
     height: 12px;
     fill: none;
-    stroke: var(--ctg-azure);
-    stroke-width: 1.8;
+    stroke: var(--azure);
+    stroke-width: 1.5;
     stroke-linecap: round;
     transition: transform var(--dur-med) var(--ease-standard);
   }
@@ -551,8 +562,7 @@ const sustainabilityItems = [
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-md);
   }
   .culture-media__badge {
     position: absolute;
@@ -560,9 +570,9 @@ const sustainabilityItems = [
     bottom: var(--sp-5);
     width: 96px;
     height: 96px;
-    background: var(--ctg-white);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
     padding: var(--sp-2);
   }
   .culture-media__quote {
@@ -584,10 +594,9 @@ const sustainabilityItems = [
   .leader-card {
     display: flex;
     flex-direction: column;
-    background: var(--ctg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xs);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
     overflow: hidden;
   }
   .leader-card summary {
@@ -606,7 +615,7 @@ const sustainabilityItems = [
     width: 96px;
     height: 96px;
     object-fit: cover;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
     margin-bottom: var(--sp-4);
   }
   .leader-card__name {
@@ -619,11 +628,12 @@ const sustainabilityItems = [
   }
   .leader-card__role {
     display: block;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-12);
-    letter-spacing: 0.1em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ctg-azure);
+    color: var(--azure);
     margin-bottom: var(--sp-3);
   }
   .leader-card__short {
@@ -637,15 +647,15 @@ const sustainabilityItems = [
     width: 32px;
     height: 32px;
     margin-top: auto;
-    border: 1.5px solid var(--ctg-azure);
-    border-radius: var(--radius-pill);
+    border: 1px solid var(--azure);
+    border-radius: var(--radius-sm);
   }
   .leader-card__toggle svg {
     width: 12px;
     height: 12px;
     fill: none;
-    stroke: var(--ctg-azure);
-    stroke-width: 1.8;
+    stroke: var(--azure);
+    stroke-width: 1.5;
     stroke-linecap: round;
     transition: transform var(--dur-med) var(--ease-standard);
   }
@@ -674,9 +684,11 @@ const sustainabilityItems = [
   }
   .quote-card figcaption {
     margin-top: var(--sp-4);
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 

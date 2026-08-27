@@ -96,20 +96,29 @@ const {
   .quickfacts__ids {
     margin: 0;
   }
+  .quickfacts__ids {
+    border-top: 2px solid var(--navy);
+  }
   .quickfacts__row {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--sp-2);
-    padding-block: var(--sp-2);
-    border-bottom: 1px solid var(--color-border);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--light-gray);
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
   }
   .quickfacts__row dt {
-    color: var(--color-fg-muted);
+    color: var(--charcoal);
+    text-transform: uppercase;
     white-space: nowrap;
   }
   .quickfacts__row dd {
     margin: 0;
-    font-weight: var(--fw-medium);
-    color: var(--ctg-navy);
+    color: var(--navy);
     font-variant-numeric: tabular-nums;
   }
   .quickfacts__list,
@@ -119,7 +128,11 @@ const {
   }
   .quickfacts__list li,
   .quickfacts__downloads li {
-    margin-bottom: var(--sp-2);
+    margin-bottom: var(--space-li);
+    line-height: 1.5;
+  }
+  .quickfacts__list li::marker {
+    color: var(--azure);
   }
   .quickfacts__downloads {
     list-style: none;
@@ -131,13 +144,22 @@ const {
   }
   .quickfacts--dark,
   .quickfacts--dark .quickfacts__row dd {
-    color: rgba(255, 255, 255, 0.86);
+    color: var(--color-on-dark-body);
+  }
+  .quickfacts--dark .quickfacts__ids {
+    border-top-color: var(--azure);
   }
   .quickfacts--dark .quickfacts__row {
-    border-color: var(--color-border-inverse);
+    border-bottom-color: var(--color-border-inverse);
   }
   .quickfacts--dark .quickfacts__row dt {
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-on-dark-muted);
+  }
+  .quickfacts--dark .quickfacts__row dd {
+    color: var(--azure-300);
+  }
+  .quickfacts--dark .quickfacts__list li::marker {
+    color: var(--azure-300);
   }
   @media (max-width: 900px) {
     .quickfacts__grid {

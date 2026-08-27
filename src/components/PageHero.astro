@@ -1,19 +1,26 @@
 ---
 /**
- * PageHero — the navy gradient band at the top of every interior page.
+ * PageHero — the navy authority band at the top of every interior page.
  *
  *   <PageHero eyebrow="Protect your data and assets" title="Cybersecurity"
  *             intro="Cybersecurity architecture and processes…"
  *             image="/images/generated/service-cybersecurity.jpg" />
  *   <PageHero title="Resources" align="center" />
  *
- * eyebrow  small Oswald line above the H1
- * intro    lede paragraph below the H1
- * image    optional right-side image (omit for a text-only band)
+ * Brand Standard: Navy (or Yale) ground + the one permitted cover radial
+ * (Azure → Navy, 25%) + hex micro-grid in the top-right corner + Azure
+ * registration marks on the content frame. Title is Display L in Georgia.
+ *
+ * eyebrow  mono tag line above the H1 (rendered as `.tag`)
+ * intro    lead paragraph below the H1
+ * image    optional right-side photo — carries a 70% Navy scrim
  * align    'left' (default) | 'center' — center only applies without an image
- * tone     'gradient' (default) | 'navy'
+ * tone     'navy' (default) | 'yale'
  * A <slot /> renders under the intro (buttons, breadcrumbs, extra copy).
  */
+import HexGrid from './HexGrid.astro';
+import RegMarks from './RegMarks.astro';
+
 interface Props {
   eyebrow?: string;
   title: string;
@@ -21,7 +28,7 @@ interface Props {
   image?: string;
   imageAlt?: string;
   align?: 'left' | 'center';
-  tone?: 'gradient' | 'navy';
+  tone?: 'navy' | 'yale';
 }
 const {
   eyebrow,
@@ -30,18 +37,23 @@ const {
   image,
   imageAlt = '',
   align = 'left',
-  tone = 'gradient',
+  tone = 'navy',
 } = Astro.props;
+const ground = tone === 'yale' ? 'yale' : 'navy';
 const centered = align === 'center' && !image;
 ---
 
-<section class={`pagehero pagehero--${tone} hex-bg ${image ? 'pagehero--split' : ''}`}>
+<section class={`pagehero pagehero--${ground} motif-host ${image ? 'pagehero--split' : ''}`}>
+  <HexGrid corner="tr" size={420} />
   <div class={`container pagehero__inner ${centered ? 'pagehero__inner--center' : ''}`}>
-    <div class="pagehero__text">
-      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-      <h1>{title}</h1>
-      {intro && <p class="lede pagehero__intro">{intro}</p>}
-      <slot />
+    <div class="pagehero__text reg-frame">
+      <RegMarks />
+      <div class="pagehero__body">
+        {eyebrow && <p class="tag">{eyebrow}</p>}
+        <h1 class="display-l">{title}</h1>
+        {intro && <p class="lede pagehero__intro">{intro}</p>}
+        <slot />
+      </div>
     </div>
     {
       image && (
@@ -55,20 +67,46 @@ const centered = align === 'center' && !image;
 
 <style>
   .pagehero {
-    background: var(--gradient-brand);
-    color: rgba(255, 255, 255, 0.86);
+    position: relative;
+    background: var(--navy);
+    color: var(--color-on-dark-body);
     padding-block: clamp(56px, 7vw, 96px);
   }
-  .pagehero--navy {
-    background: var(--ctg-navy);
+  .pagehero--yale {
+    background: var(--yale);
+  }
+  /* The one permitted gradient: cover radial, Azure → Navy at 25%. */
+  .pagehero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--cover-radial);
   }
   .pagehero__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     gap: clamp(32px, 5vw, 64px);
     align-items: center;
   }
   .pagehero--split .pagehero__inner {
     grid-template-columns: 1.15fr 1fr;
+  }
+  .pagehero__text {
+    position: relative;
+  }
+  /* Without a photo beside it the frame would span the full container and the
+     registration marks would read as page furniture, not a frame. */
+  .pagehero:not(.pagehero--split) .pagehero__text {
+    max-width: 860px;
+  }
+  .pagehero__inner--center .pagehero__text {
+    margin-inline: auto;
+  }
+  .pagehero__body {
+    padding: var(--sp-6) var(--sp-8);
   }
   .pagehero__inner--center {
     text-align: center;
@@ -78,27 +116,41 @@ const centered = align === 'center' && !image;
     margin-inline: auto;
   }
   .pagehero h1 {
-    color: var(--ctg-white);
-    margin-bottom: var(--sp-5);
-  }
-  .pagehero .eyebrow {
-    color: #7fb8ff;
+    color: var(--white);
+    margin-bottom: var(--space-lead);
   }
   .pagehero__intro {
-    color: rgba(255, 255, 255, 0.86);
+    color: var(--color-on-dark-body);
     max-width: 62ch;
     margin-bottom: 0;
+  }
+  .pagehero__media {
+    position: relative;
   }
   .pagehero__media img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    border-radius: var(--radius-md);
+  }
+  /* Navy scrim over photography (Brand Standard §19B) — flat, held at 35% because no type sits over this photo — the full 70% scrim is
+     for type-over-image covers and would erase the picture here. */
+  .pagehero__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-md);
+    background: rgba(0, 37, 80, 0.35);
+    pointer-events: none;
   }
   @media (max-width: 900px) {
     .pagehero--split .pagehero__inner {
       grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .pagehero__body {
+      padding: var(--sp-5) var(--sp-4);
     }
   }
 </style>

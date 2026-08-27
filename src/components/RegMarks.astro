@@ -1,0 +1,74 @@
+---
+/**
+ * RegMarks — L-shaped registration marks at all four corners of a block.
+ *
+ *   <div class="reg-frame">
+ *     <RegMarks />
+ *     …content…
+ *   </div>
+ *
+ * Brand Standard §18B: 14–18px long, 1px stroke, Azure on light AND on dark.
+ * Always all four corners — never partial.
+ *
+ * length  arm length in px (default 16)
+ * inset   distance from the block edge (default 0)
+ * color   stroke color (default Azure)
+ */
+interface Props {
+  length?: number;
+  inset?: number;
+  color?: string;
+  class?: string;
+}
+const { length = 16, inset = 0, color = '#0073FE', class: className = '' } = Astro.props;
+---
+
+<span
+  class={`regmarks ${className}`.trim()}
+  style={`--reg-len:${length}px; --reg-inset:${inset}px; --reg-color:${color};`}
+  aria-hidden="true"
+>
+  <i class="regmarks__m regmarks__m--tl"></i>
+  <i class="regmarks__m regmarks__m--tr"></i>
+  <i class="regmarks__m regmarks__m--bl"></i>
+  <i class="regmarks__m regmarks__m--br"></i>
+</span>
+
+<style>
+  .regmarks {
+    position: absolute;
+    inset: var(--reg-inset, 0);
+    z-index: 1;
+    pointer-events: none;
+  }
+  .regmarks__m {
+    position: absolute;
+    width: var(--reg-len, 16px);
+    height: var(--reg-len, 16px);
+    border: 0 solid var(--reg-color, #0073FE);
+  }
+  .regmarks__m--tl {
+    top: 0;
+    left: 0;
+    border-top-width: 1px;
+    border-left-width: 1px;
+  }
+  .regmarks__m--tr {
+    top: 0;
+    right: 0;
+    border-top-width: 1px;
+    border-right-width: 1px;
+  }
+  .regmarks__m--bl {
+    bottom: 0;
+    left: 0;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+  }
+  .regmarks__m--br {
+    bottom: 0;
+    right: 0;
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+  }
+</style>

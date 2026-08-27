@@ -1,6 +1,6 @@
 /**
  * stats.ts — the six-up credibility bar shown on home, solutions, and about.
- * `value` is the large Oswald number, `label` the small Roboto caption below.
+ * `value` is the large Georgia number, `label` the small mono caption below.
  * Copy is verbatim from the live site; do not invent or round these.
  */
 

@@ -19,7 +19,7 @@ npm run preview    # serve the built site
 | `src/layouts/BaseLayout.astro` | Head, header, footer, SEO |
 | `src/components/` | Shared sections (hero, stats bar, logo grids, forms, etc.) |
 | `src/data/` | Site content that repeats across pages: nav, stats, services, partners, customers, testimonials, quick facts |
-| `src/styles/global.css` | Brand tokens and base styles (from the CTG Federal Design System) |
+| `src/styles/global.css` | Brand tokens and base styles (CTG Federal Brand Standard v2.0 — see `BRAND-RESTYLE.md`) |
 | `public/images/` | Logos, icons, badges, photos |
 | `public/downloads/` | PDFs (capabilities statement, line card, contracts, etc.) |
 

@@ -3,17 +3,19 @@
  * Section — page rhythm wrapper. One <section> with a container inside.
  *
  *   <Section tone="subtle" id="partners">…</Section>
- *   <Section tone="gradient" hex tight>…</Section>
+ *   <Section tone="navy" hex tight>…</Section>
  *   <Section narrow>…</Section>   // 860px prose column
  *
- * tone:   'white' | 'subtle' | 'muted' | 'navy' | 'yale' | 'gradient'
+ * tone:   'white' | 'subtle' | 'muted' | 'navy' | 'yale'
  * tight:  60% vertical padding
- * hex:    hexagon motif watermark (only visible on dark tones)
+ * hex:    hex micro-grid corner motif (bottom-left; dark tones only)
  * narrow: narrow container
  * full:   skip the container (child controls its own width)
  */
+import HexGrid from './HexGrid.astro';
+
 interface Props {
-  tone?: 'white' | 'subtle' | 'muted' | 'navy' | 'yale' | 'gradient';
+  tone?: 'white' | 'subtle' | 'muted' | 'navy' | 'yale';
   tight?: boolean;
   hex?: boolean;
   narrow?: boolean;
@@ -31,11 +33,15 @@ const {
   class: className = '',
 } = Astro.props;
 
+const ground = tone;
+const isDark = ground === 'navy' || ground === 'yale';
+const showHex = hex && isDark;
+
 const classes = [
   'section',
-  tone !== 'white' ? `section--${tone}` : '',
+  ground !== 'white' ? `section--${ground}` : '',
   tight ? 'section--tight' : '',
-  hex ? 'hex-bg' : '',
+  showHex ? 'motif-host' : '',
   className,
 ]
   .filter(Boolean)
@@ -43,6 +49,7 @@ const classes = [
 ---
 
 <section class={classes} id={id}>
+  {showHex && <HexGrid corner="bl" size={360} />}
   {
     full ? (
       <slot />

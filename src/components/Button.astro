@@ -7,12 +7,13 @@
  *   <Button href="/x.pdf" variant="outline-light" size="sm" external>Learn More</Button>
  *   <Button type="submit" variant="primary">Send</Button>
  *
- * variant: 'primary' | 'navy' | 'outline' | 'outline-light'   (default 'primary')
+ * variant: 'primary' | 'navy' | 'outline' | 'white' | 'outline-light'
+ *          (default 'primary'; 'white' and 'outline-light' are for navy grounds)
  * size:    'md' | 'sm'                                        (default 'md')
  */
 interface Props {
   href?: string;
-  variant?: 'primary' | 'navy' | 'outline' | 'outline-light';
+  variant?: 'primary' | 'navy' | 'outline' | 'white' | 'outline-light';
   size?: 'md' | 'sm';
   external?: boolean;
   type?: 'button' | 'submit';

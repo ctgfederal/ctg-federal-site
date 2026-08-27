@@ -119,12 +119,11 @@ const resources = [
     padding: var(--sp-5);
     background: var(--ctg-white);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-med) var(--ease-standard);
   }
   .resource-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    border-color: var(--azure);
   }
   .resource-card img {
     flex-shrink: 0;
@@ -143,9 +142,10 @@ const resources = [
     margin-bottom: var(--sp-2);
   }
   .resource-card a {
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.08em;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--fs-ui);
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 </style>

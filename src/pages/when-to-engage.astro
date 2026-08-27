@@ -58,7 +58,7 @@ const postSales = [
   <Section tone="white" id="when-anchor">
     <div class="loop">
       <div class="loop__col">
-        <p class="eyebrow">Pre-Sales</p>
+        <p class="tag">Pre-Sales</p>
         <ol class="loop__list">
           {
             preSales.map((step, index) => (
@@ -74,7 +74,7 @@ const postSales = [
         </ol>
       </div>
       <div class="loop__col">
-        <p class="eyebrow">Post-Sales</p>
+        <p class="tag">Post-Sales</p>
         <ol class="loop__list" start={preSales.length + 1}>
           {
             postSales.map((step, index) => (
@@ -178,7 +178,7 @@ const postSales = [
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 5vw, 64px);
   }
-  .loop__col .eyebrow {
+  .loop__col .tag {
     text-align: center;
   }
   .loop__list {
@@ -202,11 +202,14 @@ const postSales = [
     width: 32px;
     height: 32px;
     flex: none;
-    border-radius: 50%;
-    background: var(--color-accent-soft);
-    color: var(--ctg-navy);
-    font-family: var(--font-condensed);
-    font-weight: var(--fw-medium);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    border: 1px solid var(--azure);
+    color: var(--navy);
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 500;
+    letter-spacing: 0.04em;
   }
   .loop__text {
     font-size: var(--fs-16);
@@ -216,11 +219,12 @@ const postSales = [
     flex: none;
     padding: 4px 10px;
     border-radius: var(--radius-sm);
-    background: var(--ctg-navy);
-    color: var(--ctg-white);
-    font-family: var(--font-condensed);
-    font-size: var(--fs-12);
-    letter-spacing: 0.08em;
+    background: var(--navy);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     white-space: nowrap;
   }

@@ -96,7 +96,7 @@ const pillars = [
   <Section tone="subtle">
     <div class="split">
       <div>
-        <p class="eyebrow">Our Difference</p>
+        <p class="tag">Our Difference</p>
         <h2>People. Purpose. Partnerships.</h2>
         <p>
           Three crucial components that don’t just keep a business running; they keep people
@@ -113,7 +113,7 @@ const pillars = [
     </div>
 
     <div class="section-heading section-heading--center pillars-heading">
-      <p class="eyebrow">Pillars</p>
+      <p class="tag">Pillars</p>
     </div>
     <div class="grid grid--4">
       {
@@ -130,7 +130,7 @@ const pillars = [
   <Section tone="navy" hex>
     <div class="split careers-band">
       <div>
-        <p class="eyebrow">Careers</p>
+        <p class="tag">Careers</p>
         <h2>Join the CTG Federal Team</h2>
         <p>
           CTG Federal is one of the fastest-growing, trusted IT solution providers around.
@@ -204,19 +204,22 @@ const pillars = [
   .careers-band p {
     color: rgba(255, 255, 255, 0.9);
   }
-  .careers-band .eyebrow {
-    color: #7fb8ff;
+  .careers-band .tag,
+  .careers-band .tag {
+    color: var(--azure-300);
   }
   .careers-band__quote {
-    color: var(--ctg-white);
+    color: var(--white);
     margin-top: var(--sp-8);
   }
   .careers-band__attribution {
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #7fb8ff;
+    color: var(--azure-300);
   }
   .careers-band__media img {
     display: block;

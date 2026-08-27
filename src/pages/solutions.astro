@@ -1,6 +1,6 @@
 ---
 /**
- * Solutions — the /solutions/ hub page. Hero (3-line H1 + six tech icons) →
+ * Solutions — the /solutions/ hub page. Hero (3-line H1 + six solution tags) →
  * intro paragraph → "Enterprise IT Solutions & Expertise" grid → stats bar →
  * Our Partners → Our Customers → Testimonials.
  */
@@ -11,17 +11,22 @@ import ServicesGrid from '../components/ServicesGrid.astro';
 import LogoGrid from '../components/LogoGrid.astro';
 import CustomerLogos from '../components/CustomerLogos.astro';
 import Testimonials from '../components/Testimonials.astro';
+import HexGrid from '../components/HexGrid.astro';
 import { strategic } from '../data/partners';
 
 const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26.pdf';
 
-const techIcons = [
-  { src: '/images/site/tech-infrastructure.png', alt: 'Infrastructure' },
-  { src: '/images/site/tec-ai.png', alt: 'HPC and AI/ML + GenAI' },
-  { src: '/images/site/tech-cloud.png', alt: 'Hybrid Cloud' },
-  { src: '/images/site/tech-cyber.png', alt: 'Cybersecurity' },
-  { src: '/images/site/tech-network.png', alt: 'Networking' },
-  { src: '/images/site/tech-comms.png', alt: 'Communications' },
+/* The live page set these six words inside filled, glowing hexagon PNGs. The
+   Brand Standard retires the legacy hexagon graphic (§18A) and bans fills,
+   glows and gradients (§18D), so the same six words are now real text in
+   registration-marked cells. Wording is unchanged. */
+const techTags = [
+  'Infrastructure',
+  'HPC & AI/ML GenAI',
+  'Hybrid Cloud',
+  'Cybersecurity',
+  'Networking',
+  'Communications',
 ];
 ---
 
@@ -30,18 +35,19 @@ const techIcons = [
   description="Information technology expertise, engineering excellence. Best-in-class service. We design and deliver IT solutions that power and equip businesses nationwide."
 >
   <!-- Hero -->
-  <section class="solhero hex-bg">
+  <section class="solhero motif-host">
+    <HexGrid corner="tr" size={380} />
     <div class="container solhero__inner">
       <h1 class="solhero__title">
         <span>Information technology expertise.</span>
         <span>Engineering excellence.</span>
         <span>Second-to-none service.</span>
       </h1>
-      <ul class="solhero__icons">
+      <ul class="solhero__tags">
         {
-          techIcons.map((tile) => (
+          techTags.map((label) => (
             <li>
-              <img src={tile.src} alt={tile.alt} width="209" height="201" decoding="async" />
+              <span class="solhero__tag">{label}</span>
             </li>
           ))
         }
@@ -97,9 +103,19 @@ const techIcons = [
 
 <style>
   .solhero {
-    background: var(--gradient-brand);
-    color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    background: var(--navy);
+    color: var(--color-on-dark-body);
     padding-block: clamp(56px, 7vw, 96px);
+  }
+  /* Cover radial — the one permitted gradient in the system. */
+  .solhero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--cover-radial);
   }
   .solhero__inner {
     display: grid;
@@ -108,42 +124,52 @@ const techIcons = [
     grid-template-columns: 1.2fr 1fr;
   }
   .solhero__title {
-    color: var(--ctg-white);
+    color: var(--white);
     max-width: 22ch;
     margin: 0;
-    font-size: clamp(var(--fs-30), 4vw, var(--fs-48));
-    line-height: 1.16;
   }
   .solhero__title span {
     display: block;
   }
-  .solhero__icons {
+  .solhero__tags {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--sp-3);
     list-style: none;
-    margin: 0;
+    margin: 0 0 0 auto;
     padding: 0;
-    max-width: 400px;
-    margin-left: auto;
+    max-width: 420px;
   }
-  .solhero__icons img {
-    display: block;
-    width: 100%;
-    height: auto;
+  .solhero__tags li {
+    margin-bottom: 0;
+  }
+  .solhero__tag {
+    display: flex;
+    align-items: center;
+    min-height: 64px;
+    padding: var(--sp-3) var(--sp-4);
+    border: 1px solid var(--azure);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--azure-300);
   }
   .solhero__intro {
     padding-left: var(--sp-6);
-    border-left: 3px solid var(--ctg-azure);
-    max-width: 68ch;
+    border-left: 3px solid var(--azure);
+    max-width: var(--measure);
   }
   @media (max-width: 900px) {
     .solhero__inner {
       grid-template-columns: 1fr;
     }
-    .solhero__icons {
+    .solhero__tags {
       margin-left: 0;
-      max-width: 340px;
+      max-width: 480px;
     }
   }
 </style>

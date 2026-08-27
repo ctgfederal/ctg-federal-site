@@ -188,11 +188,13 @@ const papers: Paper[] = [
 const videos = [
   {
     title: 'HPC & AI in the Federal Government',
+    href: 'https://www.youtube.com/watch?v=gjTgTyRoNEo',
     thumb: '/images/site/video-HPC-AI-thumbnail.jpg',
     desc: 'Mosa Emamjomeh, Bob Ciotti & Steve Grewal from CTG Federal discuss in this panel-style interview everything HPC & AI related to the Federal Government, and how it affects its customers.',
   },
   {
     title: 'CTG Federal Zero Trust Security With Multidomain Fabrics v1',
+    href: 'https://www.youtube.com/watch?v=FITKcaR3jWU',
     thumb: '/images/site/video-zero-trust-security-thumbnail.jpg',
     desc: 'Brian Trentham and Jeff Fossett discuss the tenants of multi-domain architectures and how they’re the most thorough path forward for a zero trust architectural posture.',
   },
@@ -236,9 +238,18 @@ const videos = [
       {
         videos.map((video) => (
           <div class="card video-card">
-            <img class="video-card__thumb" src={video.thumb} alt={`${video.title} video thumbnail`} loading="lazy" width="480" height="270" />
-            <h4>{video.title}</h4>
+            <a class="video-card__media" href={video.href} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+              <img class="video-card__thumb" src={video.thumb} alt="" loading="lazy" width="480" height="270" />
+            </a>
+            <h4>
+              <a class="video-card__title" href={video.href} target="_blank" rel="noopener">
+                {video.title}
+              </a>
+            </h4>
             <p>{video.desc}</p>
+            <p class="video-card__cta">
+              <a href={video.href} target="_blank" rel="noopener">Watch the video</a>
+            </p>
           </div>
         ))
       }
@@ -288,11 +299,40 @@ const videos = [
     }
   }
 
+  .video-card__media {
+    display: block;
+    margin-bottom: var(--sp-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: border-color var(--dur-med) var(--ease-standard);
+  }
+  .video-card__media:hover {
+    border-color: var(--azure);
+  }
   .video-card__thumb {
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    border-radius: var(--radius-md);
-    margin-bottom: var(--sp-4);
+  }
+  .video-card__title {
+    color: var(--navy);
+    letter-spacing: inherit;
+  }
+  .video-card__title:hover {
+    color: var(--medium);
+  }
+  .video-card__cta {
+    margin-top: var(--sp-4);
+    font-family: var(--font-body);
+    font-size: var(--fs-ui);
+    font-weight: 700;
+    letter-spacing: 0.005em;
+  }
+  .video-card__cta a {
+    color: var(--medium);
+  }
+  .video-card__cta a:hover {
+    color: var(--navy-500);
   }
 </style>

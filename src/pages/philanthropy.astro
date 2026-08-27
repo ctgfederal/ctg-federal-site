@@ -225,7 +225,7 @@ const programDetails = [
   <!-- Funding / donate -->
   <Section tone="navy" hex>
     <div class="section-heading section-heading--center">
-      <p class="eyebrow">Funding</p>
+      <p class="tag">Funding</p>
       <p class="lede">
         Our efforts are funded through the generous donations of corporations, churches, and
         individual partners. Donations are quickly translated from dollars to life-giving
@@ -289,15 +289,21 @@ const programDetails = [
   }
   .giving-stats__value {
     display: block;
-    font-family: var(--font-condensed);
-    font-weight: var(--fw-medium);
-    font-size: var(--fs-30);
-    color: var(--ctg-navy);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-36);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--navy);
   }
   .giving-stats__label {
     display: block;
-    font-size: var(--fs-14);
-    color: var(--color-fg-muted);
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--charcoal);
   }
   .contributions-heading {
     margin-top: var(--sp-4);
@@ -324,11 +330,12 @@ const programDetails = [
   }
 
   .funding-attribution {
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.12em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #7fb8ff;
+    color: var(--azure-300);
   }
 
   .program-detail {

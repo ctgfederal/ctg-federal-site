@@ -23,7 +23,7 @@ professional. Not a growth-hacking marketing site.
 | AI-generated brand photos | `public/images/generated/` (hero.png, service-*.png, about-team.png, culture.png, warehouse.png, customers.png, contracts.png) |
 | Headshots | `public/images/site/Brian-Reynolds-profile.jpg`, `Dennis-Yoon-profile.jpg`, `Brad-Baker-profile.jpg`, `Clay-Goldberg_BW_sq.png` |
 | Global CSS tokens (already written) | `src/styles/global.css` |
-| Brand rules | Georgia display, Roboto body, Oswald eyebrows. Navy #002550, Yale #003B82, Royal #0055BC, Azure #0073FE accent. No emoji, no exclamation marks, no purple, no illustrations/blobs. Restrained motion. Crisp radii (6px buttons, 10px cards). |
+| Brand rules | **See `BRAND-RESTYLE.md` — it is the authority for every visual token and wins over this file.** In short: CTG Federal Brand Standard v2.0 (CTG/F-BS-001). Georgia display, Verdana body/UI, JetBrains Mono tags and tokens. Navy #002550, Yale #003B82, Medium #0055BC, Azure #0073FE (pointer only, never body text). No shadows, no gradients except the cover radial, no emoji, no exclamation marks. Radii 2px on buttons/tags, 4px on cards, nothing larger. |
 
 `SCRATCH` = `/private/tmp/claude-501/-Users-joshschultz-Projects-ctg-federal-site/066db006-a66f-4996-a4af-3ba6d0f7e713/scratchpad`
 
@@ -40,16 +40,19 @@ Slug mapping: URL path with `/` replaced by `__`. Home is `home`. e.g. `partners
 
 ## Design direction (modernize, but stay the same site)
 
-- Full-bleed hero on home (generated `hero.png`) with brand gradient overlay; H1 in Georgia white; one primary button.
-- Interior pages: `PageHero` — navy/gradient band with hex motif at low opacity, eyebrow + H1 + intro paragraph. Optional right-side image.
-- Section rhythm: white → subtle gray → navy accents. Generous whitespace. Max content width 1200px; prose capped at 72ch.
-- Cards: white, 1px border, 10px radius, navy-tinted shadow on hover, 2px lift.
-- Service cards: image top (4:3, object-fit cover), title "Transform with Modern Infrastructure" style, azure accent bar.
-- Logo grids: grayscale logos at 70% opacity, full color on hover; consistent tile size; `object-fit: contain`.
-- Stats bar: 6 stats on navy background; big number in Oswald, label in Roboto small caps.
-- Testimonials: Georgia italic quote, attribution in Oswald eyebrow style.
-- Forms: Netlify Forms (see below). Stacked labels, 6px radius inputs, azure focus ring, primary button.
-- Nav: white header, logo left, 4 top-level items with dropdowns (hover on desktop, click on mobile), "Contact" as a navy button on the right. Thin utility bar above with "CTG Federal, a Cohesive Technology Group company™" and Contracts / Tech Support / Resources links. Sticky header with subtle shadow on scroll. Mobile: hamburger → full-height drawer.
+> **Authority: `BRAND-RESTYLE.md` and the CTG Federal Brand Standard v2.0 it
+> points at.** Where this section and that document differ, that document wins.
+
+- Full-bleed hero on home (generated `hero.png`) under a flat Navy 70% scrim plus the cover radial; H1 in Georgia Display XL white; mono tag line above it; hex micro-grid in the top-right corner; one Medium Blue button.
+- Interior pages: `PageHero` — navy band + cover radial + hex micro-grid top-right + Azure registration marks on the content frame, mono tag + Display L H1 + lead paragraph. Optional right-side image under a navy scrim.
+- Section rhythm: white → Bone → navy authority bands. Generous whitespace. Max content width 1200px; prose capped at 70ch (never over 80).
+- Cards: flat. White or Bone, 1px Light Gray border, 4px radius, no shadow. Hover moves the border to Azure — no lift.
+- Service cards: image top (4:3, object-fit cover), mono verb tag, Georgia title, 2px azure rule under the image.
+- Logo grids: grayscale logos at 70% opacity, full color on hover; consistent tile size; `object-fit: contain`; hover border Azure.
+- Stats bar: 6 stats on navy; number in Georgia, label in JetBrains Mono caps; registration marks at the four corners; hex grid bottom-left.
+- Testimonials: callout treatment — 3px Azure left rule, Georgia italic, attribution in mono caps.
+- Forms: Netlify Forms (see below). Verdana 14/700 labels, 1px Light Gray inputs at 2px radius, 2px Azure focus ring, Medium Blue submit.
+- Nav: white header, logo left, 4 top-level items with dropdowns (hover on desktop, click on mobile), "Contact" as a Medium Blue button on the right. Nav links Verdana 14/700 caps with a 2px Azure underline on hover/active. Thin navy utility bar above in mono caps with "CTG Federal, a Cohesive Technology Group company™" and Contracts / Tech Support / Resources links. Sticky header gains a 1px border on scroll. Mobile: hamburger → full-height drawer.
 - Footer: navy. Row 1: white logo + "a Cohesive Technology Group company®" + accolade badges. Row 2: DUNS/UEI/Cage/NAICS block, link columns, address/phone/email, LinkedIn. Row 3: Fortune license line + "CTG Federal © 2026 | Terms & Conditions | Privacy Policy".
 - No JS frameworks. Vanilla JS in `<script>` tags only where needed (nav toggle, accordions, partner filter, tabs).
 

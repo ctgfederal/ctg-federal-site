@@ -59,16 +59,14 @@ const slides = [
     padding: 0;
   }
   .timeline-gallery li {
-    background: var(--color-bg-subtle);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
+    background: var(--bone);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    box-shadow: var(--shadow-xs);
-    transition: box-shadow var(--dur-med) var(--ease-standard), transform var(--dur-med) var(--ease-standard);
+    transition: border-color var(--dur-med) var(--ease-standard);
   }
   .timeline-gallery li:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    border-color: var(--azure);
   }
   .timeline-gallery a {
     display: block;

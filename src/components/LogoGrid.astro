@@ -8,6 +8,7 @@
  *
  * logos     [{ name, logo }]
  * cols      4 | 5 | 6 | 8   (default 6)
+ * tag       optional mono tag line above the heading
  * heading   optional H2
  * intro     optional paragraph under the heading
  * link      optional { label, href, external? } shown under the grid
@@ -21,6 +22,7 @@ interface LogoItem {
 interface Props {
   logos: LogoItem[];
   cols?: 4 | 5 | 6 | 8;
+  tag?: string;
   heading?: string;
   intro?: string;
   link?: { label: string; href: string; external?: boolean };
@@ -31,6 +33,7 @@ interface Props {
 const {
   logos,
   cols = 6,
+  tag,
   heading,
   intro,
   link,
@@ -42,8 +45,9 @@ const {
 
 <div class={`logogrid logogrid--${tone}`} id={id}>
   {
-    (heading || intro) && (
+    (tag || heading || intro) && (
       <div class={`section-heading ${center ? 'section-heading--center' : ''}`}>
+        {tag && <p class="tag">{tag}</p>}
         {heading && <h2>{heading}</h2>}
         <span class="accent-bar" />
         {intro && <p class="lede">{intro}</p>}
@@ -89,13 +93,12 @@ const {
     display: grid;
     place-items: center;
     aspect-ratio: 3 / 2;
+    margin-bottom: 0;
     padding: var(--sp-4);
-    background: var(--ctg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    transition:
-      border-color var(--dur-med) var(--ease-standard),
-      box-shadow var(--dur-med) var(--ease-standard);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
+    transition: border-color var(--dur-med) var(--ease-standard);
   }
   .logotile img {
     max-width: 100%;
@@ -109,8 +112,7 @@ const {
       opacity var(--dur-med) var(--ease-standard);
   }
   .logotile:hover {
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-sm);
+    border-color: var(--azure);
   }
   .logotile:hover img {
     filter: grayscale(0);
@@ -122,9 +124,10 @@ const {
   }
   .logogrid__link {
     margin: var(--sp-8) 0 0;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 

@@ -79,7 +79,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
         </ul>
       </nav>
 
-      <a href={ctaButton.href} class="btn btn--navy btn--sm masthead__cta">{ctaButton.label}</a>
+      <a href={ctaButton.href} class="btn btn--primary btn--sm masthead__cta">{ctaButton.label}</a>
 
       <button
         class="hamburger"
@@ -140,18 +140,23 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     position: sticky;
     top: 0;
     z-index: 100;
-    background: var(--ctg-white);
-    transition: box-shadow var(--dur-med) var(--ease-standard);
+    background: var(--white);
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--dur-med) var(--ease-standard);
   }
   .site-header.is-stuck {
-    box-shadow: var(--shadow-sm);
+    border-bottom-color: var(--light-gray);
   }
 
   /* ---- Utility bar ---- */
   .utility {
-    background: var(--ctg-navy);
-    color: rgba(255, 255, 255, 0.78);
-    font-size: var(--fs-12);
+    background: var(--navy);
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
   .utility__inner {
     display: flex;
@@ -163,13 +168,13 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   }
   .utility__legal {
     margin: 0;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.1em;
   }
   .utility a {
-    color: rgba(255, 255, 255, 0.78);
+    color: var(--azure-300);
   }
   .utility a:hover {
-    color: var(--ctg-white);
+    color: var(--white);
     text-decoration: none;
   }
   .utility__links {
@@ -179,8 +184,10 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     margin: 0;
     padding: 0;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-family: var(--font-condensed);
+    letter-spacing: 0.18em;
+  }
+  .utility__links li {
+    margin-bottom: 0;
   }
 
   /* ---- Masthead ---- */
@@ -217,18 +224,35 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   }
   .mainnav__link {
     display: block;
-    padding: 10px 10px;
-    font-size: var(--fs-14);
-    font-weight: var(--fw-medium);
+    position: relative;
+    padding: 12px 10px;
+    font-family: var(--font-body);
+    font-size: var(--fs-ui);
+    font-weight: 700;
     letter-spacing: 0.06em;
+    line-height: 1.45;
     text-transform: uppercase;
-    color: var(--ctg-navy);
-    border-radius: var(--radius-sm);
+    color: var(--navy);
+  }
+  .mainnav__link::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 4px;
+    height: 2px;
+    background: var(--azure);
+    opacity: 0;
+    transition: opacity var(--dur-fast) var(--ease-standard);
   }
   .mainnav__link:hover,
   .mainnav__link.is-active {
-    color: var(--ctg-azure);
+    color: var(--navy);
     text-decoration: none;
+  }
+  .mainnav__link:hover::after,
+  .mainnav__link.is-active::after {
+    opacity: 1;
   }
   .mainnav__toggle {
     display: grid;
@@ -239,7 +263,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     background: none;
     border: 0;
     cursor: pointer;
-    color: var(--ctg-navy);
+    color: var(--navy);
   }
   .mainnav__toggle svg {
     width: 10px;
@@ -263,10 +287,9 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     padding: var(--sp-2);
     margin: 0;
     list-style: none;
-    background: var(--ctg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
     opacity: 0;
     visibility: hidden;
     transform: translateY(6px);
@@ -282,17 +305,23 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     visibility: visible;
     transform: translateY(0);
   }
+  .dropdown li {
+    margin-bottom: 0;
+  }
   .dropdown a {
     display: block;
     padding: 9px 12px;
     border-radius: var(--radius-sm);
-    font-size: var(--fs-14);
-    color: var(--ctg-navy);
+    border-left: 2px solid transparent;
+    font-size: var(--fs-ui);
+    font-weight: 700;
+    color: var(--navy);
     line-height: 1.35;
   }
   .dropdown a:hover {
-    background: var(--ctg-navy-050);
-    color: var(--ctg-azure);
+    background: var(--bone);
+    border-left-color: var(--azure);
+    color: var(--navy);
     text-decoration: none;
   }
 
@@ -317,8 +346,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   .hamburger span {
     display: block;
     height: 2px;
-    background: var(--ctg-navy);
-    border-radius: 2px;
+    background: var(--navy);
     transition: transform var(--dur-med) var(--ease-standard), opacity var(--dur-fast);
   }
   .hamburger[aria-expanded='true'] span:nth-child(1) {
@@ -336,9 +364,9 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     display: none;
     position: fixed;
     inset: calc(34px + var(--header-h)) 0 0;
-    background: var(--ctg-white);
+    background: var(--white);
     overflow-y: auto;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--light-gray);
   }
   .drawer:not([hidden]) {
     display: block;
@@ -353,20 +381,24 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     margin: 0;
     padding: 0;
   }
+  .drawer__list li {
+    margin-bottom: 0;
+  }
   .drawer__row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--light-gray);
   }
   .drawer__row a {
     flex: 1;
     padding: 16px 0;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-20);
-    letter-spacing: 0.04em;
+    font-family: var(--font-body);
+    font-size: var(--fs-16);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--ctg-navy);
+    color: var(--navy);
   }
   .drawer__row button {
     display: grid;
@@ -376,7 +408,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     background: none;
     border: 0;
     cursor: pointer;
-    color: var(--ctg-navy);
+    color: var(--navy);
   }
   .drawer__row button svg {
     width: 12px;
@@ -397,8 +429,9 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   .drawer__sub a {
     display: block;
     padding: 10px 0 10px var(--sp-4);
-    font-size: var(--fs-16);
-    color: var(--color-fg-body);
+    font-size: var(--fs-ui);
+    font-weight: 700;
+    color: var(--medium);
   }
   .drawer__cta {
     width: 100%;
@@ -409,10 +442,14 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
     flex-wrap: wrap;
     gap: var(--sp-5);
     margin-top: var(--sp-8);
-    font-size: var(--fs-14);
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-family: var(--font-condensed);
+    letter-spacing: 0.18em;
+  }
+  .drawer__utility li {
+    margin-bottom: 0;
   }
 
   @media (max-width: 1320px) {
@@ -420,9 +457,13 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
       gap: var(--sp-4);
     }
     .mainnav__link {
-      padding: 10px 7px;
-      font-size: var(--fs-12);
+      padding: 12px 7px;
+      font-size: var(--fs-tag);
       letter-spacing: 0.04em;
+    }
+    .mainnav__link::after {
+      left: 7px;
+      right: 7px;
     }
     .dropdown {
       min-width: 230px;

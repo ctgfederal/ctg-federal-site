@@ -137,17 +137,20 @@ const ids = [
 
 <style>
   .site-footer {
-    background: var(--ctg-navy);
-    color: rgba(255, 255, 255, 0.72);
+    background: var(--navy);
+    color: var(--color-on-dark-body);
     padding-block: var(--sp-16) var(--sp-10);
-    font-size: var(--fs-14);
+    font-size: var(--fs-ui);
   }
   .site-footer a {
-    color: rgba(255, 255, 255, 0.82);
+    color: rgba(255, 255, 255, 0.85);
   }
   .site-footer a:hover {
-    color: var(--ctg-white);
+    color: var(--white);
     text-decoration: none;
+  }
+  .site-footer li {
+    margin-bottom: 0;
   }
 
   .footer-grid {
@@ -166,7 +169,7 @@ const ids = [
   }
   .footer-identity__legal {
     margin: var(--sp-3) 0 var(--sp-8);
-    font-size: var(--fs-12);
+    font-size: var(--fs-caption);
     letter-spacing: 0.04em;
   }
   .accolades {
@@ -186,8 +189,9 @@ const ids = [
   }
   .fortune {
     margin: var(--sp-6) 0 var(--sp-6);
-    font-size: var(--fs-12);
-    color: rgba(255, 255, 255, 0.5);
+    font-size: var(--fs-caption);
+    line-height: 1.4;
+    color: var(--color-on-dark-muted);
     max-width: 46ch;
   }
   .ids {
@@ -196,16 +200,21 @@ const ids = [
   .ids__row {
     display: flex;
     gap: var(--sp-2);
-    margin-bottom: var(--sp-1);
-    font-size: var(--fs-12);
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
   }
   .ids dt {
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--color-on-dark-muted);
+    text-transform: uppercase;
     white-space: nowrap;
   }
   .ids dd {
     margin: 0;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--azure-300);
     font-variant-numeric: tabular-nums;
   }
 
@@ -220,9 +229,10 @@ const ids = [
     line-height: 1.3;
   }
   .footer-col a {
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.1em;
+    font-family: var(--font-body);
+    font-size: var(--fs-ui);
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
   }
 
@@ -256,8 +266,8 @@ const ids = [
     margin-top: var(--sp-16);
     padding-top: var(--sp-6);
     border-top: 1px solid var(--color-border-inverse);
-    font-size: var(--fs-12);
-    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--fs-caption);
+    color: var(--color-on-dark-muted);
     text-align: center;
   }
 

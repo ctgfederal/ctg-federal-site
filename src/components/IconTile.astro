@@ -1,21 +1,44 @@
 ---
 /**
- * IconTile — small square (or hexagon) holder for a solution icon.
+ * IconTile — a 48px line icon, optionally inside a 1px Light Gray square.
  *
  *   <IconTile src="/images/icons/Hybrid_Cloud-Black.svg" />
- *   <IconTile src="/images/site/1.network.png" hex />
+ *   <IconTile src="/images/site/1.network.png" onDark />
  *
- * hex: clip the tile to the brand hexagon and invert the icon to white.
+ * Brand Standard §17: line-only, 1.5px stroke, Navy on light / White on dark /
+ * Azure active. No filled tiles, no clipped hexagons, no shadows.
+ *
+ * plain:  drop the bounding square, icon only
+ * onDark: render the icon White instead of Navy
+ * hex:    accepted for backwards compatibility; renders the plain square
  */
 interface Props {
   src: string;
   alt?: string;
   hex?: boolean;
+  plain?: boolean;
+  onDark?: boolean;
   class?: string;
 }
-const { src, alt = '', hex = false, class: className = '' } = Astro.props;
+const {
+  src,
+  alt = '',
+  hex = false,
+  plain = false,
+  onDark = false,
+  class: className = '',
+} = Astro.props;
+void hex;
 ---
 
-<span class={`icon-tile ${hex ? 'icon-tile--hex' : ''} ${className}`.trim()}>
-  <img src={src} alt={alt} loading="lazy" decoding="async" width="30" height="30" />
+<span class={`icon-tile ${plain ? 'icon-tile--plain' : ''} ${className}`.trim()}>
+  <img
+    src={src}
+    alt={alt}
+    class={onDark ? 'icon-white' : 'icon-navy'}
+    loading="lazy"
+    decoding="async"
+    width="26"
+    height="26"
+  />
 </span>

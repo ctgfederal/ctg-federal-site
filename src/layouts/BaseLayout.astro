@@ -35,6 +35,11 @@ const {
   bodyClass = '',
 } = Astro.props;
 
+// Google Analytics 4. Override per environment with PUBLIC_GA_ID (see
+// .env.example); the tag only ships in production builds.
+const GA_ID = import.meta.env.PUBLIC_GA_ID ?? 'G-C3K2XCK3DQ';
+const loadGA = Boolean(GA_ID) && import.meta.env.PROD;
+
 const pageTitle = brandSuffix ? `${title} | ${site.name}` : title;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const ogImage = new URL(image, Astro.site ?? site.url).href;
@@ -98,8 +103,29 @@ const organizationSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <link rel="preload" href="/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin />
-    <link rel="preload" href="/fonts/Oswald-Medium.ttf" as="font" type="font/ttf" crossorigin />
+    <!-- Georgia (display) and Verdana (body) are system fonts. Only the mono
+         family is loaded: JetBrains Mono 400/500/600 for tags and tokens. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+
+    {
+      loadGA && (
+        <>
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} is:inline />
+          <script
+            is:inline
+            set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA_ID}', { anonymize_ip: true });`}
+          />
+        </>
+      )
+    }
 
     <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} is:inline />
     <slot name="head" />

@@ -5,6 +5,7 @@
  *   <CustomerLogos heading="Our Customers" link={{ label: 'Learn more here', href: '/customers/' }} />
  *   <CustomerLogos intro={false} />
  *
+ * tag      optional mono tag line above the heading
  * heading  optional H2
  * intro    true (default) shows the live-site intro line; pass a string to override, false to hide
  * link     optional { label, href } shown under the seals
@@ -12,18 +13,20 @@
 import { customers, customersIntro } from '../data/customers';
 
 interface Props {
+  tag?: string;
   heading?: string;
   intro?: boolean | string;
   link?: { label: string; href: string };
 }
-const { heading, intro = true, link } = Astro.props;
+const { tag, heading, intro = true, link } = Astro.props;
 const introText = intro === true ? customersIntro : intro === false ? null : intro;
 ---
 
 <div class="custlogos">
   {
-    (heading || introText) && (
+    (tag || heading || introText) && (
       <div class="section-heading section-heading--center">
+        {tag && <p class="tag">{tag}</p>}
         {heading && <h2>{heading}</h2>}
         <span class="accent-bar" />
         {introText && <p class="lede">{introText}</p>}
@@ -63,6 +66,7 @@ const introText = intro === true ? customersIntro : intro === false ? null : int
   .custlogos__grid li {
     display: grid;
     place-items: center;
+    margin-bottom: 0;
   }
   .custlogos__grid img {
     width: 100%;
@@ -81,9 +85,10 @@ const introText = intro === true ? customersIntro : intro === false ? null : int
   }
   .custlogos__link {
     margin: var(--sp-10) 0 0;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
   @media (max-width: 900px) {

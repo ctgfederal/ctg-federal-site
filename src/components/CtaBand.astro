@@ -7,11 +7,17 @@
  *            primary={{ label: 'Contact us', href: '/contacts/' }}
  *            secondary={{ label: 'Learn more', href: '/procurement-options/' }} />
  *
- * eyebrow    optional line above the title
- * tone       'gradient' (default) | 'navy' | 'yale' | 'subtle'
+ * Brand Standard: Navy authority band, Azure registration marks at the four
+ * corners, hex micro-grid bottom-left, buttons white-fill / outline-white.
+ *
+ * eyebrow    optional mono tag above the title
+ * tone       'navy' (default) | 'yale' | 'subtle'
  * align      'center' (default) | 'left'
  * primary / secondary: { label, href, external? }
  */
+import HexGrid from './HexGrid.astro';
+import RegMarks from './RegMarks.astro';
+
 interface Action {
   label: string;
   href: string;
@@ -23,7 +29,7 @@ interface Props {
   text?: string;
   primary: Action;
   secondary?: Action;
-  tone?: 'gradient' | 'navy' | 'yale' | 'subtle';
+  tone?: 'navy' | 'yale' | 'subtle';
   align?: 'center' | 'left';
 }
 const {
@@ -32,38 +38,45 @@ const {
   text,
   primary,
   secondary,
-  tone = 'gradient',
+  tone = 'navy',
   align = 'center',
 } = Astro.props;
-const light = tone !== 'subtle';
+const ground = tone;
+const dark = ground !== 'subtle';
 ---
 
-<section class={`ctaband ctaband--${tone} ${light ? 'hex-bg' : ''} ctaband--${align}`}>
-  <div class="container ctaband__inner">
-    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
-    <h2>{title}</h2>
-    {text && <p class="lede ctaband__text">{text}</p>}
-    <div class="btn-row ctaband__actions">
-      <a
-        class={`btn ${light ? 'btn--primary' : 'btn--navy'}`}
-        href={primary.href}
-        target={primary.external ? '_blank' : undefined}
-        rel={primary.external ? 'noopener' : undefined}
-      >
-        {primary.label}
-      </a>
-      {
-        secondary && (
+<section class={`ctaband ctaband--${ground} ${dark ? 'motif-host' : ''} ctaband--${align}`}>
+  {dark && <HexGrid corner="bl" size={340} />}
+  <div class="container">
+    <div class="ctaband__inner reg-frame">
+      {dark && <RegMarks />}
+      <div class="ctaband__body">
+        {eyebrow && <p class="tag">{eyebrow}</p>}
+        <h2>{title}</h2>
+        {text && <p class="lede ctaband__text">{text}</p>}
+        <div class="btn-row ctaband__actions">
           <a
-            class={`btn ${light ? 'btn--outline-light' : 'btn--outline'}`}
-            href={secondary.href}
-            target={secondary.external ? '_blank' : undefined}
-            rel={secondary.external ? 'noopener' : undefined}
+            class={`btn ${dark ? 'btn--white' : 'btn--primary'}`}
+            href={primary.href}
+            target={primary.external ? '_blank' : undefined}
+            rel={primary.external ? 'noopener' : undefined}
           >
-            {secondary.label}
+            {primary.label}
           </a>
-        )
-      }
+          {
+            secondary && (
+              <a
+                class={`btn ${dark ? 'btn--outline-light' : 'btn--outline'}`}
+                href={secondary.href}
+                target={secondary.external ? '_blank' : undefined}
+                rel={secondary.external ? 'noopener' : undefined}
+              >
+                {secondary.label}
+              </a>
+            )
+          }
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -72,37 +85,39 @@ const light = tone !== 'subtle';
   .ctaband {
     padding-block: clamp(56px, 7vw, 96px);
   }
-  .ctaband--gradient {
-    background: var(--gradient-brand);
-  }
   .ctaband--navy {
-    background: var(--ctg-navy);
+    background: var(--navy);
   }
   .ctaband--yale {
-    background: var(--ctg-yale-blue);
+    background: var(--yale);
   }
   .ctaband--subtle {
-    background: var(--color-bg-subtle);
-    border-block: 1px solid var(--color-border);
+    background: var(--bone);
+    border-block: 1px solid var(--light-gray);
   }
-  .ctaband--gradient h2,
+  .ctaband__inner {
+    position: relative;
+  }
+  .ctaband__body {
+    padding: var(--sp-6) var(--sp-8);
+  }
   .ctaband--navy h2,
   .ctaband--yale h2 {
-    color: var(--ctg-white);
+    color: var(--white);
   }
-  .ctaband--gradient .eyebrow,
-  .ctaband--navy .eyebrow,
-  .ctaband--yale .eyebrow {
-    color: #7fb8ff;
+  .ctaband--navy .tag,
+  .ctaband--yale .tag {
+    color: var(--azure-300);
   }
-  .ctaband--gradient .ctaband__text,
   .ctaband--navy .ctaband__text,
   .ctaband--yale .ctaband__text {
-    color: rgba(255, 255, 255, 0.86);
+    color: var(--color-on-dark-body);
   }
   .ctaband--center .ctaband__inner {
     max-width: 800px;
     margin-inline: auto;
+  }
+  .ctaband--center .ctaband__body {
     text-align: center;
   }
   .ctaband--center .ctaband__actions {
@@ -116,5 +131,10 @@ const light = tone !== 'subtle';
   }
   .ctaband__actions {
     margin-top: var(--sp-8);
+  }
+  @media (max-width: 560px) {
+    .ctaband__body {
+      padding: var(--sp-5) var(--sp-4);
+    }
   }
 </style>

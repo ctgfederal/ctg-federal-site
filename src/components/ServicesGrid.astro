@@ -2,9 +2,10 @@
 /**
  * ServicesGrid — the six solution cards. Reads src/data/services.ts.
  *
- *   <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+ *   <ServicesGrid tag="02  Solutions" heading="Enterprise IT Solutions & Expertise" />
  *   <ServicesGrid exclude="cybersecurity" cols={3} />
  *
+ * tag      optional mono tag line above the heading
  * heading  optional H2 above the grid
  * exclude  slug to leave out (use on a service page to show the other five)
  * cols     3 (default) | 2
@@ -12,19 +13,21 @@
 import { services } from '../data/services';
 
 interface Props {
+  tag?: string;
   heading?: string;
   exclude?: string;
   cols?: 2 | 3;
 }
-const { heading, exclude, cols = 3 } = Astro.props;
+const { tag, heading, exclude, cols = 3 } = Astro.props;
 const list = exclude ? services.filter((service) => service.slug !== exclude) : services;
 ---
 
 <div class="services">
   {
-    heading && (
+    (tag || heading) && (
       <div class="section-heading">
-        <h2>{heading}</h2>
+        {tag && <p class="tag">{tag}</p>}
+        {heading && <h2>{heading}</h2>}
         <span class="accent-bar" />
       </div>
     )
@@ -66,6 +69,9 @@ const list = exclude ? services.filter((service) => service.slug !== exclude) : 
     margin: 0;
     padding: 0;
   }
+  .services__grid > li {
+    margin-bottom: 0;
+  }
   .services__grid--3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -78,65 +84,67 @@ const list = exclude ? services.filter((service) => service.slug !== exclude) : 
     flex-direction: column;
     height: 100%;
     overflow: hidden;
-    background: var(--ctg-white);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-xs);
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
     color: inherit;
-    transition:
-      transform var(--dur-med) var(--ease-standard),
-      box-shadow var(--dur-med) var(--ease-standard);
+    transition: border-color var(--dur-med) var(--ease-standard);
   }
   .scard:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    border-color: var(--azure);
     text-decoration: none;
     color: inherit;
   }
   .scard__media {
     display: block;
     position: relative;
-    background: var(--ctg-navy);
+    background: var(--navy);
+  }
+  /* Navy scrim keeps the photography on-cast under the card head. */
+  .scard__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 37, 80, 0.28);
+    pointer-events: none;
   }
   .scard__media img {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    transition: transform var(--dur-slow) var(--ease-standard);
-  }
-  .scard:hover .scard__media img {
-    transform: scale(1.03);
   }
   .scard__body {
     display: block;
     position: relative;
     padding: var(--sp-6) var(--sp-6) var(--sp-8);
-    border-top: 4px solid var(--ctg-azure);
+    border-top: 2px solid var(--azure);
   }
   .scard__verb {
     display: block;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-12);
-    font-weight: var(--fw-medium);
-    letter-spacing: 0.22em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ctg-azure);
-    margin-bottom: var(--sp-2);
+    color: var(--azure);
+    margin-bottom: var(--sp-3);
   }
   .scard__title {
     display: block;
     font-family: var(--font-display);
-    font-weight: var(--fw-bold);
-    font-size: var(--fs-24);
-    line-height: var(--lh-snug);
-    color: var(--ctg-navy);
+    font-weight: 400;
+    font-size: var(--fs-h2);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--navy);
     text-wrap: balance;
   }
   .scard__arrow {
     position: absolute;
     right: var(--sp-6);
     bottom: var(--sp-6);
-    color: var(--ctg-azure);
+    color: var(--azure);
     opacity: 0;
     transform: translateX(-6px);
     transition:
@@ -148,7 +156,7 @@ const list = exclude ? services.filter((service) => service.slug !== exclude) : 
     height: 12px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.6;
+    stroke-width: 1.5;
     stroke-linecap: round;
     stroke-linejoin: round;
   }

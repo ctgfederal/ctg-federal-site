@@ -5,7 +5,7 @@
  *
  *   <ServicePage slug="cybersecurity" />
  *
- * Renders, in the live site's order: PageHero (eyebrow + H1 + condensed
+ * Renders, in the live site's order: PageHero (mono tag + H1 + condensed
  * intro + hero photo) → expanded paragraph + capability grid →
  * Technology Partners (23 strategic logos + line-card PDF) → Our Customers
  * (agency seals) → Testimonials.
@@ -46,7 +46,7 @@ const customersLinkLabel =
         service.capabilities.map((cap) => (
           <li class="capgrid__item">
             <img src={cap.icon} alt="" width="48" height="48" loading="lazy" decoding="async" />
-            <h3>{cap.title}</h3>
+            <h3 class="capgrid__title">{cap.title}</h3>
           </li>
         ))
       }
@@ -91,7 +91,7 @@ const customersLinkLabel =
 
 <style>
   .service-intro {
-    max-width: 72ch;
+    max-width: var(--measure);
     margin-bottom: var(--sp-10);
   }
   .capgrid {
@@ -106,18 +106,30 @@ const customersLinkLabel =
     display: flex;
     align-items: flex-start;
     gap: var(--sp-4);
+    margin-bottom: 0;
   }
+  .capgrid__title {
+    padding-top: 2px;
+  }
+  /* The brand's capability PNGs are Azure line art on a white ground, so they
+     need no tile and no recolor: on the white section the ground disappears. */
   .capgrid__item img {
     flex-shrink: 0;
-    width: 44px;
-    height: 44px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
+    background: none;
+    border: 0;
   }
-  .capgrid__item h3 {
+  .capgrid__title {
     margin: 0;
-    font-size: var(--fs-18);
-    line-height: var(--lh-snug);
-    color: var(--ctg-navy);
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--fs-20);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    text-transform: none;
   }
   .service-customers__sub {
     margin-top: var(--sp-2);

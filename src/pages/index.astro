@@ -12,6 +12,7 @@ import LogoGrid from '../components/LogoGrid.astro';
 import CustomerLogos from '../components/CustomerLogos.astro';
 import Testimonials from '../components/Testimonials.astro';
 import CtaBand from '../components/CtaBand.astro';
+import HexGrid from '../components/HexGrid.astro';
 import { strategic } from '../data/partners';
 
 const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_7.20.26-2.pdf';
@@ -22,11 +23,13 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   description="Empowering organizations with best-in-class IT. We deliver scalable solutions, reduce risk, and provide nationwide support."
 >
   <!-- Hero -->
-  <section class="hero">
+  <section class="hero motif-host">
     <img class="hero__bg" src="/images/generated/hero.jpg" alt="" width="2400" height="1018" fetchpriority="high" decoding="async" />
     <div class="hero__scrim"></div>
+    <HexGrid corner="tr" size={420} />
     <div class="container hero__inner">
-      <h1 class="hero__title">
+      <p class="tag hero__tag">Enterprise IT</p>
+      <h1 class="hero__title display-xl">
         <span>Equipping agencies</span>
         <span>nationwide to operate with</span>
         <span>velocity and scale</span>
@@ -41,7 +44,7 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   <Section tone="white">
     <div class="split split--wide-text about">
       <div>
-        <p class="eyebrow">About</p>
+        <p class="tag">{'01\u00A0\u00A0About'}</p>
         <h2>A trusted advisor specializing in smart, secure, and scalable solutions</h2>
         <span class="accent-bar"></span>
       </div>
@@ -64,7 +67,7 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
 
   <!-- Solutions -->
   <Section tone="subtle" id="solutions">
-    <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+    <ServicesGrid tag={'02\u00A0\u00A0Solutions'} heading="Enterprise IT Solutions & Expertise" />
     <p class="section-link">
       <a href="/solutions/">Our Solutions</a>
     </p>
@@ -75,6 +78,7 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
     <LogoGrid
       logos={strategic}
       cols={6}
+      tag={'03\u00A0\u00A0Partners'}
       heading="Our Partners"
       link={{ label: 'See the complete list', href: '/partners/' }}
     />
@@ -82,22 +86,26 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
 
   <!-- Customers -->
   <Section tone="subtle" id="customers">
-    <CustomerLogos heading="Our Customers" link={{ label: 'Learn more here', href: '/customers/' }} />
+    <CustomerLogos
+      tag={'04\u00A0\u00A0Customers'}
+      heading="Our Customers"
+      link={{ label: 'Learn more here', href: '/customers/' }}
+    />
   </Section>
 
   <!-- Testimonials -->
   <Section tone="navy" hex>
-    <Testimonials eyebrow="Testimonials" />
+    <Testimonials eyebrow={'05\u00A0\u00A0Testimonials'} />
   </Section>
 
   <!-- Procurement options -->
   <CtaBand
-    eyebrow="Procurement Options"
+    eyebrow={'06\u00A0\u00A0Procurement Options'}
     title="Flexible payment structures designed for our customers’ budget and project needs."
     text="We offer a variety of flexible payment solutions and terms to meet your unique business needs and objectives."
     primary={{ label: 'Contact us', href: '/contacts/' }}
     secondary={{ label: 'Learn more about our procurement options', href: '/procurement-options/' }}
-    tone="gradient"
+    tone="navy"
   />
 </BaseLayout>
 
@@ -109,7 +117,7 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
     align-items: center;
     min-height: clamp(460px, 68vh, 680px);
     overflow: hidden;
-    background: var(--ctg-navy-900);
+    background: var(--navy-900);
   }
   .hero__bg {
     position: absolute;
@@ -119,24 +127,33 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
     object-fit: cover;
     object-position: center 55%;
   }
+  /* Navy 70% scrim — flat, per Brand Standard §19B. The cover radial on top
+     is the one permitted gradient in the system. */
   .hero__scrim {
     position: absolute;
     inset: 0;
-    background:
-      linear-gradient(90deg, rgba(0, 26, 58, 0.9) 0%, rgba(0, 37, 80, 0.72) 45%, rgba(0, 37, 80, 0.15) 100%),
-      linear-gradient(0deg, rgba(0, 26, 58, 0.45) 0%, rgba(0, 26, 58, 0) 55%);
+    background: rgba(0, 37, 80, 0.72);
+  }
+  .hero__scrim::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cover-radial);
   }
   .hero__inner {
     position: relative;
+    z-index: 1;
     padding-block: var(--sp-20);
   }
+  /* White, not Azure: the tag sits over photography, where §19B allows
+     Azure or White and Azure 300 does not clear AA on the lighter frames. */
+  .hero__tag {
+    color: var(--white);
+  }
   .hero__title {
-    max-width: 26ch;
-    color: var(--ctg-white);
-    font-size: clamp(var(--fs-36), 5vw, var(--fs-60));
-    line-height: 1.12;
+    max-width: 22ch;
+    color: var(--white);
     margin-bottom: var(--sp-8);
-    text-shadow: 0 2px 24px rgba(0, 26, 58, 0.35);
   }
   /* One logical line per span; each wraps on its own when space is tight. */
   .hero__title span {
@@ -152,9 +169,10 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   }
   .about__more {
     margin-top: var(--sp-5);
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
@@ -162,9 +180,10 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   .section-link {
     margin: var(--sp-10) 0 0;
     text-align: center;
-    font-family: var(--font-condensed);
-    font-size: var(--fs-14);
-    letter-spacing: 0.16em;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
