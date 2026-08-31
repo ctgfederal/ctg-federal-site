@@ -160,6 +160,11 @@ const sustainabilityItems = [
 
   <!-- Culture: who/what/who-we-serve -->
   <Section tone="white" id="culture">
+    <div class="section-heading">
+      <p class="tag">Culture</p>
+      <h2>Tech is our platform. People are our purpose.</h2>
+      <span class="accent-bar"></span>
+    </div>
     <div class="grid grid--3 who-grid">
       <div>
         <h3>Who We Are</h3>
@@ -239,14 +244,22 @@ const sustainabilityItems = [
             loading="lazy"
             decoding="async"
           />
-          <img
-            class="culture-media__badge"
-            src="/images/site/work-badges-2026.png"
-            alt="Great Place to Work Certified and Fortune Best Small Workplaces badges"
-            width="120"
-            height="120"
-            loading="lazy"
-          />
+          <div class="culture-media__badges">
+            <img
+              src="/images/site/badge-gptw-certified-2026.png"
+              alt="Great Place to Work Certified badge"
+              width="96"
+              height="96"
+              loading="lazy"
+            />
+            <img
+              src="/images/site/badge-fortune-best-small-workplaces-2025.png"
+              alt="Fortune Best Small Workplaces 2025 badge"
+              width="96"
+              height="96"
+              loading="lazy"
+            />
+          </div>
         </div>
         <p class="quote culture-media__quote">
           “The amount of camaraderie and collaboration far exceeds anything I’ve experienced
@@ -307,8 +320,8 @@ const sustainabilityItems = [
 
   <!-- Leadership -->
   <Section tone="subtle" id="leadership">
-    <div class="section-heading section-heading--center">
-      <h2>Leadership</h2>
+    <div class="section-heading">
+      <h2 class="heading-mono">Leadership</h2>
       <span class="accent-bar"></span>
     </div>
     <div class="leaders-grid">
@@ -428,10 +441,9 @@ const sustainabilityItems = [
   </Section>
 
   <!-- Conference -->
-  <Section tone="navy" hex id="conference">
-    <div class="section-heading section-heading--center">
+  <Section tone="muted" id="conference">
+    <div class="section-heading">
       <p class="tag">Conference</p>
-      <h2>Conference</h2>
       <p class="lede">
         Stay in the loop. See the latest updates and announcements on where CTGF will be and
         what we are up to at the industry’s biggest conferences.
@@ -513,10 +525,29 @@ const sustainabilityItems = [
     margin-top: var(--sp-6);
   }
   .value-card {
-    background: var(--ctg-white);
+    background: var(--bone);
     border: 1px solid var(--color-border);
+    border-left: 3px solid var(--azure);
     border-radius: var(--radius-lg);
     padding: var(--sp-4) var(--sp-5);
+    transition:
+      background var(--dur-med) var(--ease-standard),
+      border-color var(--dur-med) var(--ease-standard);
+  }
+  .value-card:hover {
+    border-left-color: var(--medium);
+  }
+  /* Open card deepens to navy so the values section carries more weight. */
+  .value-card[open] {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .value-card[open] summary,
+  .value-card[open] p {
+    color: var(--white);
+  }
+  .value-card[open] summary svg {
+    stroke: var(--azure-300);
   }
   .value-card summary {
     display: flex;
@@ -564,12 +595,18 @@ const sustainabilityItems = [
     object-fit: cover;
     border-radius: var(--radius-md);
   }
-  .culture-media__badge {
+  .culture-media__badges {
     position: absolute;
     left: var(--sp-5);
     bottom: var(--sp-5);
-    width: 96px;
-    height: 96px;
+    display: flex;
+    gap: var(--sp-2);
+  }
+  .culture-media__badges img {
+    display: block;
+    width: 78px;
+    height: 78px;
+    object-fit: contain;
     background: var(--white);
     border: 1px solid var(--light-gray);
     border-radius: var(--radius-md);

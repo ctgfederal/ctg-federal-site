@@ -112,13 +112,13 @@ const pillars = [
       </div>
     </div>
 
-    <div class="section-heading section-heading--center pillars-heading">
+    <div class="section-heading pillars-heading">
       <p class="tag">Pillars</p>
     </div>
-    <div class="grid grid--4">
+    <div class="grid grid--4 pillars-grid">
       {
         pillars.map((pillar) => (
-          <div class="card">
+          <div class="card pillar-card">
             <h3 class="h4">{pillar.title}</h3>
             <p>{pillar.body}</p>
           </div>
@@ -127,7 +127,7 @@ const pillars = [
     </div>
   </Section>
 
-  <Section tone="navy" hex>
+  <Section tone="white">
     <div class="split careers-band">
       <div>
         <p class="tag">Careers</p>
@@ -189,28 +189,54 @@ const pillars = [
   }
   .culture-praise {
     display: grid;
-    gap: var(--sp-5);
+    gap: var(--sp-6);
   }
+  /* Ombre vertical rule (Azure → Navy) on each praise quote — the brand's
+     one gradient motif, used here to give "Our Difference" more life. */
   .culture-praise .quote {
+    position: relative;
+    margin: 0;
+    padding-left: var(--sp-5);
     font-size: var(--fs-18);
+  }
+  .culture-praise .quote::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 3px;
+    bottom: 3px;
+    width: 3px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, var(--azure), var(--navy));
   }
   .pillars-heading {
     margin-top: var(--sp-16);
   }
+  /* Pillars stand out: Azure top rule, navy title, lift on hover. */
+  .pillar-card {
+    border-top: 3px solid var(--azure);
+    transition:
+      transform var(--dur-med) var(--ease-standard),
+      border-color var(--dur-med) var(--ease-standard);
+  }
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    border-top-color: var(--medium);
+  }
+  .pillar-card h3 {
+    color: var(--navy);
+  }
   .careers-band {
     align-items: center;
   }
-  .careers-band h2,
-  .careers-band p {
-    color: rgba(255, 255, 255, 0.9);
-  }
-  .careers-band .tag,
   .careers-band .tag {
-    color: var(--azure-300);
+    color: var(--azure);
   }
   .careers-band__quote {
-    color: var(--white);
+    color: var(--navy);
     margin-top: var(--sp-8);
+    padding-left: var(--sp-6);
+    border-left: 3px solid var(--azure);
   }
   .careers-band__attribution {
     font-family: var(--font-mono);
@@ -219,15 +245,12 @@ const pillars = [
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--azure-300);
+    color: var(--medium);
   }
   .careers-band__media img {
     display: block;
     width: 100%;
     max-width: 260px;
     margin: 0 0 var(--sp-5);
-  }
-  .careers-band__media p {
-    color: rgba(255, 255, 255, 0.86);
   }
 </style>

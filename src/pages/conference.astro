@@ -92,7 +92,7 @@ const attendees = [
   title="Conference | CTG Federal"
   description="The latest updates and announcements on where CTG Federal will be and what we are up to at the IT industry’s biggest conferences."
 >
-  <PageHero eyebrow="Conference" title="Conference" />
+  <PageHero eyebrow="Conference" title="Stay in the loop" />
 
   <Section tone="white">
     <div class="section-heading">
@@ -189,7 +189,7 @@ const attendees = [
         attendees.map((person) => (
           <li class="card">
             <h4>{person.name}</h4>
-            <p>{person.role}</p>
+            <p class="font-mono">{person.role}</p>
             <p>T: <a href={`tel:${person.phone}`}>{person.phone}</a></p>
             <p>E: <a href={`mailto:${person.email}`}>{person.email}</a></p>
             {person.region && <p class="attendee-grid__region">{person.region}</p>}

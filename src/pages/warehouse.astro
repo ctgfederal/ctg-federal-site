@@ -23,6 +23,7 @@ const pdf = '/downloads/CTG-Federal-Secure-Warehousing-Integration-Deployment-Se
   description="Secure warehousing, integration, staging, and deployment services that give federal customers a single source for asset custody, preparation, configuration, and delivery across the full program lifecycle."
 >
   <PageHero
+    eyebrow="Warehouse"
     title="Secure Warehousing, Integration & Deployment"
     intro="Our warehousing, integration, staging, and deployment services extend CTG’s role well beyond a traditional value-added reseller. We provide customers with a single source for asset custody, preparation, configuration, and delivery across the full program lifecycle."
   />
@@ -30,7 +31,7 @@ const pdf = '/downloads/CTG-Federal-Secure-Warehousing-Integration-Deployment-Se
   <Section tone="white">
     <div class="split">
       <div>
-        <h2>What We Deliver</h2>
+        <h2 class="heading-mono">What We Deliver</h2>
         <ul class="prose deliver-list">
           {deliverables.map((item) => <li>{item}</li>)}
         </ul>
@@ -47,20 +48,9 @@ const pdf = '/downloads/CTG-Federal-Secure-Warehousing-Integration-Deployment-Se
       </div>
     </div>
 
-    <div class="warehouse-capabilities">
-      <h3 class="h4">Warehouse Capabilities</h3>
-      <a class="warehouse-capabilities__link" href={pdf} target="_blank" rel="noopener">
-        <img
-          src="/images/site/CTG-Federal-Secure-Warehousing-Integration-Deployment-Services.7.20.26-1-pdf.jpg"
-          alt="Warehouse Capabilities document preview"
-          width="600"
-          height="776"
-          loading="lazy"
-          decoding="async"
-        />
-      </a>
-      <p><a class="btn btn--primary" href={pdf} target="_blank" rel="noopener">Download now</a></p>
-    </div>
+    <p class="warehouse-capabilities">
+      <a class="btn btn--primary" href={pdf} target="_blank" rel="noopener">Warehouse Capabilities</a>
+    </p>
   </Section>
 </BaseLayout>
 
@@ -79,15 +69,5 @@ const pdf = '/downloads/CTG-Federal-Secure-Warehousing-Integration-Deployment-Se
     padding-top: var(--sp-16);
     border-top: 1px solid var(--color-border);
     text-align: center;
-  }
-  .warehouse-capabilities__link {
-    display: inline-block;
-    margin-top: var(--sp-5);
-  }
-  .warehouse-capabilities__link img {
-    width: 100%;
-    max-width: 280px;
-    border: 1px solid var(--light-gray);
-    border-radius: var(--radius-md);
   }
 </style>

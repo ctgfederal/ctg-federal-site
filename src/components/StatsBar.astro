@@ -12,7 +12,6 @@
  */
 import { stats } from '../data/stats';
 import HexGrid from './HexGrid.astro';
-import RegMarks from './RegMarks.astro';
 
 interface Props {
   tone?: 'navy' | 'yale';
@@ -24,8 +23,7 @@ const ground = tone === 'yale' ? 'yale' : 'navy';
 <section class={`statsbar statsbar--${ground} motif-host`}>
   <HexGrid corner="bl" size={340} />
   <div class="container">
-    <div class="statsbar__frame reg-frame">
-      <RegMarks />
+    <div class="statsbar__frame">
       <ul class="statsbar__grid">
         {
           stats.map((stat) => (
@@ -51,12 +49,12 @@ const ground = tone === 'yale' ? 'yale' : 'navy';
   }
   .statsbar__frame {
     position: relative;
-    padding: var(--sp-6) var(--sp-8);
+    padding: var(--sp-4) 0;
   }
   .statsbar__grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: var(--sp-6);
+    gap: clamp(var(--sp-6), 3vw, var(--sp-10));
     list-style: none;
     margin: 0;
     padding: 0;
@@ -64,16 +62,16 @@ const ground = tone === 'yale' ? 'yale' : 'navy';
   .stat {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-2);
+    gap: var(--sp-3);
     margin-bottom: 0;
-    padding-left: var(--sp-4);
-    border-left: 1px solid var(--azure);
+    padding-left: var(--sp-5);
+    border-left: 2px solid var(--azure);
   }
   .stat__value {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(22px, 2.1vw, 29px);
-    line-height: 1.1;
+    font-size: clamp(28px, 2.7vw, 38px);
+    line-height: 1.05;
     letter-spacing: -0.015em;
     color: var(--white);
     text-wrap: balance;

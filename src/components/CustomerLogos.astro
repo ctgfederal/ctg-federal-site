@@ -17,15 +17,16 @@ interface Props {
   heading?: string;
   intro?: boolean | string;
   link?: { label: string; href: string };
+  center?: boolean;
 }
-const { tag, heading, intro = true, link } = Astro.props;
+const { tag, heading, intro = true, link, center = true } = Astro.props;
 const introText = intro === true ? customersIntro : intro === false ? null : intro;
 ---
 
 <div class="custlogos">
   {
     (tag || heading || introText) && (
-      <div class="section-heading section-heading--center">
+      <div class={`section-heading ${center ? 'section-heading--center' : ''}`}>
         {tag && <p class="tag">{tag}</p>}
         {heading && <h2>{heading}</h2>}
         <span class="accent-bar" />
@@ -73,15 +74,6 @@ const introText = intro === true ? customersIntro : intro === false ? null : int
     max-width: 120px;
     aspect-ratio: 1;
     object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.75;
-    transition:
-      filter var(--dur-med) var(--ease-standard),
-      opacity var(--dur-med) var(--ease-standard);
-  }
-  .custlogos__grid li:hover img {
-    filter: grayscale(0);
-    opacity: 1;
   }
   .custlogos__link {
     margin: var(--sp-10) 0 0;

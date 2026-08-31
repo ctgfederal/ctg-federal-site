@@ -53,11 +53,15 @@ const capabilitiesPdf = '/downloads/CTG-Federal-Contracts-Capabilities_External_
 >
   <PageHero
     eyebrow="Contracts"
-    title="Contracts"
-    intro="Consult the list of CTG Federal held contracts and available contracts via teaming, along with our contracts capabilities and corporate information."
+    title="The right contract vehicle for your mission"
     image="/images/generated/contracts.jpg"
     imageAlt="CTG Federal contracts"
-  />
+  >
+    <p class="font-display">
+      Consult the list of CTG Federal held contracts and available contracts via teaming, along
+      with our contracts capabilities and corporate information.
+    </p>
+  </PageHero>
 
   <Section tone="white" tight>
     <dl class="identifiers">
@@ -74,7 +78,7 @@ const capabilitiesPdf = '/downloads/CTG-Federal-Contracts-Capabilities_External_
 
   <Section tone="subtle">
     <div class="section-heading">
-      <h2>CTG Held Contracts</h2>
+      <h2 class="heading-mono">CTG Held Contracts</h2>
       <span class="accent-bar"></span>
     </div>
     <div class="grid grid--3">
@@ -96,19 +100,19 @@ const capabilitiesPdf = '/downloads/CTG-Federal-Contracts-Capabilities_External_
         )
       }
     </div>
-    <p class="contracts__cta">
-      <Button href={capabilitiesPdf} external>Contracts Capabilities</Button>
-    </p>
   </Section>
 
   <Section tone="white">
     <div class="section-heading">
-      <h2>Available contracts via teaming</h2>
+      <h2 class="heading-mono">Available contracts via teaming</h2>
       <span class="accent-bar"></span>
     </div>
     <ul class="teaming-list">
       {teamingContracts.map((t) => <li>{t}</li>)}
     </ul>
+    <p class="contracts__cta">
+      <Button href={capabilitiesPdf} external>Contracts Capabilities</Button>
+    </p>
   </Section>
 </BaseLayout>
 

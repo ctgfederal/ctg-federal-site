@@ -30,15 +30,16 @@ const activeLetters = letters.filter((letter) => grouped.has(letter));
   description="We partner with the best-in-class technology vendors to deliver solutions that enable success. See our complete list of partners."
 >
   <PageHero
+    eyebrow="Partners"
     title="Partnerships that provide our customers a business advantage."
     intro="We partner with the best-in-class technology vendors to deliver solutions that enable success."
   />
 
   <Section tone="white">
     <div class="section-heading">
-      <h2>Technology Partners</h2>
+      <h2 class="heading-mono">Technology Partners</h2>
       <span class="accent-bar"></span>
-      <p class="lede">
+      <p class="lede font-display">
         Our partners are our allies in a collective commitment to serving our customers. We work
         with the leading OEMs to deliver our customers the insights, advocacy and price advantages
         that improve business outcomes, save money, and reduce risk.
@@ -88,21 +89,25 @@ const activeLetters = letters.filter((letter) => grouped.has(letter));
   </Section>
 
   <Section tone="subtle">
-    <div class="section-heading section-heading--center">
-      <h2>Become a Partner</h2>
-      <span class="accent-bar"></span>
-      <p class="lede">
-        We carefully select and work with leading OEM&rsquo;s as well as emerging, cutting-edge
-        technology and service providers that offer turnkey designed and integrated solutions to
-        meet unique customer challenges.
-      </p>
+    <div class="partner-cta">
+      <div class="partner-cta__text">
+        <h2 class="heading-mono">Become a Partner</h2>
+        <span class="accent-bar"></span>
+        <h3 class="partner-cta__sub">Get in Touch</h3>
+        <p class="lede">
+          We carefully select and work with leading OEM&rsquo;s as well as emerging, cutting-edge
+          technology and service providers that offer turnkey designed and integrated solutions to
+          meet unique customer challenges.
+        </p>
+      </div>
+      <div class="partner-cta__form">
+        <ContactForm
+          name="become-a-partner"
+          fields={['name', 'email', 'phone', 'message']}
+          required={['name', 'email', 'phone']}
+        />
+      </div>
     </div>
-    <h3 class="form-heading">Get in Touch</h3>
-    <ContactForm
-      name="become-a-partner"
-      fields={['name', 'email', 'phone', 'message']}
-      required={['name', 'email', 'phone']}
-    />
   </Section>
 </BaseLayout>
 
@@ -259,10 +264,20 @@ const activeLetters = letters.filter((letter) => grouped.has(letter));
     color: var(--color-fg-muted);
   }
 
-  .form-heading {
-    max-width: 860px;
-    margin: 0 auto var(--sp-6);
-    text-align: center;
+  /* Become a Partner: text left, contact form right (mirrors Become a Customer). */
+  .partner-cta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  .partner-cta__sub {
+    margin: var(--sp-5) 0 var(--sp-3);
+  }
+  @media (max-width: 860px) {
+    .partner-cta {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 600px) {

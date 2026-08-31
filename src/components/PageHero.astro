@@ -29,6 +29,7 @@ interface Props {
   imageAlt?: string;
   align?: 'left' | 'center';
   tone?: 'navy' | 'yale';
+  titleMono?: boolean;
 }
 const {
   eyebrow,
@@ -38,6 +39,7 @@ const {
   imageAlt = '',
   align = 'left',
   tone = 'navy',
+  titleMono = false,
 } = Astro.props;
 const ground = tone === 'yale' ? 'yale' : 'navy';
 const centered = align === 'center' && !image;
@@ -50,7 +52,7 @@ const centered = align === 'center' && !image;
       <RegMarks />
       <div class="pagehero__body">
         {eyebrow && <p class="tag">{eyebrow}</p>}
-        <h1 class="display-l">{title}</h1>
+        <h1 class={`display-l ${titleMono ? 'pagehero__title--mono' : ''}`.trim()}>{title}</h1>
         {intro && <p class="lede pagehero__intro">{intro}</p>}
         <slot />
       </div>
@@ -118,6 +120,14 @@ const centered = align === 'center' && !image;
   .pagehero h1 {
     color: var(--white);
     margin-bottom: var(--space-lead);
+  }
+  /* JetBrains mono page title (Contact, Terms, Privacy) — kept white on navy. */
+  .pagehero__title--mono {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: clamp(26px, 3vw, 40px);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
   .pagehero__intro {
     color: var(--color-on-dark-body);

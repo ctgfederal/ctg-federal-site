@@ -12,7 +12,6 @@
  * tone     'dark' (default, for use on navy) | 'light'
  */
 import { testimonials } from '../data/testimonials';
-import RegMarks from './RegMarks.astro';
 
 interface Props {
   eyebrow?: string;
@@ -26,8 +25,7 @@ const { eyebrow = 'Testimonials', tone = 'dark' } = Astro.props;
   <div class="quotes__grid">
     {
       testimonials.map((item) => (
-        <figure class="quote-card reg-frame">
-          <RegMarks length={14} />
+        <figure class="quote-card">
           <blockquote class="quote-card__text">{item.quote}</blockquote>
           <figcaption>&ndash; {item.attribution}</figcaption>
         </figure>

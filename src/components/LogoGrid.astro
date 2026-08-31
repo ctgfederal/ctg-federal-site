@@ -18,6 +18,12 @@
 interface LogoItem {
   name: string;
   logo: string;
+  /** Destination for the tile. Omit for a non-linked logo. */
+  href?: string;
+  /** true = open in a new tab (external OEM site). */
+  external?: boolean;
+  /** true = this partner has a dedicated microsite → show a blue "+" cue. */
+  microsite?: boolean;
 }
 interface Props {
   logos: LogoItem[];
@@ -58,8 +64,21 @@ const {
   <ul class="logogrid__grid" style={`--logo-cols:${cols}`}>
     {
       logos.map((item) => (
-        <li class="logotile">
-          <img src={item.logo} alt={item.name} loading="lazy" decoding="async" />
+        <li class={`logotile ${item.microsite ? 'logotile--microsite' : ''}`}>
+          {item.href ? (
+            <a
+              class="logotile__link"
+              href={item.href}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener' : undefined}
+              aria-label={item.microsite ? `${item.name} — learn more` : `Visit ${item.name}`}
+            >
+              <img src={item.logo} alt={item.name} loading="lazy" decoding="async" />
+              {item.microsite && <span class="logotile__plus" aria-hidden="true">+</span>}
+            </a>
+          ) : (
+            <img src={item.logo} alt={item.name} loading="lazy" decoding="async" />
+          )}
         </li>
       ))
     }
@@ -90,6 +109,7 @@ const {
     padding: 0;
   }
   .logotile {
+    position: relative;
     display: grid;
     place-items: center;
     aspect-ratio: 3 / 2;
@@ -99,6 +119,31 @@ const {
     border: 1px solid var(--light-gray);
     border-radius: var(--radius-md);
     transition: border-color var(--dur-med) var(--ease-standard);
+  }
+  .logotile__link {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  /* Blue "+" cue on partners that have a dedicated microsite. */
+  .logotile__plus {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    font-family: var(--font-body);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--azure);
+    opacity: 0.85;
+    transition: opacity var(--dur-fast) var(--ease-standard);
+  }
+  .logotile--microsite:hover {
+    border-color: var(--azure);
+  }
+  .logotile--microsite:hover .logotile__plus {
+    opacity: 1;
   }
   .logotile img {
     max-width: 100%;

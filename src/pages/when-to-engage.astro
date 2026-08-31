@@ -50,46 +50,23 @@ const postSales = [
 
 <BaseLayout title="When to Engage - CTG Federal" description="We meet you where you are. Click on your specific need below to be connected with a CTG Federal team member who can help with your specific needs.">
   <PageHero
-    title="When to Engage"
-    intro="We meet you where you are. Click on your specific need below to be connected with a CTG Federal team member who can help with your specific needs."
+    eyebrow="When to Engage"
+    title="We meet you where you are."
+    intro="Click on your specific need below to be connected with a CTG Federal team member who can help with your specific needs."
   />
 
-  <!-- Routing steps: Pre-Sales / Post-Sales -->
+  <!-- Engagement infographic: the PRE-SALES / POST-SALES loop -->
   <Section tone="white" id="when-anchor">
-    <div class="loop">
-      <div class="loop__col">
-        <p class="tag">Pre-Sales</p>
-        <ol class="loop__list">
-          {
-            preSales.map((step, index) => (
-              <li>
-                <a class="card loop__step" href={`#${step.anchor}`}>
-                  <span class="loop__num">{index + 1}</span>
-                  <span class="loop__text">{step.text}</span>
-                  <span class="loop__tag">{teamTags[step.anchor]}</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-      <div class="loop__col">
-        <p class="tag">Post-Sales</p>
-        <ol class="loop__list" start={preSales.length + 1}>
-          {
-            postSales.map((step, index) => (
-              <li>
-                <a class="card loop__step" href={`#${step.anchor}`}>
-                  <span class="loop__num">{preSales.length + index + 1}</span>
-                  <span class="loop__text">{step.text}</span>
-                  <span class="loop__tag">{teamTags[step.anchor]}</span>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </div>
-    </div>
+    <figure class="engage-infographic">
+      <img
+        src="/images/site/when-to-engage-infographic.png"
+        alt="The CTG Federal engagement loop. Pre-sales: identify gaps, constraints or challenges; provide a solution to meet the business requirements; translate business requirements into IT requirements; build solution quotes and establish budgetary pricing; deliver solution builds and iterate; finalize pricing; deliver final proposal, quotes and pricing; process purchase order. Post-sales: shipping, delivery and tracking; installation, transition, migration and training; solution implementation completion; client deliverables completed; expand, renew, repeat; client nurture engagement."
+        width="1800"
+        height="930"
+        loading="eager"
+        decoding="async"
+      />
+    </figure>
   </Section>
 
   <!-- Download infographic -->
@@ -173,6 +150,17 @@ const postSales = [
 </BaseLayout>
 
 <style>
+  .engage-infographic {
+    margin: 0;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .engage-infographic img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
   .loop {
     display: grid;
     grid-template-columns: 1fr 1fr;

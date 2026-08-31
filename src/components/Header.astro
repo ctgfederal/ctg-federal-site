@@ -21,7 +21,7 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   <div class="utility">
     <div class="container utility__inner">
       <p class="utility__legal">
-        CTG Federal, a <a href={site.parentUrl} target="_blank" rel="noopener">{site.parentName}</a> company&trade;
+        CTG Federal a <a href={site.parentUrl} target="_blank" rel="noopener">{site.parentName}</a> company<sup class="rmark">&reg;</sup>
       </p>
       <ul class="utility__links">
         {utilityLinks.map((link) => <li><a href={link.href}>{link.label}</a></li>)}
@@ -169,6 +169,11 @@ const isActive = (href: string) => href !== '/' && path.startsWith(href.split('#
   .utility__legal {
     margin: 0;
     letter-spacing: 0.1em;
+  }
+  .utility__legal .rmark {
+    font-size: 0.7em;
+    vertical-align: 0.4em;
+    letter-spacing: 0;
   }
   .utility a {
     color: var(--azure-300);

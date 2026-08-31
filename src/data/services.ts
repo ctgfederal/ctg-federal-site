@@ -162,7 +162,7 @@ export const services: Service[] = [
   {
     slug: 'unified-communications-contact-center',
     navLabel: 'Unified Communications & Contact Center',
-    verb: 'Transform with',
+    verb: 'Serve with',
     title: 'Unified Communications & Contact Center',
     eyebrow: 'Serve your customers better',
     tagline:

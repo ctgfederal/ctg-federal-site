@@ -139,8 +139,10 @@ const programDetails = [
   <PageHero
     eyebrow="Philanthropy"
     title="We are committed to communities at home and around the world."
-    intro="Launched in 2018, the CTG Foundation® focuses on finding tangible ways to help people in need break free from the bonds of circumstantial poverty; resource scarcity; and physical, mental or emotional illness and disease."
   >
+    <p class="lede pagehero__intro">
+      Launched in 2018, the <a href="https://www.ctgfoundation.org/" target="_blank" rel="noopener" style="color: var(--azure-300);">CTG Foundation</a>® focuses on finding tangible ways to help people in need break free from the bonds of circumstantial poverty; resource scarcity; and physical, mental or emotional illness and disease.
+    </p>
     <img
       class="foundation-logo"
       src="/images/site/CTG-Foundation-Logo.png"
@@ -155,7 +157,7 @@ const programDetails = [
   <!-- Giving back -->
   <Section tone="white">
     <div class="section-heading">
-      <h2>Giving Back</h2>
+      <h2 class="heading-mono">Giving Back</h2>
       <span class="accent-bar"></span>
     </div>
     <p class="lede">
@@ -174,36 +176,17 @@ const programDetails = [
       }
     </ul>
 
-    <h2 class="contributions-heading">Our Contributions</h2>
+    <h2 class="contributions-heading heading-mono">Our Contributions</h2>
     <p>Each year we assist communities at home and abroad in a variety of ways. Some of our recent contributions include:</p>
     <ul class="prose">
       {contributions.map((item) => <li>{item}</li>)}
     </ul>
   </Section>
 
-  <!-- Our Programs (summary) -->
-  <Section tone="subtle">
-    <div class="section-heading section-heading--center">
-      <h2>Our Programs</h2>
-      <span class="accent-bar"></span>
-    </div>
-    <div class="grid grid--4">
-      {
-        programSummaries.map((item) => (
-          <div class="text-center">
-            <IconTile src={item.icon} />
-            <h3 class="h4">{item.title}</h3>
-            <p>{item.body}</p>
-          </div>
-        ))
-      }
-    </div>
-  </Section>
-
   <!-- Partners -->
   <Section tone="white">
-    <div class="section-heading section-heading--center">
-      <h2>Our Partners</h2>
+    <div class="section-heading">
+      <h2 class="heading-mono">Our Partners</h2>
       <span class="accent-bar"></span>
       <p class="lede">
         The CTG Foundation® strives to make a difference in the lives of children and families
@@ -224,7 +207,7 @@ const programDetails = [
 
   <!-- Funding / donate -->
   <Section tone="navy" hex>
-    <div class="section-heading section-heading--center">
+    <div class="section-heading">
       <p class="tag">Funding</p>
       <p class="lede">
         Our efforts are funded through the generous donations of corporations, churches, and
@@ -232,23 +215,33 @@ const programDetails = [
         access to clean water, health, nourishment, education, and economic development
         programs. All donations are tax deductible.
       </p>
-      <p><a class="btn btn--primary" href="https://www.ctgfoundation.org/donate" target="_blank" rel="noopener">Donate to the CTG Foundation</a></p>
-      <p class="lede">
+      <p class="funding-donate"><a class="btn btn--primary" href="https://www.ctgfoundation.org/donate" target="_blank" rel="noopener">Donate to the CTG Foundation</a></p>
+    </div>
+    <figure class="funding-quote">
+      <blockquote class="quote">
         While we’re pleased with our accomplishments, we know there is more work to be done.
         As a responsible supplier and partner, we’ll continue to take deliberate steps to
         drive meaningful change.
-      </p>
-      <p class="funding-attribution">
+      </blockquote>
+      <figcaption class="funding-attribution">
         &ndash; Brian Reynolds, CTG Federal President and CEO, CTG Foundation Founding Member
         and Co-Chair
-      </p>
+      </figcaption>
+    </figure>
+  </Section>
+
+  <!-- Our Programs (in depth) -->
+  <Section tone="white">
+    <div class="section-heading">
+      <h2 class="heading-mono">Our Programs</h2>
+      <span class="accent-bar"></span>
     </div>
   </Section>
 
   <!-- Program detail sections -->
   {
     programDetails.map((program, index) => (
-      <Section tone={index % 2 === 0 ? 'white' : 'subtle'}>
+      <Section tone={index % 2 === 0 ? 'subtle' : 'white'}>
         <div class="split program-detail">
           <div>
             <IconTile src={program.icon} />
@@ -272,9 +265,10 @@ const programDetails = [
 
 <style>
   .foundation-logo {
-    width: 200px;
+    display: block;
+    width: 210px;
     height: auto;
-    margin-bottom: var(--sp-6);
+    margin: var(--sp-10) 0 var(--sp-2);
     filter: brightness(0) invert(1);
   }
   .giving-stats {
@@ -294,7 +288,7 @@ const programDetails = [
     font-size: var(--fs-36);
     line-height: 1.1;
     letter-spacing: -0.015em;
-    color: var(--navy);
+    color: var(--azure);
   }
   .giving-stats__label {
     display: block;
@@ -329,8 +323,26 @@ const programDetails = [
     margin: 0;
   }
 
+  .funding-donate {
+    margin-top: var(--sp-10);
+  }
+  /* Brian Reynolds pull-quote as its own callout on the navy band. */
+  .funding-quote {
+    max-width: 760px;
+    margin: var(--sp-12) 0 0;
+    padding: var(--sp-6) var(--sp-8);
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 3px solid var(--azure);
+    border-radius: var(--radius-md);
+  }
+  .funding-quote .quote {
+    margin: 0 0 var(--sp-4);
+    color: var(--white);
+  }
   .funding-attribution {
+    margin: 0;
     font-family: var(--font-mono);
+    font-style: normal;
     font-size: var(--fs-tag);
     font-weight: 500;
     letter-spacing: 0.18em;

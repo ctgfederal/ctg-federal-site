@@ -12,6 +12,7 @@ import LogoGrid from '../components/LogoGrid.astro';
 import CustomerLogos from '../components/CustomerLogos.astro';
 import Testimonials from '../components/Testimonials.astro';
 import HexGrid from '../components/HexGrid.astro';
+import RegMarks from '../components/RegMarks.astro';
 import { strategic } from '../data/partners';
 
 const lineCardPdf = '/downloads/Line_Card-CTG_Federal_7.20.26.pdf';
@@ -38,11 +39,15 @@ const techTags = [
   <section class="solhero motif-host">
     <HexGrid corner="tr" size={380} />
     <div class="container solhero__inner">
-      <h1 class="solhero__title">
-        <span>Information technology expertise.</span>
-        <span>Engineering excellence.</span>
-        <span>Second-to-none service.</span>
-      </h1>
+      <div class="solhero__text reg-frame">
+        <RegMarks />
+        <p class="tag">Solutions</p>
+        <h1 class="solhero__title">
+          <span>Information technology expertise.</span>
+          <span>Engineering excellence.</span>
+          <span>Second-to-none service.</span>
+        </h1>
+      </div>
       <ul class="solhero__tags">
         {
           techTags.map((label) => (
@@ -65,7 +70,11 @@ const techTags = [
 
   <!-- Solutions grid -->
   <Section tone="subtle" id="core-anchor">
-    <ServicesGrid heading="Enterprise IT Solutions & Expertise" />
+    <div class="section-heading">
+      <h2 class="heading-mono">Enterprise IT Solutions &amp; Expertise</h2>
+      <span class="accent-bar"></span>
+    </div>
+    <ServicesGrid />
   </Section>
 
   <!-- Stats -->
@@ -73,31 +82,33 @@ const techTags = [
 
   <!-- Partners -->
   <Section tone="white" id="partners">
-    <div class="section-heading section-heading--center">
-      <h2>Our Partners</h2>
+    <div class="section-heading">
+      <h2 class="heading-mono">Our Partners</h2>
       <span class="accent-bar" />
-      <p class="lede">Partnering with best-in-class technology vendors to deliver solutions that enable success.</p>
-      <p><a href="/partners/">Learn more about our technology partners</a></p>
+      <p class="lede font-display">Partnering with best-in-class technology vendors to deliver solutions that enable success.</p>
     </div>
-    <LogoGrid
-      logos={strategic}
-      cols={6}
-      link={{ label: 'See our complete list of partners', href: lineCardPdf, external: true }}
-    />
+    <LogoGrid logos={strategic} cols={6} center={false} />
+    <p class="solutions-cta">
+      <a class="btn btn--primary" href="/partners/">Learn more about our partners</a>
+    </p>
   </Section>
 
   <!-- Customers -->
   <Section tone="subtle" id="customers">
-    <CustomerLogos
-      heading="Our Customers"
-      intro="We’re trusted by some of the most complex and critical organizations in the nation."
-      link={{ label: 'Learn more here', href: '/customers/' }}
-    />
+    <div class="section-heading">
+      <h2 class="heading-mono">Our Customers</h2>
+      <span class="accent-bar"></span>
+      <p class="lede font-display">We’re trusted by some of the most complex and critical organizations in the nation.</p>
+    </div>
+    <CustomerLogos intro={false} center={false} />
+    <p class="solutions-cta">
+      <a class="btn btn--primary" href="/customers/">Learn more about our customers</a>
+    </p>
   </Section>
 
   <!-- Testimonials -->
-  <Section tone="navy" hex>
-    <Testimonials eyebrow="Testimonials" />
+  <Section tone="white">
+    <Testimonials eyebrow="Testimonials" tone="light" />
   </Section>
 </BaseLayout>
 
@@ -122,6 +133,10 @@ const techTags = [
     gap: clamp(32px, 5vw, 56px);
     align-items: center;
     grid-template-columns: 1.2fr 1fr;
+  }
+  .solhero__text {
+    position: relative;
+    padding: var(--sp-6) var(--sp-8);
   }
   .solhero__title {
     color: var(--white);
@@ -162,6 +177,9 @@ const techTags = [
     padding-left: var(--sp-6);
     border-left: 3px solid var(--azure);
     max-width: var(--measure);
+  }
+  .solutions-cta {
+    margin: var(--sp-8) 0 0;
   }
   @media (max-width: 900px) {
     .solhero__inner {

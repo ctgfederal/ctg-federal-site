@@ -33,7 +33,7 @@ const {
 ---
 
 <div class={`quickfacts quickfacts--${tone}`} id={id}>
-  {heading && <h2>{heading}</h2>}
+  {heading && <h2 class="heading-mono">{heading}</h2>}
   <span class="accent-bar"></span>
 
   <div class="quickfacts__grid">
@@ -95,9 +95,6 @@ const {
   }
   .quickfacts__ids {
     margin: 0;
-  }
-  .quickfacts__ids {
-    border-top: 2px solid var(--navy);
   }
   .quickfacts__row {
     display: flex;

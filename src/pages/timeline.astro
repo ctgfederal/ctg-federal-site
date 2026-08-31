@@ -24,23 +24,38 @@ const slides = [
   description="In 2017, a team of four talented IT veterans came together to start a forward-thinking company dedicated to delivering best-in-class IT services. The new company would be defined not only by superior technical solutions but by people and partnerships dedicated to transforming and accelerating businesses."
 >
   <PageHero
+    eyebrow="History"
     title="CTG Over the Years"
     intro="In 2017, a team of four talented IT veterans came together to start a forward-thinking company dedicated to delivering best-in-class IT services. The new company would be defined not only by superior technical solutions but by people and partnerships dedicated to transforming and accelerating businesses. Here’s a bit about our history."
   />
 
   <Section tone="white">
-    <p class="lede timeline-caption">Click an image below to follow our timeline.</p>
-    <ul class="timeline-gallery">
-      {
-        slides.map((slide) => (
-          <li>
-            <a href={pdf} target="_blank" rel="noopener">
-              <img src={slide.src} alt={slide.alt} loading="lazy" decoding="async" />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <p class="lede timeline-caption">Use the arrows to move through our timeline, one era at a time.</p>
+
+    <div class="timeline-carousel" data-carousel>
+      <button class="tcarousel__arrow tcarousel__arrow--prev" type="button" data-prev aria-label="Previous era">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8" /></svg>
+      </button>
+
+      <div class="tcarousel__viewport">
+        <ul class="tcarousel__track">
+          {
+            slides.map((slide, i) => (
+              <li class="tcarousel__slide" data-slide hidden={i !== 0}>
+                <img src={slide.src} alt={slide.alt} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <button class="tcarousel__arrow tcarousel__arrow--next" type="button" data-next aria-label="Next era">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8" /></svg>
+      </button>
+
+      <p class="tcarousel__status"><span data-current>1</span> / {slides.length}</p>
+    </div>
+
     <p class="timeline-download">
       <a class="btn btn--primary" href={pdf} target="_blank" rel="noopener">Download the CTG Timeline</a>
     </p>
@@ -51,32 +66,94 @@ const slides = [
   .timeline-caption {
     margin-bottom: var(--sp-8);
   }
-  .timeline-gallery {
+
+  /* One-era-at-a-time carousel with large side arrows. */
+  .timeline-carousel {
+    position: relative;
     display: grid;
-    gap: var(--sp-6);
-    list-style: none;
-    margin: 0 0 var(--sp-10);
-    padding: 0;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--sp-3);
+    margin: 0 0 var(--sp-8);
   }
-  .timeline-gallery li {
+  .tcarousel__viewport {
     background: var(--bone);
     border: 1px solid var(--light-gray);
     border-radius: var(--radius-md);
     overflow: hidden;
-    transition: border-color var(--dur-med) var(--ease-standard);
   }
-  .timeline-gallery li:hover {
-    border-color: var(--azure);
+  .tcarousel__track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-  .timeline-gallery a {
+  .tcarousel__slide {
+    margin: 0;
+  }
+  .tcarousel__slide img {
     display: block;
-  }
-  .timeline-gallery img {
     width: 100%;
     height: auto;
-    display: block;
+  }
+  .tcarousel__arrow {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    flex: none;
+    background: var(--navy);
+    color: var(--white);
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-standard);
+  }
+  .tcarousel__arrow:hover {
+    background: var(--medium);
+  }
+  .tcarousel__arrow svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .tcarousel__status {
+    grid-column: 2;
+    margin: var(--sp-3) 0 0;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: var(--fs-tag);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--medium);
   }
   .timeline-download {
     text-align: center;
   }
+  @media (max-width: 560px) {
+    .tcarousel__arrow {
+      width: 44px;
+      height: 44px;
+    }
+  }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('[data-slide]')];
+    const current = root.querySelector<HTMLElement>('[data-current]');
+    if (slides.length < 2) return;
+    let i = 0;
+    const show = (n: number) => {
+      slides[i].hidden = true;
+      i = (n + slides.length) % slides.length;
+      slides[i].hidden = false;
+      if (current) current.textContent = String(i + 1);
+    };
+    root.querySelector<HTMLButtonElement>('[data-prev]')?.addEventListener('click', () => show(i - 1));
+    root.querySelector<HTMLButtonElement>('[data-next]')?.addEventListener('click', () => show(i + 1));
+  });
+</script>

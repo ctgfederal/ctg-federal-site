@@ -282,6 +282,25 @@ code {
   margin: 0 0 var(--sp-4);
 }
 
+/* Font-family utilities — swap any element's typeface without new CSS.
+   display = Georgia (headlines/subheads), mono = JetBrains, body = Verdana. */
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
+.font-body { font-family: var(--font-body); }
+
+/* Section heading rendered in JetBrains mono (marketing standard for section
+   titles like "Quick Facts", "Leadership", "Technology Partners"). Apply to an
+   <h2>/<h3> to override the Georgia default while keeping heading semantics. */
+.heading-mono {
+  font-family: var(--font-mono);
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy);
+}
+
 /* Prose rhythm */
 .prose { max-width: var(--measure); }
 .prose > h2, .prose > .h1 { margin-top: var(--space-before-h2); }

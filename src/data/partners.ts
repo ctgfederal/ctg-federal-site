@@ -18,6 +18,12 @@ export interface Partner {
   name: string;
   logo: string;
   solutions: string[];
+  /** Tile destination — OEM website, or an internal microsite for featured OEMs. */
+  href?: string;
+  /** true = external OEM site (opens a new tab). */
+  external?: boolean;
+  /** true = has a dedicated microsite under /partners/ → shows a blue "+" cue. */
+  microsite?: boolean;
 }
 
 export interface SolutionFilter {
@@ -25,30 +31,35 @@ export interface SolutionFilter {
   label: string;
 }
 
-/** Strategic OEMs, in the order shown on the home page. */
+/**
+ * Strategic OEMs, in the order shown on the home page.
+ * The seven with a dedicated microsite link inward (microsite:true → blue "+");
+ * the rest link out to the OEM's own website. DMSI has no confirmed URL, so it
+ * stays unlinked until marketing supplies one.
+ */
 export const strategic: Partner[] = [
-  { name: 'NetApp', logo: '/images/site/netapp-cr1.png', solutions: [] },
-  { name: 'Cisco', logo: '/images/site/sq_cisco.jpg', solutions: [] },
-  { name: 'Supermicro', logo: '/images/site/supermicro.png', solutions: [] },
-  { name: 'VMware by Broadcom', logo: '/images/site/vmware-cr1.png', solutions: [] },
-  { name: 'Omnissa', logo: '/images/site/omnissa.png', solutions: [] },
-  { name: 'Dell Technologies', logo: '/images/site/sq_dell_1.jpg', solutions: [] },
-  { name: 'Red Hat', logo: '/images/site/red-hat.png', solutions: [] },
-  { name: 'Palo Alto Networks', logo: '/images/site/sq_paloalto.jpg', solutions: [] },
-  { name: 'Commvault', logo: '/images/site/sq_commvault.jpg', solutions: [] },
-  { name: 'Pure Storage', logo: '/images/site/sq_purestorage.jpg', solutions: [] },
-  { name: 'Dynatrace', logo: '/images/site/Dynatrace.png', solutions: [] },
-  { name: 'VAST Data', logo: '/images/site/vast1.png', solutions: [] },
-  { name: 'Okta', logo: '/images/site/okta.png', solutions: [] },
-  { name: 'Cohesity', logo: '/images/site/sq_cohesity.jpg', solutions: [] },
-  { name: 'HPE', logo: '/images/site/sq_hp.jpg', solutions: [] },
-  { name: 'Juniper Networks', logo: '/images/site/Juniper.png', solutions: [] },
-  { name: 'NVIDIA', logo: '/images/site/sq_nvidia.jpg', solutions: [] },
-  { name: 'Rubrik', logo: '/images/site/Rubrik.png', solutions: [] },
-  { name: 'Elastic', logo: '/images/site/elastic.png', solutions: [] },
-  { name: 'Nutanix', logo: '/images/site/sq_nutanix.jpg', solutions: [] },
-  { name: 'Palantir', logo: '/images/site/palantir.png', solutions: [] },
-  { name: 'Crestron', logo: '/images/site/creston.png', solutions: [] },
+  { name: 'NetApp', logo: '/images/site/netapp-cr1.png', solutions: [], href: '/partners/netapp/', microsite: true },
+  { name: 'Cisco', logo: '/images/site/sq_cisco.jpg', solutions: [], href: '/partners/cisco/', microsite: true },
+  { name: 'Supermicro', logo: '/images/site/supermicro.png', solutions: [], href: 'https://www.supermicro.com', external: true },
+  { name: 'VMware by Broadcom', logo: '/images/site/vmware-cr1.png', solutions: [], href: '/partners/vmware-by-broadcom/', microsite: true },
+  { name: 'Omnissa', logo: '/images/site/omnissa.png', solutions: [], href: 'https://www.omnissa.com', external: true },
+  { name: 'Dell Technologies', logo: '/images/site/sq_dell_1.jpg', solutions: [], href: '/partners/dell/', microsite: true },
+  { name: 'Red Hat', logo: '/images/site/red-hat.png', solutions: [], href: 'https://www.redhat.com', external: true },
+  { name: 'Palo Alto Networks', logo: '/images/site/sq_paloalto.jpg', solutions: [], href: 'https://www.paloaltonetworks.com', external: true },
+  { name: 'Commvault', logo: '/images/site/sq_commvault.jpg', solutions: [], href: '/partners/commvault/', microsite: true },
+  { name: 'Pure Storage', logo: '/images/site/sq_purestorage.jpg', solutions: [], href: 'https://www.purestorage.com', external: true },
+  { name: 'Dynatrace', logo: '/images/site/Dynatrace.png', solutions: [], href: 'https://www.dynatrace.com', external: true },
+  { name: 'VAST Data', logo: '/images/site/vast1.png', solutions: [], href: 'https://www.vastdata.com', external: true },
+  { name: 'Okta', logo: '/images/site/okta.png', solutions: [], href: 'https://www.okta.com', external: true },
+  { name: 'Cohesity', logo: '/images/site/sq_cohesity.jpg', solutions: [], href: '/partners/cohesity/', microsite: true },
+  { name: 'HPE', logo: '/images/site/sq_hp.jpg', solutions: [], href: 'https://www.hpe.com', external: true },
+  { name: 'Juniper Networks', logo: '/images/site/Juniper.png', solutions: [], href: 'https://www.juniper.net', external: true },
+  { name: 'NVIDIA', logo: '/images/site/sq_nvidia.jpg', solutions: [], href: '/partners/nvidia/', microsite: true },
+  { name: 'Rubrik', logo: '/images/site/Rubrik.png', solutions: [], href: 'https://www.rubrik.com', external: true },
+  { name: 'Elastic', logo: '/images/site/elastic.png', solutions: [], href: 'https://www.elastic.co', external: true },
+  { name: 'Nutanix', logo: '/images/site/sq_nutanix.jpg', solutions: [], href: 'https://www.nutanix.com', external: true },
+  { name: 'Palantir', logo: '/images/site/palantir.png', solutions: [], href: 'https://www.palantir.com', external: true },
+  { name: 'Crestron', logo: '/images/site/creston.png', solutions: [], href: 'https://www.crestron.com', external: true },
   { name: 'DMSI', logo: '/images/site/DMSI-1.png', solutions: [] },
 ];
 
