@@ -116,8 +116,9 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   /* ---- Hero ---- */
   .hero {
     position: relative;
-    display: grid;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     min-height: clamp(460px, 68vh, 680px);
     overflow: hidden;
     background: var(--navy-900);
@@ -145,11 +146,12 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
   .hero__inner {
     position: relative;
     z-index: 1;
+    width: 100%;
     padding-block: var(--sp-20);
   }
-  /* Headline sits in the image's open left space. */
+  /* Headline sits in the image's open left space; the forced line breaks in the
+     <span>s control wrapping, so no character-based cap is needed here. */
   .hero__content {
-    max-width: 30ch;
     text-align: left;
   }
   /* White, not Azure: the tag sits over photography, where §19B allows
@@ -191,9 +193,4 @@ const capabilitiesPdf = '/downloads/CTG_Federal-Overview_Capabilities_Statement_
     margin: var(--sp-10) 0 0;
   }
 
-  @media (max-width: 820px) {
-    .hero__content {
-      max-width: 32ch;
-    }
-  }
 </style>
