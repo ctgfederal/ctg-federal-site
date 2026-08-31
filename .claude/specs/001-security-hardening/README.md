@@ -22,8 +22,12 @@ self-hosted fonts — plus DNS/email records the owner applies.
   (national used `public/_headers`; same effect, this repo's existing convention wins).
 - **D-002 — Strict CSP, no `'unsafe-inline'` in `script-src`.** The GA4 bootstrap was moved
   from an inline `set:html` block to a bundled same-origin script, so `script-src` is just
-  `'self' https://www.googletagmanager.com`. GA4's beacons need `google-analytics.com`
-  origins in `connect-src`/`img-src` — that is unavoidable while GA4 is used.
+  `'self'` plus the analytics loader origins. GA4's beacons need `google-analytics.com`
+  origins in `connect-src`/`img-src` — unavoidable while GA4 is used.
+- **D-002a — Both analytics vendors are pre-allowed.** Both sites will eventually run GA4
+  **and** Ahrefs. `https://analytics.ahrefs.com` is already in `script-src` and `connect-src`,
+  so turning Ahrefs on later is just adding the tag — **no CSP edit or re-verify needed**.
+  Ahrefs is not yet on the page (no tracking key wired); GA4 is live in prod builds.
 - **D-003 — `Cross-Origin-Embedder-Policy: credentialless`** so GA4 loads cross-origin
   without the vendor sending CORP/CORS (`require-corp` would break it).
 - **D-004 — `style-src` keeps `'unsafe-inline'`.** The site uses inline `style=""` attributes
@@ -99,8 +103,38 @@ ctgfederal.com.  CAA  0 iodef "mailto:security@ctgfederal.com"
 - Confirm **security@ctgfederal.com** is a monitored inbox/alias (used in security.txt + CAA iodef).
 - Re-run SiteSecurityScore to confirm the A grade.
 
+## Enforcement verification (pre-deploy)
+
+`node scripts/csp-verify-server.mjs` serves `dist/` with the **real** `netlify.toml` headers
+(parsing it also proves the TOML is valid). Verified 2026-08-31:
+- All 17 headers emit with correct values on pages **and** on `/_astro/*` assets.
+- Both `security.txt` paths return `200 text/plain`.
+- Full resource scan of the build: the only CSP-governed external load anywhere is the GA4
+  loader (`googletagmanager.com`); no external img/iframe/style/font; no inline scripts,
+  inline event handlers, or `javascript:` URLs. So **zero CSP violations are possible.**
+
+## Go-live checklist (2-day launch off the Netlify staging site)
+
+**Repo — done, ready to ship:**
+- [x] Headers + strict CSP (GA4 + Ahrefs both allowed), self-hosted fonts, `security.txt`,
+      build clean (39 pages), enforcement verified against served headers.
+
+**Owner — before / at cutover (in priority order):**
+1. [ ] **DNS cutover to Netlify.** Apex `A` today is `208.97.159.184` (old DreamHost). Point
+       `ctgfederal.com` + `www` at Netlify (per Netlify's DNS panel) so the new build — and
+       its headers — actually serve. Nothing below matters until this is done.
+2. [ ] **Confirm `security@ctgfederal.com`** is a monitored inbox/alias (used by security.txt).
+3. [ ] **On the Netlify deploy preview:** open DevTools console on `/`, a partner page,
+       `/payment/`, `/techsupport/`, `/contacts/` — confirm zero CSP errors and GA4 fires.
+4. [ ] **Add the missing email DNS** (does not block launch, but do it this week): SPF (none
+       today), verify M365 DKIM, upgrade DMARC (`p=quarantine;` → add `rua`, then `p=reject`).
+5. [ ] **Add CAA + enable DNSSEC** at Namecheap (records above).
+6. [ ] **HSTS preload caution:** the header ships `includeSubDomains; preload`. Before you
+       submit at **hstspreload.org** (do this *after* launch is stable), confirm every
+       subdomain that visitors touch serves HTTPS — preload is a 2-year, hard-to-undo
+       commitment. The header alone is safe; the list submission is the irreversible step.
+
 ## Status
 
-- [x] Repo work complete and build-verified.
-- [ ] Owner: apply SPF, DKIM, DMARC, CAA, DNSSEC (above).
-- [ ] Owner: after Netlify deploy, re-scan + submit to hstspreload.org.
+- [x] Repo work complete and enforcement-verified pre-deploy.
+- [ ] Owner: DNS cutover to Netlify, then the checklist above.

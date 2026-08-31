@@ -13,12 +13,13 @@
     # Force HTTPS for two years, cover subdomains, preload-eligible.
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 
-    # Content Security Policy. script-src is strict 'self' + the GA4 loader
-    # origin only (the GA bootstrap is a bundled same-origin script). GA4
-    # beacons/pixels need google-analytics origins in connect-src/img-src.
+    # Content Security Policy. script-src is strict 'self' plus the two analytics
+    # loader origins the site uses (GA4) or will use (Ahrefs) — the GA bootstrap
+    # is a bundled same-origin script, so no inline script is allowed. Analytics
+    # beacons/pixels add google-analytics + ahrefs origins to connect-src/img-src.
     # style-src keeps 'unsafe-inline' — the site uses inline style="" attributes
     # and Astro-inlined <style> blocks; script-src stays strict regardless.
-    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; manifest-src 'self'; upgrade-insecure-requests"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com https://analytics.ahrefs.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.ahrefs.com; manifest-src 'self'; upgrade-insecure-requests"
 
     # Cross-origin isolation. credentialless lets GA4 load cross-origin without
     # the vendor sending CORP/CORS headers (require-corp would break it).
