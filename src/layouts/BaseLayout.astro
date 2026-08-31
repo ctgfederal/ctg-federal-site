@@ -103,26 +103,22 @@ const organizationSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <!-- Georgia (display) and Verdana (body) are system fonts. Only the mono
-         family is loaded: JetBrains Mono 400/500/600 for tags and tokens. -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
-    />
+    <!-- Georgia (display) and Verdana (body) are system fonts. JetBrains Mono
+         400/500/600 is self-hosted via @fontsource (see global.css) so no
+         external font host is loaded and the CSP needs no font origins. -->
 
     {
       loadGA && (
         <>
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} is:inline />
-          <script
-            is:inline
-            set:html={`window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', '${GA_ID}', { anonymize_ip: true });`}
-          />
+          {/* Bootstrap is a bundled (non-inline) script so script-src stays
+              strict 'self' — no inline hash or 'unsafe-inline' needed. */}
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){ dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', import.meta.env.PUBLIC_GA_ID || 'G-C3K2XCK3DQ', { anonymize_ip: true });
+          </script>
         </>
       )
     }

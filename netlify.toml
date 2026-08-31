@@ -5,9 +5,41 @@
 [build.environment]
   NODE_VERSION = "22"
 
+# Single source of truth for HTTP response headers (security posture).
+# Applied to every route. See .claude/specs/001-security-hardening/README.md.
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    # Force HTTPS for two years, cover subdomains, preload-eligible.
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+
+    # Content Security Policy. script-src is strict 'self' + the GA4 loader
+    # origin only (the GA bootstrap is a bundled same-origin script). GA4
+    # beacons/pixels need google-analytics origins in connect-src/img-src.
+    # style-src keeps 'unsafe-inline' — the site uses inline style="" attributes
+    # and Astro-inlined <style> blocks; script-src stays strict regardless.
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://www.googletagmanager.com https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com; manifest-src 'self'; upgrade-insecure-requests"
+
+    # Cross-origin isolation. credentialless lets GA4 load cross-origin without
+    # the vendor sending CORP/CORS headers (require-corp would break it).
+    Cross-Origin-Opener-Policy = "same-origin"
+    Cross-Origin-Embedder-Policy = "credentialless"
+    Cross-Origin-Resource-Policy = "same-origin"
+
+    # Clickjacking + sniffing + referrer + feature lockdown.
+    X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "accelerometer=(), autoplay=(), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), interest-cohort=()"
+
+    # Belt-and-suspenders hardening headers.
+    X-Permitted-Cross-Domain-Policies = "none"
+    X-DNS-Prefetch-Control = "off"
+    Origin-Agent-Cluster = "?1"
+    X-XSS-Protection = "0"
+
+# Long-cache the fingerprinted build assets (safe: content-hashed filenames).
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

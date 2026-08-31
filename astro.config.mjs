@@ -7,4 +7,7 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [sitemap()],
   build: { format: 'directory' },
+  // Externalize inline scripts so the CSP script-src can stay strict 'self'
+  // (no 'unsafe-inline', no per-script hashes to maintain).
+  vite: { build: { assetsInlineLimit: 0 } },
 });

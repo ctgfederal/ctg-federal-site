@@ -1,0 +1,6 @@
+# Vulnerability disclosure — https://www.ctgfederal.com (RFC 9116)
+# Canonical location is /.well-known/security.txt
+Contact: mailto:security@ctgfederal.com
+Expires: 2027-08-31T00:00:00.000Z
+Canonical: https://www.ctgfederal.com/.well-known/security.txt
+Preferred-Languages: en

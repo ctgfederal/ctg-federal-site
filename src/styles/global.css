@@ -8,6 +8,12 @@
    Navy carries authority. Azure points. Medium Blue is the UI blue.
    ========================================================= */
 
+/* Self-hosted JetBrains Mono (400/500/600) — no external font host, so the
+   CSP needs no googleapis/gstatic origins. Georgia + Verdana are system fonts. */
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
 :root {
   /* ---- Primary palette ---- */
   --navy: #002550;
