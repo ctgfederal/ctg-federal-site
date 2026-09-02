@@ -32,6 +32,7 @@ export const mainNav: NavItem[] = [
     children: [
       { label: 'Culture', href: '/culture/' },
       { label: 'History', href: '/timeline/' },
+      { label: 'Locations', href: '/locations/' },
       { label: 'Philanthropy', href: '/philanthropy/' },
       {
         label: 'Sustainability',

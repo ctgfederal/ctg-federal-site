@@ -34,8 +34,7 @@ export interface SolutionFilter {
 /**
  * Strategic OEMs, in the order shown on the home page.
  * The seven with a dedicated microsite link inward (microsite:true → blue "+");
- * the rest link out to the OEM's own website. DMSI has no confirmed URL, so it
- * stays unlinked until marketing supplies one.
+ * the rest link out to the OEM's own website.
  */
 export const strategic: Partner[] = [
   { name: 'NetApp', logo: '/images/site/netapp-cr1.png', solutions: [], href: '/partners/netapp/', microsite: true },
@@ -47,7 +46,7 @@ export const strategic: Partner[] = [
   { name: 'Red Hat', logo: '/images/site/red-hat.png', solutions: [], href: 'https://www.redhat.com', external: true },
   { name: 'Palo Alto Networks', logo: '/images/site/sq_paloalto.jpg', solutions: [], href: 'https://www.paloaltonetworks.com', external: true },
   { name: 'Commvault', logo: '/images/site/sq_commvault.jpg', solutions: [], href: '/partners/commvault/', microsite: true },
-  { name: 'Pure Storage', logo: '/images/site/sq_purestorage.jpg', solutions: [], href: 'https://www.purestorage.com', external: true },
+  { name: 'Everpure', logo: '/images/site/everpure.png', solutions: [], href: 'https://www.everpuredata.com/', external: true },
   { name: 'Dynatrace', logo: '/images/site/Dynatrace.png', solutions: [], href: 'https://www.dynatrace.com', external: true },
   { name: 'VAST Data', logo: '/images/site/vast1.png', solutions: [], href: 'https://www.vastdata.com', external: true },
   { name: 'Okta', logo: '/images/site/okta.png', solutions: [], href: 'https://www.okta.com', external: true },
@@ -60,7 +59,7 @@ export const strategic: Partner[] = [
   { name: 'Nutanix', logo: '/images/site/sq_nutanix.jpg', solutions: [], href: 'https://www.nutanix.com', external: true },
   { name: 'Palantir', logo: '/images/site/palantir.png', solutions: [], href: 'https://www.palantir.com', external: true },
   { name: 'Crestron', logo: '/images/site/creston.png', solutions: [], href: 'https://www.crestron.com', external: true },
-  { name: 'DMSI', logo: '/images/site/DMSI-1.png', solutions: [] },
+  { name: 'DMSI', logo: '/images/site/DMSI-1.png', solutions: [], href: 'https://www.dmsimfg.com/', external: true },
 ];
 
 /** Filter options on /partners/ — values match the tags in `all`. */

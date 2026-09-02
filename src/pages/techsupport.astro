@@ -29,8 +29,16 @@ const severityOptions = [1, 2, 3, 4, 5];
     <div class="support">
       <div class="support__intro">
         <p class="tag">24&times;7 Technical Assistance</p>
-        <p class="support__phone"><a href="tel:1-888-876-6885">Toll free (888) 876-6885</a></p>
-        <p>Email <a href="mailto:techsupport@ctgfederal.com">techsupport@ctgfederal.com</a></p>
+        <div class="support__contact">
+          <p class="support__line">
+            <img src="/images/icons/phone_iphone_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="" width="24" height="24" aria-hidden="true" />
+            <a href="tel:1-888-876-6885">(888) 876-6885</a>
+          </p>
+          <p class="support__line">
+            <img src="/images/icons/mail_24dp_FILL0_wght400_GRAD0_opsz24.svg" alt="" width="24" height="24" aria-hidden="true" />
+            <a href="mailto:techsupport@ctgfederal.com">techsupport@ctgfederal.com</a>
+          </p>
+        </div>
       </div>
 
       <div class="support__form">
@@ -124,10 +132,25 @@ const severityOptions = [1, 2, 3, 4, 5];
     gap: clamp(32px, 5vw, 64px);
     align-items: start;
   }
-  .support__phone {
-    font-size: var(--fs-24);
-    font-weight: var(--fw-medium);
-    color: var(--ctg-navy);
+  /* Phone + email: same size, Verdana (body font), each led by an icon. */
+  .support__contact {
+    display: grid;
+    gap: var(--sp-4);
+    margin-top: var(--sp-5);
+  }
+  .support__line {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: var(--fs-20);
+    line-height: 1.3;
+  }
+  .support__line img {
+    flex: none;
+    width: 24px;
+    height: 24px;
   }
   .field-hint {
     margin: 0;

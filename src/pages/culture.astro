@@ -148,14 +148,28 @@ const pillars = [
         <p class="careers-band__attribution">&ndash; CTG Employee</p>
       </div>
       <div class="careers-band__media">
-        <img
-          src="/images/site/work-badges-2026.png"
-          alt="Great Place to Work Certified and Fortune Best Small Workplaces badges"
-          width="320"
-          height="320"
-          loading="lazy"
-          decoding="async"
-        />
+        <div class="careers-band__badges">
+          <a href="https://www.greatplacetowork.com/certified-company/7020449" target="_blank" rel="noopener" aria-label="Great Place to Work Certified — view certification">
+            <img
+              src="/images/site/badge-gptw-certified-2026.png"
+              alt="Great Place to Work Certified badge"
+              width="120"
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <a href="https://www.greatplacetowork.com/best-workplaces/small/2025" target="_blank" rel="noopener" aria-label="Fortune Best Small Workplaces 2025 — view list">
+            <img
+              src="/images/site/badge-fortune-best-small-workplaces-2025.png"
+              alt="Fortune Best Small Workplaces 2025 badge"
+              width="120"
+              height="120"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        </div>
         <p>
           CTG Federal has been rated a Great Place to Work by our employees eight years in a
           row. In addition, we ranked #4 on Fortune Best Small Workplaces 2025 list.
@@ -196,7 +210,11 @@ const pillars = [
   .culture-praise .quote {
     position: relative;
     margin: 0;
-    padding-left: var(--sp-5);
+    /* No box or solid rule here — the ombre gradient rule below is the only
+       vertical line (the default .quote azure border is removed). */
+    background: transparent;
+    border-left: 0;
+    padding: 0 0 0 var(--sp-5);
     font-size: var(--fs-18);
   }
   .culture-praise .quote::before {
@@ -247,10 +265,17 @@ const pillars = [
     text-transform: uppercase;
     color: var(--medium);
   }
-  .careers-band__media img {
-    display: block;
-    width: 100%;
-    max-width: 260px;
+  .careers-band__badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-5);
     margin: 0 0 var(--sp-5);
+  }
+  .careers-band__badges img {
+    display: block;
+    width: auto;
+    height: 120px;
+    object-fit: contain;
   }
 </style>

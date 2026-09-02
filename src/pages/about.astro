@@ -145,6 +145,7 @@ const sustainabilityItems = [
   description="Headquartered in Virginia, CTG Federal serves customers nationwide with top-tier IT solutions. Scalable, secure, and cost-effective."
 >
   <PageHero
+    eyebrow="About"
     title="Your trusted advisor specializing in smart, secure, and scalable solutions"
     intro="CTG Federal, a Cohesive Technology Group company™, provides customers with best-in-class information technology. Our experienced team of sales and elite engineering professionals design and deliver IT hardware and software solutions that save time and money for our customers. Headquartered in Virginia, we have dedicated resources in all regions across the continental United States."
   />
@@ -245,20 +246,24 @@ const sustainabilityItems = [
             decoding="async"
           />
           <div class="culture-media__badges">
-            <img
-              src="/images/site/badge-gptw-certified-2026.png"
-              alt="Great Place to Work Certified badge"
-              width="96"
-              height="96"
-              loading="lazy"
-            />
-            <img
-              src="/images/site/badge-fortune-best-small-workplaces-2025.png"
-              alt="Fortune Best Small Workplaces 2025 badge"
-              width="96"
-              height="96"
-              loading="lazy"
-            />
+            <a href="https://www.greatplacetowork.com/certified-company/7020449" target="_blank" rel="noopener" aria-label="Great Place to Work Certified — view certification">
+              <img
+                src="/images/site/badge-gptw-certified-2026.png"
+                alt="Great Place to Work Certified badge"
+                width="96"
+                height="96"
+                loading="lazy"
+              />
+            </a>
+            <a href="https://www.greatplacetowork.com/best-workplaces/small/2025" target="_blank" rel="noopener" aria-label="Fortune Best Small Workplaces 2025 — view list">
+              <img
+                src="/images/site/badge-fortune-best-small-workplaces-2025.png"
+                alt="Fortune Best Small Workplaces 2025 badge"
+                width="96"
+                height="96"
+                loading="lazy"
+              />
+            </a>
           </div>
         </div>
         <p class="quote culture-media__quote">
@@ -444,11 +449,12 @@ const sustainabilityItems = [
   <Section tone="muted" id="conference">
     <div class="section-heading">
       <p class="tag">Conference</p>
+      <span class="accent-bar"></span>
       <p class="lede">
-        Stay in the loop. See the latest updates and announcements on where CTGF will be and
-        what we are up to at the industry’s biggest conferences.
+        Stay in the loop. See the latest updates and announcements on where CTG Federal will be
+        and what we are up to at the industry’s biggest conferences.
       </p>
-      <p><a class="btn btn--primary" href="/conference/">Don’t miss out. Click here</a></p>
+      <p class="conference-cta"><a class="btn btn--primary" href="/conference/">Don’t miss out. Click here</a></p>
     </div>
   </Section>
 </BaseLayout>
@@ -607,10 +613,6 @@ const sustainabilityItems = [
     width: 78px;
     height: 78px;
     object-fit: contain;
-    background: var(--white);
-    border: 1px solid var(--light-gray);
-    border-radius: var(--radius-md);
-    padding: var(--sp-2);
   }
   .culture-media__quote {
     margin-top: var(--sp-5);
@@ -705,6 +707,11 @@ const sustainabilityItems = [
   }
   .leader-card__more p {
     margin-bottom: var(--sp-3);
+  }
+
+  /* ---- Conference ---- */
+  .conference-cta {
+    margin-top: var(--sp-8);
   }
 
   /* ---- Philanthropy / Sustainability ---- */

@@ -155,7 +155,7 @@ const programDetails = [
   </PageHero>
 
   <!-- Giving back -->
-  <Section tone="white">
+  <Section tone="white" class="phil-giving">
     <div class="section-heading">
       <h2 class="heading-mono">Giving Back</h2>
       <span class="accent-bar"></span>
@@ -184,7 +184,7 @@ const programDetails = [
   </Section>
 
   <!-- Partners -->
-  <Section tone="white">
+  <Section tone="white" class="phil-partners">
     <div class="section-heading">
       <h2 class="heading-mono">Our Partners</h2>
       <span class="accent-bar"></span>
@@ -208,7 +208,8 @@ const programDetails = [
   <!-- Funding / donate -->
   <Section tone="navy" hex>
     <div class="section-heading">
-      <p class="tag">Funding</p>
+      <h2 class="heading-mono">Funding</h2>
+      <span class="accent-bar"></span>
       <p class="lede">
         Our efforts are funded through the generous donations of corporations, churches, and
         individual partners. Donations are quickly translated from dollars to life-giving
@@ -230,18 +231,17 @@ const programDetails = [
     </figure>
   </Section>
 
-  <!-- Our Programs (in depth) -->
-  <Section tone="white">
-    <div class="section-heading">
-      <h2 class="heading-mono">Our Programs</h2>
-      <span class="accent-bar"></span>
-    </div>
-  </Section>
-
-  <!-- Program detail sections -->
+  <!-- Program detail sections, led by the "Our Programs" heading sitting
+       directly above the first program (Clean Water). -->
   {
     programDetails.map((program, index) => (
       <Section tone={index % 2 === 0 ? 'subtle' : 'white'}>
+        {index === 0 && (
+          <div class="section-heading section-heading--programs">
+            <h2 class="heading-mono">Our Programs</h2>
+            <span class="accent-bar"></span>
+          </div>
+        )}
         <div class="split program-detail">
           <div>
             <IconTile src={program.icon} />
@@ -264,6 +264,10 @@ const programDetails = [
 </BaseLayout>
 
 <style>
+  /* Tighten the gap between the Our Contributions block and Our Partners. */
+  :global(.section.phil-giving) { padding-bottom: var(--sp-12); }
+  :global(.section.phil-partners) { padding-top: var(--sp-8); }
+
   .foundation-logo {
     display: block;
     width: 210px;

@@ -29,7 +29,7 @@ interface Props {
   text?: string;
   primary: Action;
   secondary?: Action;
-  tone?: 'navy' | 'yale' | 'subtle';
+  tone?: 'navy' | 'yale' | 'subtle' | 'white';
   align?: 'center' | 'left';
 }
 const {
@@ -42,7 +42,7 @@ const {
   align = 'center',
 } = Astro.props;
 const ground = tone;
-const dark = ground !== 'subtle';
+const dark = ground === 'navy' || ground === 'yale';
 ---
 
 <section class={`ctaband ctaband--${ground} ${dark ? 'motif-host' : ''} ctaband--${align}`}>
@@ -93,6 +93,11 @@ const dark = ground !== 'subtle';
   }
   .ctaband--subtle {
     background: var(--bone);
+    border-block: 1px solid var(--light-gray);
+  }
+  /* White ground — sets the band apart from an adjacent subtle/bone section. */
+  .ctaband--white {
+    background: var(--white);
     border-block: 1px solid var(--light-gray);
   }
   .ctaband__inner {

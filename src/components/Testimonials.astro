@@ -22,6 +22,7 @@ const { eyebrow = 'Testimonials', tone = 'dark' } = Astro.props;
 
 <div class={`quotes quotes--${tone}`}>
   {eyebrow && <p class="tag quotes__eyebrow">{eyebrow}</p>}
+  {eyebrow && <span class="accent-bar quotes__bar"></span>}
   <div class="quotes__grid">
     {
       testimonials.map((item) => (
@@ -37,7 +38,14 @@ const { eyebrow = 'Testimonials', tone = 'dark' } = Astro.props;
 <style>
   .quotes__eyebrow {
     display: block;
+    margin-bottom: var(--sp-4);
+  }
+  .quotes__bar {
     margin-bottom: var(--sp-8);
+  }
+  /* On navy grounds the azure bar already reads; on light grounds keep it azure too. */
+  .quotes--dark .quotes__bar {
+    background: var(--azure-300);
   }
   .quotes__grid {
     display: grid;

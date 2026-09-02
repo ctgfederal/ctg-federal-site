@@ -293,10 +293,14 @@ code {
    <h2>/<h3> to override the Georgia default while keeping heading semantics. */
 .heading-mono {
   font-family: var(--font-mono);
-  font-size: clamp(17px, 1.5vw, 21px);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: 0.1em;
+  /* Mono caps carry ~30-40% more optical mass than Georgia at the same px, so
+     matching the Georgia <h2> px would make the mono titles shout. Set at the
+     h2 (--fs-h2) scale with lighter weight and tracking: mono caps at ~28px
+     read as a size peer of the Georgia section titles, not louder. */
+  font-size: var(--fs-h2);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--navy);
 }
@@ -425,6 +429,9 @@ a:active { color: var(--azure-900); }
 .section-heading--center { text-align: center; margin-inline: auto; }
 .section-heading .lede { margin-bottom: 0; }
 .section-heading--center .lede { margin-inline: auto; }
+/* When a subheading (.lede) sits between the title and the accent bar, the bar
+   follows under the subheading — give it breathing room above. */
+.section-heading .lede + .accent-bar { margin-top: var(--sp-5); }
 
 /* ---------- Buttons ---------- */
 .btn {
