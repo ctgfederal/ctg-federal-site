@@ -7,6 +7,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import Section from '../components/Section.astro';
 import Button from '../components/Button.astro';
+import 'leaflet/dist/leaflet.css';
 
 interface Office {
   state: string;
@@ -70,10 +71,6 @@ const stateCount = new Set(offices.map((o) => o.state)).size;
   title="Locations - CTG Federal"
   description="CTG Federal's offices span the DC corridor to the Pacific Coast — find addresses, directions, and an interactive map of our five locations."
 >
-  <Fragment slot="head">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  </Fragment>
-
   <PageHero
     eyebrow="Locations"
     title="CTG Federal is built where our customers are."
@@ -164,12 +161,16 @@ const stateCount = new Set(offices.map((o) => o.state)).size;
     </div>
   </Section>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" is:inline></script>
-  <script is:inline define:vars={{ offices }}>
+  <script type="application/json" id="offices-data" set:html={JSON.stringify(offices)}></script>
+  <script>
+    import L from 'leaflet';
+
     (function () {
-      if (typeof L === 'undefined') return;
       const el = document.getElementById('locations-map');
       if (!el) return;
+      const dataEl = document.getElementById('offices-data');
+      if (!dataEl) return;
+      const offices = JSON.parse(dataEl.textContent);
 
       const map = L.map(el, {
         center: [38.5, -96.5],
